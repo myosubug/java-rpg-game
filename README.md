@@ -6,3 +6,4 @@ There will be two versions: text-based, GUI
 
 //checking user.name update
 //checking pushing
+//chunyu
