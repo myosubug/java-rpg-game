@@ -2,28 +2,27 @@ import java.util.ArrayList;
 
 public class Player extends Creature{
     private ArrayList<Item> inventory = new ArrayList<Item>();
-    private int ycoord;
-    private int xcoord;
     private int pad;
+    private Location playerXcoord = Location.getXcoordinate();
+    private Location playerYcoord = Location.getYcoordinate();
 
 
-    public Player(ArrayList<Item> inventory, int ycoord, int xcoord, int pad) {
+
+    public Player(ArrayList<Item> inventory, Location x, Location y, int pad) {
         super(); // Should call Creature(), which is Pikachu, 10, 1, 1
         this.inventory = inventory;
-        this.ycoord = ycoord;
-        this.xcoord = xcoord;
+        this.playerXcoord = x;
+        this.playerYcoord = y;
         this.pad = pad;
     }
 
     // Stores the item from the map into the player inventory
-    public ArrayList<Item> inventory() {
-        ArrayList<Item> playerInventory = new ArrayList<Item>();
-        playerInventory.add(getItem());
-        return playerInventory;
+    public void ArrayList<Item> setInventory(Item newItem) {
+        this.inventory.add(newItem);
     }
 
     public ArrayList<Item> getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     public void setInventory(ArrayList<Item> inventory) {
@@ -31,7 +30,7 @@ public class Player extends Creature{
     }
 
     // I don't think this code is necessary, but just in case if we want to change the stats based on level, this code might do.
-
+    /*
     public void levelUp(hitPoints, level, attackDamage){
         int i = 1;
         if (i < level){
@@ -40,6 +39,7 @@ public class Player extends Creature{
             i += 1;
         }
     }
+    */
 
 
     // Movement of the player
