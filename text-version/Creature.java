@@ -41,9 +41,17 @@ public class Creature{
 		return attackDamage;
 	}
 
-	public void move(){
+	/*public void move(){
 		int newXcoord = 0;
 		int newYcoord = 0;
-		return newXcoord, newYcoord;
+		return newXcoord , newYcoord;
+	}*/
+
+
+
+	public static void main (String [] args){
+	Creature c1 = new Creature();
+	System.out.print(c1);
 	}
-}
+}	
+
