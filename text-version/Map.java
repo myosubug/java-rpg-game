@@ -9,7 +9,7 @@ public class Map{
 		this.mapGrid = new String[8][8];
 		for(int i = 0; i < this.mapGrid.length; i++){
 			for(int j = 0; j < this.mapGrid[i].length; j++){
-				mapGrid[i][j] = "  [*****]  ";
+				mapGrid[i][j] = " - ";
 			}
 		}
 	}
