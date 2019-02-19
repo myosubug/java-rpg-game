@@ -16,7 +16,7 @@ public class Map{
 	//METHODS
 	/**Note, all maps are 8x8*/
 
-	public String[][] getMap(){
+	public String[][] getMap(){ 	//NOTE: NEEDS TO BE ENCAPSULATED, SHOULD RETURN A COPY OF mapGrid
 		return this.mapGrid;
 	}
 

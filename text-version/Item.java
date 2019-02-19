@@ -1,3 +1,5 @@
+import java.util.jar.*;
+
 public class Item{
 	private String name;
 	private String description;
@@ -18,4 +20,25 @@ public class Item{
 	public Item(){
 		this("No Name", "No one knows what it is?", 0);
 	}
+	
+	/*public String getName(){
+		return this.name=name;
+	}
+	public void setName(String name){
+		
+	}*/
+	
+	
+	
+	public static void main(String[] args) {
+		Item item = new Item();
+		System.out.println(item);
+		
+		/*String name = new Name();
+		System.out.println(name);*/
+		
+		
+		
+	}
+
 }
