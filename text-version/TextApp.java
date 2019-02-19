@@ -68,8 +68,13 @@ public class TextApp{
 		Boolean game = true;
 
 		//Intro for now
+		System.out.println("You are Pikachu. You have been held hostage for TOO LONG!");
+		System.out.println("You must gain your freedom!");
+		System.out.println();
+
 		test.printToConsole();
-		System.out.println("You are Pikachu.");
+		System.out.println();
+
 		System.out.println("You can go: Left(8) Right(2) Up(4) Down(6)");
 		System.out.println("Press 0 to quit the game");
 
