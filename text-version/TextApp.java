@@ -9,8 +9,8 @@ public class TextApp{
 	//Constructors
 	TextApp(){
 		this.currentMap = new Map();
-		this.HP = new Item("HP Potion", "Healing",0 ,4);
-		this.battleFruit = new Item("Battle Fruit", "Attack Bonus", 5, 5);
+		this.HP = new Item("HP Potion", "H",0 ,4);
+		this.battleFruit = new Item("Battle Fruit", "A", 5, 5);
 		this.pikachu = new Player();
 		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
 		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
@@ -20,12 +20,12 @@ public class TextApp{
 	//Methods
 
 	public void updateMap(){
-		this.currentMap.setMap(HP.getName(), HP.getX(), HP.getY());
-		this.currentMap.setMap(battleFruit.getName(), battleFruit.getX(), battleFruit.getY());
-		this.currentMap.setMap(pikachu.getName(), pikachu.getX(), pikachu.getY());
-		this.currentMap.setMap(metapod.getName(), metapod.getX(), metapod.getY());
-		this.currentMap.setMap(weedle.getName(), weedle.getX(), weedle.getY());
-		this.currentMap.setMap(rattata.getName(), rattata.getX(), rattata.getY());
+		this.currentMap.setMap("  "+HP.getName(), HP.getX(), HP.getY());
+		this.currentMap.setMap("  "+battleFruit.getName(), battleFruit.getX(), battleFruit.getY());
+		this.currentMap.setMap("  "+pikachu.getName(), pikachu.getX(), pikachu.getY());
+		this.currentMap.setMap("  "+metapod.getName(), metapod.getX(), metapod.getY());
+		this.currentMap.setMap("  "+weedle.getName(), weedle.getX(), weedle.getY());
+		this.currentMap.setMap("  "+rattata.getName(), rattata.getX(), rattata.getY());
 	}
 
 	public Map getCurrentMap(){

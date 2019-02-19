@@ -29,6 +29,7 @@ public class Map{
 		String [][] m = this.getMap();
 		for(int i = 0; i < m.length; i++){
 			System.out.println();
+			System.out.println();
 			for(int j = 0; j < m[0].length; j++){
 				System.out.print(m[i][j]);
 			}
