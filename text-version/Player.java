@@ -43,6 +43,8 @@ public class Player extends Creature{
 
 
     // Movement of the player
+
+    //Can we add functionality for WASD or arrow keys instead of just num pad? -Emily
     public void move(int pad){
         if (pad == 8){
             this.ycoord -= ycoord;
