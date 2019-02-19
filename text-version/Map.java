@@ -15,8 +15,8 @@ public class Map{
 			}
 		}
 
-		this.HP = new Item("H", 0, 4);
-		this.battleFruit = new Item("I", 5, 5);
+		this.HP = new Item("HP", 0, 4);
+		this.battleFruit = new Item("BF", 5, 5);
 		this.pikachu = new Player();
 		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
 		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
