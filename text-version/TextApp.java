@@ -1,42 +1,28 @@
 import java.util.Scanner;
 
-public class TextApp{
+public class TextApp extends Map{
 
 	//Variables
 
 	private Map currentMap;
-	private Item HP, battleFruit;
-	private Player pikachu;
-	private Creature metapod, weedle, rattata;
+
 
 	//Constructors
 
 	/*NOTE: instead of putting these things in the text app, I think maybe they could go in the map object?
 		SO a particular map would have a health potion and a rattata and another map would have a battle fruit and a weedle
 		This way we don't have to hard code the locations of each thing within the actual app
-	*/
+
+		Sean: that's good idea, I will try to move everything to Map calss and let TextApp.java to just load currentMap!
+	
+			I have extended textapp.java with Map.java so that we can access all the thing we put on the map.
+		*/
 
 	TextApp(){
 		this.currentMap = new Map();
-		this.HP = new Item("HP Potion", "H",0 ,4);
-		this.battleFruit = new Item("Battle Fruit", "A", 5, 5);
-		this.pikachu = new Player();
-		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
-		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
-		this.rattata = new Creature("Rattata", 12, 1, 2, 7, 2);
 	}
 
 	//Methods
-
-	public void updateMap(){
-		this.currentMap.setMap("  "+HP.getName(), HP.getX(), HP.getY());
-		this.currentMap.setMap("  "+battleFruit.getName(), battleFruit.getX(), battleFruit.getY());
-		this.currentMap.setMap("  "+pikachu.getName(), pikachu.getX(), pikachu.getY());
-		this.currentMap.setMap("  "+metapod.getName(), metapod.getX(), metapod.getY());
-		this.currentMap.setMap("  "+weedle.getName(), weedle.getX(), weedle.getY());
-		this.currentMap.setMap("  "+rattata.getName(), rattata.getX(), rattata.getY()); 
-
-	}
 
 	public Map getCurrentMap(){		//NEEDS TO BE ENCAPSULATED
 		return this.currentMap;
@@ -48,7 +34,7 @@ public class TextApp{
 			System.out.println();
 			for(int j = 0; j < temp[i].length; j++){
 
-				if ((i == pikachu.getX()) && (j == pikachu.getY()))		//Prints P for Pikachu in char. location
+				if ((i == super.getPikachu().getX()) && (j == super.getPikachu().getY()))		//Prints P for Pikachu in char. location
 					System.out.print(" P ");
 				else 								//Otherwise prints map data
 					System.out.print(temp[i][j]);		
@@ -74,8 +60,8 @@ public class TextApp{
 
 		test.printToConsole();
 		System.out.println();
-
-		System.out.println("You can go: Left(8) Right(2) Up(4) Down(6)");
+		//updated movement 
+		System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
 		System.out.println("Press 0 to quit the game");
 
 
@@ -85,14 +71,19 @@ public class TextApp{
 			//Takes user input for movement
 			int input = keyboard.nextInt();
 			if ((input == 2) || (input == 4) || (input == 6) || (input == 8)){
-				test.pikachu.move(input);
+				test.getPikachu().move(input);
 				test.printToConsole();
-				System.out.println("You can go: Left(8) Right(2) Up(4) Down(6)");
+				System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
 				System.out.println("Press 0 to quit the game");
 			}
 
 			else if (input == 0) 		//quits if user presses 0
 				game = false;
+			
+			// have added instructions for inputs rather than 2,4,6,8
+			else {
+				System.out.println("Please enter correct input for the movement,\nyou can go: Left(4) Right(6) Up(8) Down(2).");
+			}
 
 		}
 		

@@ -1,6 +1,8 @@
 public class Map{
 	private String[][] mapGrid;		//this will be the 2d array for any specific map screen
-
+	private Item HP, battleFruit;
+	private Player pikachu;
+	private Creature metapod, weedle, rattata;
 
 	//CONSTRUCTORS
 	//Sean has merged createEmptyMap() method to this constructor as it is useless to do it 2 steps while we can do it once
@@ -12,6 +14,19 @@ public class Map{
 				mapGrid[i][j] = " - ";
 			}
 		}
+
+		this.HP = new Item("H", 0, 4);
+		this.battleFruit = new Item("I", 5, 5);
+		this.pikachu = new Player();
+		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
+		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
+		this.rattata = new Creature("Rattata", 12, 1, 2, 7, 2);
+
+		this.setMap(HP.getName(), HP.getX(), HP.getY());
+		this.setMap(battleFruit.getName(), battleFruit.getX(), battleFruit.getY());
+		this.setMap(metapod.getName(), metapod.getX(), metapod.getY());
+		this.setMap(weedle.getName(), weedle.getX(), weedle.getY());
+		this.setMap(rattata.getName(), rattata.getX(), rattata.getY()); 
 	}
 
 	//METHODS
@@ -23,6 +38,10 @@ public class Map{
 
 	public String[][] getMap(){ 	//NOTE: NEEDS TO BE ENCAPSULATED, SHOULD RETURN A COPY OF mapGrid
 		return this.mapGrid;
+	}
+
+	public Player getPikachu(){
+		return this.pikachu;
 	}
 
 	public void printMap(){
