@@ -46,4 +46,8 @@ public class Creature{
 		int newYcoord = 0;
 		return newXcoord, newYcoord;
 	}
+
+	public void toString(){
+		System.out.println("printing x, y, or curren status");
+	}
 }
