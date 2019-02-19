@@ -15,6 +15,18 @@ class Item{
 		this.yCoord = y;
 	}
 
+	public String getName(){
+		return this.name;
+	}
+
+	public int getX(){
+		return this.xCoord;
+	}
+
+	public int getY(){
+		return this.yCoord;
+	}
+
 	public String toString(){
 		return "Item Name : "+ this.name; 
 	}

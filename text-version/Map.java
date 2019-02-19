@@ -9,13 +9,17 @@ public class Map{
 		this.mapGrid = new String[8][8];
 		for(int i = 0; i < this.mapGrid.length; i++){
 			for(int j = 0; j < this.mapGrid[i].length; j++){
-				mapGrid[i][j] = " * ";
+				mapGrid[i][j] = "  [*****]  ";
 			}
 		}
 	}
 
 	//METHODS
 	/**Note, all maps are 8x8*/
+	public void setMap(String name, int x, int y){
+		this.mapGrid[x][y] = name;
+	}
+
 
 	public String[][] getMap(){ 	//NOTE: NEEDS TO BE ENCAPSULATED, SHOULD RETURN A COPY OF mapGrid
 		return this.mapGrid;
