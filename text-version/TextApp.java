@@ -27,8 +27,10 @@ public class TextApp{
 
 	//Main Method
 	public static void main(String[] args){
+		
+		
 		TextApp test = new TextApp();
 
-		test.printToScreen();
+		
 	}
 }

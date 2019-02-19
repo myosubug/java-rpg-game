@@ -1,26 +1,24 @@
-public class Creature{
-	protected String name;
-	protected int hitPoints;
-	protected int level;
-	protected int attackDamage;
-
-//hello world
+class Creature{
+	private String name;
+	private int hitPoints;
+	private int level;
+	private int attackDamage;
+	private int xCoord;
+	private int yCoord;
 
 	//CONSTRUCTORS
 
-	public Creature(String name, int hitPoints, int level, int attackDamage){
+	Creature(String name, int hitPoints, int level, int attackDamage, int x, int y){
 		this.name = name;
 		this.hitPoints = hitPoints;
 		this.level = level;
 		this.attackDamage = attackDamage;
+		this.xCoord = x;
+		this.yCoord = y;
 	}
 
-	public Creature(String name){
-		this(name, 10, 1, 1);
-	}
-
-	public Creature(){
-		this("Pikachu", 10, 1, 1);
+	Creature(){
+		this("default", 10, 1, 1, 0, 0);
 	}
 
 	//METHODS
@@ -41,22 +39,47 @@ public class Creature{
 		return attackDamage;
 	}
 
-	/*public void move(){
-		int newXcoord = 0;
-		int newYcoord = 0;
-		return newXcoord , newYcoord;
-	}*/
+	public int getX(){
+		return this.xCoord;
+	}
+
+	public int getY(){
+		return this.yCoord;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void setHP(int hp){
+		this.hitPoints = hp;
+	}
+
+	public void setAttack(int ad){
+		this.attackDamage = ad;
+	}
+	public void setLocation(int x, int y){
+		this.xCoord = x;
+		this.yCoord = y;
+	}
+
+	public void levelUp(){
+		this.level += 1;
+		this.hitPoints += 3;
+		this.attackDamage += 1;
+	}
+
+	public String toString(){
+		return "Name: " + this.getName() + " HP: " + this.getHP();
+	}
 
 
-
+	//tested with main, it works and I (Sean) have brought level system to creature and let player class override levelup method so that it can give
+	//specific stats later 
 	public static void main (String [] args){
 	Creature c1 = new Creature();
-	System.out.print(c1);
+	System.out.println(c1.toString());
 	}
 
-	public void toString(){
-		System.out.println("printing x, y, or curren status");
-	}
-}
 }	
 

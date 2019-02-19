@@ -1,16 +1,17 @@
 public class Map{
 	private String[][] mapGrid;		//this will be the 2d array for any specific map screen
-	private String[][] overWorldCoords;	//this is the ordered pair that tells where a map screen should sit among other map screens
 
 
 	//CONSTRUCTORS
-	public Map(String[][] mapGrid, String[][] overWorldCoords){
-		this.mapGrid = mapGrid;
-		this.overWorldCoords = overWorldCoords;
-	}
-
-	public Map(){
-		this.mapGrid = createEmptyMap();
+	//Sean has merged createEmptyMap() method to this constructor as it is useless to do it 2 steps while we can do it once
+	//at constructor 
+	Map(){
+		this.mapGrid = new String[8][8];
+		for(int i = 0; i < this.mapGrid.length; i++){
+			for(int j = 0; j < this.mapGrid[i].length; j++){
+				mapGrid[i][j] = " * ";
+			}
+		}
 	}
 
 	//METHODS
@@ -20,27 +21,23 @@ public class Map{
 		return this.mapGrid;
 	}
 
-	public String[][] createEmptyMap(){			//creates an 8x8 map with no enemies, items, or obstacles
-		String gameBoard[][] = new String[8][8];
-		for(int i = 0; i < gameBoard.length; i++){
-			for(int j = 0; j < gameBoard[i].length; j++){
-				gameBoard[i][j] = " * ";
-			}
-		}
-		return gameBoard;
-	}
-
-	public static void main(String[] args) {
-		Map m = new Map();
-		String[][] d;
-		d = m.getMap();
-		for(int i = 0; i < d.length; i++){
+	public void printMap(){
+		String [][] m = this.getMap();
+		for(int i = 0; i < m.length; i++){
 			System.out.println();
-			for(int j = 0; j < d[0].length; j++){
-				System.out.print(d[i][j]);
+			for(int j = 0; j < m[0].length; j++){
+				System.out.print(m[i][j]);
 			}
 		}
 		System.out.println();
+	}
+
+	//main method working, printMap() function is located in Map.java now
+
+	public static void main(String[] args) {
+		Map test = new Map();
+		test.printMap();
+	
 			
 	}
 }

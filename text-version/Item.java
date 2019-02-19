@@ -1,41 +1,29 @@
 import java.util.jar.*;
 
-public class Item{
+class Item{
 	private String name;
-	private String description;
-	private int attackBonus;
+	private String type;
+	private int xCoord;
+	private int yCoord;
 
 	//CONSTRUCTORS
 
-	public Item(String name, String description, int attackBonus){
+	Item(String name, String type, int x, int y){
 		this.name = name;
-		this.description = description;
-		this.attackBonus = attackBonus;
+		this.type = type;
+		this.xCoord = x;
+		this.yCoord = y;
 	}
 
-	public Item(String name){
-		this(name, "It's a " + name + "!", 0);
+	public String toString(){
+		return "Item Name : "+ this.name; 
 	}
 
-	public Item(){
-		this("No Name", "No one knows what it is?", 0);
-	}
-	
-	/*public String getName(){
-		return this.name=name;
-	}
-	public void setName(String name){
-		
-	}*/
-	
-	
-	
+	//deleted anything is not necessary for now, checked constructor/object and toString() method works
 	public static void main(String[] args) {
-		Item item = new Item();
-		System.out.println(item);
-		
-		/*String name = new Name();
-		System.out.println(name);*/
+
+		Item test = new Item("HP potion", "healing", 0, 0);
+		System.out.println(test.toString());
 		
 		
 		
