@@ -65,16 +65,30 @@ public class TextApp{
 		
 		TextApp test = new TextApp();
 		Scanner keyboard = new Scanner(System.in);
+		Boolean game = true;
 
 		//Intro for now
 		test.printToConsole();
-		System.out.println("You are Pikachu. You can go: Up(8)/Down(2)/Left(4)/Right(6)");
+		System.out.println("You are Pikachu.");
+		System.out.println("You can go: Left(8) Right(2) Up(4) Down(6)");
+		System.out.println("Press 0 to quit the game");
 
-		//Takes user input for movement
-		int input = keyboard.nextInt();
-		if ((input == 2) || (input == 4) || (input == 6) || (input == 8)){
-			test.pikachu.move(input);
-			test.printToConsole();
+
+		//MAIN GAME LOOP
+		while (game == true){
+
+			//Takes user input for movement
+			int input = keyboard.nextInt();
+			if ((input == 2) || (input == 4) || (input == 6) || (input == 8)){
+				test.pikachu.move(input);
+				test.printToConsole();
+				System.out.println("You can go: Left(8) Right(2) Up(4) Down(6)");
+				System.out.println("Press 0 to quit the game");
+			}
+
+			else if (input == 0) 		//quits if user presses 0
+				game = false;
+
 		}
 		
 	}
