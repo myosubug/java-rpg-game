@@ -22,11 +22,11 @@ public class Map{
 		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
 		this.rattata = new Creature("Rattata", 12, 1, 2, 7, 2);
 
-		this.setMap(HP.getName(), HP.getX(), HP.getY());
-		this.setMap(battleFruit.getName(), battleFruit.getX(), battleFruit.getY());
-		this.setMap(metapod.getName(), metapod.getX(), metapod.getY());
-		this.setMap(weedle.getName(), weedle.getX(), weedle.getY());
-		this.setMap(rattata.getName(), rattata.getX(), rattata.getY()); 
+		this.setMap(" I ", HP.getX(), HP.getY());
+		this.setMap(" I ", battleFruit.getX(), battleFruit.getY());
+		this.setMap(" M ", metapod.getX(), metapod.getY());
+		this.setMap(" M ", weedle.getX(), weedle.getY());
+		this.setMap(" M ", rattata.getX(), rattata.getY()); 
 	}
 
 	//METHODS
@@ -65,3 +65,6 @@ public class Map{
 			
 	}
 }
+
+
+

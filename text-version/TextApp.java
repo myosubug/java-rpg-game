@@ -85,6 +85,18 @@ public class TextApp extends Map{
 				System.out.println("Please enter correct input for the movement,\nyou can go: Left(4) Right(6) Up(8) Down(2).");
 			}
 
+			/** 
+			 * added possible interaction feature but not working at the moment
+			tempMap = test.getCurrentMap();
+			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()];
+			if (mapObject == " I "){
+				System.out.println("Found an item!");
+			} else if (mapObject == " M "){
+				System.out.println("Monster is near!");
+			} else {
+				continue;
+			}
+			*/
 		}
 		
 	}
