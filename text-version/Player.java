@@ -19,6 +19,12 @@ class Player extends Creature{
         return this.inventory;
     }
 
+    public void displayInventory(){
+        for(Item i : this.getInventory()){
+            System.out.println(i.toString());
+        }
+    }
+
      // Movement of the player
 
     //Can we add functionality for WASD or arrow keys instead of just num pad? -Emily

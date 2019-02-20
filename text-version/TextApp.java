@@ -48,7 +48,8 @@ public class TextApp extends Map{
 
 	//Main Method
 	public static void main(String[] args){
-		
+		String mapObject;
+		String[][] tempMap;
 		TextApp test = new TextApp();
 		Scanner keyboard = new Scanner(System.in);
 		Boolean game = true;
@@ -85,18 +86,44 @@ public class TextApp extends Map{
 				System.out.println("Please enter correct input for the movement,\nyou can go: Left(4) Right(6) Up(8) Down(2).");
 			}
 
-			/** 
-			 * added possible interaction feature but not working at the moment
-			tempMap = test.getCurrentMap();
+			
+			tempMap = test.getCurrentMap().getMap();
 			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()];
+			double itemRate = Math.random();
+			
 			if (mapObject == " I "){
-				System.out.println("Found an item!");
+				System.out.println("Found an item!, let's keep this in my bag! \nCurrent list of the items in the inventory: ");
+				
+				if (itemRate > 0.50)
+					test.getPikachu().addItemToInventory(test.getHP());
+				else
+					test.getPikachu().addItemToInventory(test.getBattleFruit());
+				
+				test.getPikachu().displayInventory();
+				System.out.println();
+				System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
+				continue;
+			
 			} else if (mapObject == " M "){
-				System.out.println("Monster is near!");
+				System.out.println("Monster is near! \n What do you want to do? : Fight(7) or Run away(9)");
+				int input2 = keyboard.nextInt();
+				do{
+					if (input2 == 7){
+						System.out.println("Preparing battle...");
+						//now we need fight interaction here
+						break;
+					} else if (input2 == 9){
+						System.out.println("You are safe now! \nYou can go: Left(4) Right(6) Up(8) Down(2)");
+						break;
+					} else{
+						System.out.println("Please enter correct input for the movement,\nyou can : Fight(7) or Run away(9)");
+					}
+				} while(input2 == 7 || input2 == 9);
+
 			} else {
 				continue;
 			}
-			*/
+			
 		}
 		
 	}

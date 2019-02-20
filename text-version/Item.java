@@ -26,7 +26,7 @@ class Item{
 	}
 
 	public String toString(){
-		return "Item Name : "+ this.name; 
+		return this.name; 
 	}
 
 	//deleted anything is not necessary for now, checked constructor/object and toString() method works

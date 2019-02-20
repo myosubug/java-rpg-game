@@ -15,8 +15,8 @@ public class Map{
 			}
 		}
 
-		this.HP = new Item("HP", 0, 4);
-		this.battleFruit = new Item("BF", 5, 5);
+		this.HP = new Item("HP Potion", 0, 4);
+		this.battleFruit = new Item("Battle Fruit", 5, 5);
 		this.pikachu = new Player();
 		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
 		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
@@ -27,6 +27,10 @@ public class Map{
 		this.setMap(" M ", metapod.getX(), metapod.getY());
 		this.setMap(" M ", weedle.getX(), weedle.getY());
 		this.setMap(" M ", rattata.getX(), rattata.getY()); 
+	}
+
+	Map(Map m){
+		this();
 	}
 
 	//METHODS
@@ -42,6 +46,14 @@ public class Map{
 
 	public Player getPikachu(){
 		return this.pikachu;
+	}
+
+	public Item getHP(){
+		return this.HP;
+	}
+
+	public Item getBattleFruit(){
+		return this.battleFruit;
 	}
 
 	public void printMap(){
