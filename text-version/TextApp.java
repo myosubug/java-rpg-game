@@ -85,7 +85,9 @@ public class TextApp extends Map{
 			}
 
 			else if (input == "0") 		//quits if user presses 0
+				System.out.println("Bye!");
 				game = false;
+			}
 
 			// have added instructions for inputs rather than 2,4,6,8
 			else {
