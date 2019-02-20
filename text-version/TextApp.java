@@ -76,6 +76,7 @@ public class TextApp extends Map{
 				test.printToConsole();
 				System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
 				System.out.println("Press 0 to quit the game");
+				System.out.println();
 			}
 
 			else if (input == 0) 		//quits if user presses 0
@@ -87,8 +88,9 @@ public class TextApp extends Map{
 			}
 
 			
-			tempMap = test.getCurrentMap().getMap();
-			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()];
+			//interaction starts when player meets something else rather than " - " in the map.
+			tempMap = test.getCurrentMap().getMap(); //getting copy of map
+			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()]; //saving comparison string for interaction
 			double itemRate = Math.random();
 			
 			if (mapObject == " I "){
@@ -102,21 +104,25 @@ public class TextApp extends Map{
 				test.getPikachu().displayInventory();
 				System.out.println();
 				System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
+				System.out.println();
 				continue;
 			
 			} else if (mapObject == " M "){
-				System.out.println("Monster is near! \n What do you want to do? : Fight(7) or Run away(9)");
+				System.out.println("Monster is near! \nWhat do you want to do? : Fight(7) or Run away(9)");
 				int input2 = keyboard.nextInt();
 				do{
 					if (input2 == 7){
 						System.out.println("Preparing battle...");
+						System.out.println();
 						//now we need fight interaction here
 						break;
 					} else if (input2 == 9){
 						System.out.println("You are safe now! \nYou can go: Left(4) Right(6) Up(8) Down(2)");
+						System.out.println();
 						break;
 					} else{
 						System.out.println("Please enter correct input for the movement,\nyou can : Fight(7) or Run away(9)");
+						System.out.println();
 					}
 				} while(input2 == 7 || input2 == 9);
 
