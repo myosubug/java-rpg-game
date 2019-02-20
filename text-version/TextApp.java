@@ -84,7 +84,7 @@ public class TextApp extends Map{
 				System.out.println();
 			}
 
-			else if (input == "0") 		//quits if user presses 0
+			else if (input.equals("0")){ 		//quits if user presses 0
 				System.out.println("Bye!");
 				game = false;
 			}
@@ -134,20 +134,16 @@ public class TextApp extends Map{
 						System.out.println("Preparing battle...");
 						System.out.println();
 						//now we need fight interaction here
-
-						mapObject = " - ";	//removes monster from board
-						break;
 					}
 
 					else if (input2.equals("r")){
-						System.out.println("You are safe now!");
+						System.out.println("Success!");
+						System.out.println();
+						test.printToConsole();
 						System.out.println();
 						System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
 						System.out.println("Press 0 to quit the game");
 						System.out.println();
-
-						mapObject = " - ";		//removes monster from board
-						break;
 					}
 
 					else if (input2.equals("0")){
@@ -161,7 +157,6 @@ public class TextApp extends Map{
 					}
 
 					continue;
-
 			}
 		}
 	}
