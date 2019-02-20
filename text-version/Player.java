@@ -29,19 +29,19 @@ class Player extends Creature{
 
     //Can we add functionality for WASD or arrow keys instead of just num pad? -Emily
     public void move(String pad){
-        if (pad == "w"){
+        if ((pad == "w") && ((super.getX() - 1) >= 0)){
             super.setLocation(super.getX()-1, super.getY());
-            // when you type 8 you move up
+            // when you type W you move up
         }
-        else if (pad.equals("a")){
+        else if ((pad.equals("a")) && ((super.getY() - 1) >= 0)){
             super.setLocation(super.getX(), super.getY()-1);
             // when you type 4 you move left
         }
-        else if (pad.equals("s")){
+        else if ((pad.equals("s")) && ((super.getX() + 1) <= 8)){
             super.setLocation(super.getX()+1, super.getY());
             // when you type 2 you move down
         }
-        else if (pad.equals("d")){
+        else if ((pad.equals("d")) && ((super.getX() + 1) <= 8)){
             super.setLocation(super.getX(), super.getY()+1);
             // when you type 6 you move right
         }
