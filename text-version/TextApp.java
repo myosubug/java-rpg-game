@@ -55,8 +55,12 @@ public class TextApp extends Map{
 		Boolean game = true;
 
 		//Intro for now
+		System.out.println();
+		System.out.println();
+		System.out.println("=========================================================");
 		System.out.println("You are Pikachu. You have been held hostage for TOO LONG!");
 		System.out.println("You must gain your freedom!");
+		System.out.println("=========================================================");
 		System.out.println();
 
 		test.printToConsole();
@@ -64,6 +68,7 @@ public class TextApp extends Map{
 		//updated movement 
 		System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
 		System.out.println("Press 0 to quit the game");
+		System.out.println();
 
 
 		//MAIN GAME LOOP
@@ -94,7 +99,7 @@ public class TextApp extends Map{
 			double itemRate = Math.random();
 			
 			if (mapObject == " I "){
-				System.out.println("Found an item!, let's keep this in my bag! \nCurrent list of the items in the inventory: ");
+				System.out.println("Found an item!, let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
 				
 				if (itemRate > 0.50)
 					test.getPikachu().addItemToInventory(test.getHP());
@@ -108,23 +113,35 @@ public class TextApp extends Map{
 				continue;
 			
 			} else if (mapObject == " M "){
-				System.out.println("Monster is near! \nWhat do you want to do? : Fight(7) or Run away(9)");
-				int input2 = keyboard.nextInt();
-				do{
-					if (input2 == 7){
+				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f/F) or Run away(r/R)");
+					char input2 = 'a';
+					char input3 = 'b';
+					
+				
+				while (input3 != 'F' || input3 != 'R'){
+					System.out.println();
+					input2 = keyboard.next().charAt(0);
+					input3 = Character.toUpperCase(input2);
+					System.out.println();
+					
+					if (input3 == 'F'){
 						System.out.println("Preparing battle...");
 						System.out.println();
 						//now we need fight interaction here
 						break;
-					} else if (input2 == 9){
-						System.out.println("You are safe now! \nYou can go: Left(4) Right(6) Up(8) Down(2)");
+					} else if (input3 == 'R'){
+						System.out.println("You are safe now!");
+						System.out.println();
+						System.out.println("You can go: Left(4) Right(6) Up(8) Down(2)");
+						System.out.println("Press 0 to quit the game");
 						System.out.println();
 						break;
 					} else{
-						System.out.println("Please enter correct input for the movement,\nyou can : Fight(7) or Run away(9)");
+						System.out.println("Please enter correct input for the movement,\nyou can Fight(f/F) or Run away(r/R)");
 						System.out.println();
+						continue;
 					}
-				} while(input2 == 7 || input2 == 9);
+				} 
 
 			} else {
 				continue;
