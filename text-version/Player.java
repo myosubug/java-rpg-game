@@ -5,7 +5,6 @@ class Player extends Creature{
 
     Player() {
         super("Pikachu", 30, 1, 5, 0, 0);
-        this.inventory = inventory;
     }
 
     // Stores the item from the map into the player inventory
@@ -18,8 +17,11 @@ class Player extends Creature{
     }
 
     public void displayInventory(){
+        int order = 1;
         for(Item i : this.getInventory()){
+            System.out.print(order+": ");
             System.out.println(i.toString());
+            order++;
         }
     }
 
@@ -50,7 +52,7 @@ class Player extends Creature{
 
     public String toString(){
         String r;
-        r = "Current status of "+super.getName() +"\n HP: "+super.getHP()+"\n Level: "+super.getLevel()+"\n Attack Damage: "+super.getAttack()+" \n Location (x, y): ("+super.getX()+", "+super.getY()+")";
+        r = "Current status of "+super.getName() +"\n HP: "+super.getHP()+"\n Level: "+super.getLevel()+"\n Attack Damage: "+super.getAttack();
         return r;
     }
     public static void main(String[] args) {

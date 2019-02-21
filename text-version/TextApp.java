@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner6;
+
+import java.util.Random;
+
 public class TextApp extends Map{
 
 	//Variables
@@ -48,6 +52,7 @@ public class TextApp extends Map{
 
 	//Main Method
 	public static void main(String[] args){
+		Random rand = new Random();
 		String mapObject;
 		String[][] tempMap;
 		TextApp test = new TextApp();
@@ -88,9 +93,10 @@ public class TextApp extends Map{
 			else if (input.equals("0")){ 		//quits if user presses 0
 				System.out.println("Bye!");
 				game = false;
+				System.exit(0);
 			}
 
-			// have added instructions for inputs rather than 2,4,6,8
+			// have added instructions for inputs rather than w,a,s,d
 			else {
 				System.out.println("Please enter correct input for the movement,\nyou can go: Left(a) Right(d) Up(w) Down(s).");
 			}
@@ -103,7 +109,7 @@ public class TextApp extends Map{
 
 			//object interaction
 			if (mapObject == " I "){
-				System.out.println("Found an item!, let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
+				System.out.println("Found an item! Let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
 
 				if (itemRate > 0.50)
 					test.getPikachu().addItemToInventory(test.getHP());
@@ -121,23 +127,32 @@ public class TextApp extends Map{
 			//Battle interaction
 			else if (mapObject == " M "){
 				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f) or Run away(r)");
-
 					String input2 = keyboard.nextLine();
+					String inputCap2 = input2.toUpperCase();
 
-
-			/*	while (input3 != 'F' || input3 != 'R'){
-					System.out.println();
-					input2 = keyboard.next().charAt(0);
-					input3 = Character.toUpperCase(input2);
-					System.out.println(); */
-
-					if (input2.equals("f")){
+					if (inputCap2.equals("F")){
 						System.out.println("Preparing battle...");
 						System.out.println();
 						//now we need fight interaction here
+						int randomMonster =  rand.nextInt(3);
+						Creature m = new Creature();
+						if (randomMonster == 0)
+							m = test.getMetapod();
+						else if (randomMonster == 1)
+							m = test.getRattata();
+						else
+							m = test.getWeedle();
+						Interaction fight = new Interaction(test.getPikachu(), m);
+						fight.battle();
+
+						test.printToConsole();
+						System.out.println();
+						System.out.println("Use WASD to move");
+						System.out.println("Press 0 to quit the game");
+						System.out.println();
 					}
 
-					else if (input2.equals("r")){
+					else if (inputCap2.equals("R")){
 						System.out.println("Success!");
 						System.out.println();
 						test.printToConsole();
@@ -148,7 +163,7 @@ public class TextApp extends Map{
 					}
 
 					else if (input2.equals("0")){
-						game = false;
+						System.exit(0);
 					}
 
 					else{
@@ -160,5 +175,7 @@ public class TextApp extends Map{
 					continue;
 			}
 		}
+		//closing keyboad scanner
+		keyboard.close();
 	}
 }

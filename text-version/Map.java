@@ -48,6 +48,18 @@ public class Map{
 		return this.pikachu;
 	}
 
+	public Creature getMetapod(){
+		return this.metapod;
+	}
+
+	public Creature getWeedle(){
+		return this.weedle;
+	}
+
+	public Creature getRattata(){
+		return this.rattata;
+	}
+
 	public Item getHP(){
 		return this.HP;
 	}

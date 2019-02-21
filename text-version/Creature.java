@@ -52,6 +52,8 @@ class Creature{
 	}
 
 	public void setHP(int hp){
+		if (hp > 30)
+			this.hitPoints = 30;
 		this.hitPoints = hp;
 	}
 
