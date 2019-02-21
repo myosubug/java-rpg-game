@@ -68,7 +68,7 @@ public class Interaction extends Creature{
 
             }
             else {
-                System.out.println("You must type either 'J' or 'K');
+                System.out.println("You must type either 'J' or 'K'");
             }
         }
 
