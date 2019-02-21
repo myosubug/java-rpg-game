@@ -39,8 +39,8 @@ public class Interaction extends Creature{
                     System.out.println(this.player.toString());
                 }
             } 
-            
-            else{
+            //Made else into else if K
+            else if (inputCap.equals("K")){
                 System.out.println("You can use 1 item from your inventory! \n please select an item by number (1, 2, 3 ...) ");
                 this.player.displayInventory();
                 int input2 = keyboard.nextInt();
@@ -66,6 +66,9 @@ public class Interaction extends Creature{
                 continue;
                 
 
+            }
+            else {
+                System.out.println("You must type either 'J' or 'K');
             }
         }
 
@@ -98,7 +101,7 @@ public class Interaction extends Creature{
 
         }
         //Item button
-        else if (pad.eqauls("k")) {
+        else if (pad.equals("k")) {
             System.out.println("What kind of item do you want to use?");
             // scans the current inventory
             System.out.println(Player.Inventory);
