@@ -7,6 +7,7 @@ There will be two versions: text-version, GUI
 Text-version is located at "text-version" folder.
 
 How to start text-version:
+    
     1. Download the files in https://gitlab.cpsc.ucalgary.ca/sungjong.oh/liberatepikachu/tree/text-version
 
     2. Unzip the file and locate the folder you unzipped in your comman terminal.
