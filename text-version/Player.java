@@ -2,12 +2,10 @@ import java.util.ArrayList;
 
 class Player extends Creature{
     private ArrayList<Item> inventory = new ArrayList<Item>();
-    private int pad;
 
     Player() {
         super("Pikachu", 30, 1, 5, 0, 0);
         this.inventory = inventory;
-        this.pad = 5;
     }
 
     // Stores the item from the map into the player inventory
@@ -29,19 +27,20 @@ class Player extends Creature{
 
     //Can we add functionality for WASD or arrow keys instead of just num pad? -Emily
     public void move(String pad){
-        if ((pad == "w") && ((super.getX() - 1) >= 0)){
+        String padCap = pad.toUpperCase();
+        if ((padCap.equals("w")) && ((super.getX() - 1) >= 0)){
             super.setLocation(super.getX()-1, super.getY());
             // when you type W you move up
         }
-        else if ((pad.equals("a")) && ((super.getY() - 1) >= 0)){
+        else if ((padCap.equals("a")) && ((super.getY() - 1) >= 0)){
             super.setLocation(super.getX(), super.getY()-1);
             // when you type 4 you move left
         }
-        else if ((pad.equals("s")) && ((super.getX() + 1) <= 8)){
+        else if ((padCap.equals("s")) && ((super.getX() + 1) <= 8)){
             super.setLocation(super.getX()+1, super.getY());
             // when you type 2 you move down
         }
-        else if ((pad.equals("d")) && ((super.getX() + 1) <= 8)){
+        else if ((padCap.equals("d")) && ((super.getX() + 1) <= 8)){
             super.setLocation(super.getX(), super.getY()+1);
             // when you type 6 you move right
         }
