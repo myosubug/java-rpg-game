@@ -76,8 +76,9 @@ public class TextApp extends Map{
 
 			//Takes user input for movement
 			String input = keyboard.nextLine();
-			if ((input.equals("w")) || (input.equals("a")) || (input.equals("d")) || (input.equals("s"))){
-				test.getPikachu().move(input);
+			String inputCap = input.toUpperCase();
+			if ((inputCap.equals("W")) || (inputCap.equals("A")) || (inputCap.equals("D")) || (inputCap.equals("S"))){
+				test.getPikachu().move(inputCap);
 				test.printToConsole();
 				System.out.println("Use WASD to move");
 				System.out.println("Press 0 to quit the game");
