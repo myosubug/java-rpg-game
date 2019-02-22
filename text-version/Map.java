@@ -15,18 +15,18 @@ public class Map{
 			}
 		}
 
-		this.HP = new Item("HP Potion", 0, 4);
-		this.battleFruit = new Item("Battle Fruit", 5, 5);
+		this.HP = new Item("HP Potion");
+		this.battleFruit = new Item("Battle Fruit");
 		this.pikachu = new Player();
-		this.metapod = new Creature("Metapod", 15, 1, 2, 2, 4);
-		this.weedle = new Creature("Weedle", 10, 1, 3, 6, 6);
-		this.rattata = new Creature("Rattata", 12, 1, 2, 7, 2);
+		this.metapod = new Creature("Metapod", 20, 1, 7);
+		this.weedle = new Creature("Weedle", 21, 1, 6);
+		this.rattata = new Creature("Rattata", 24, 1, 5);
 
-		this.setMap(" I ", HP.getX(), HP.getY());
-		this.setMap(" I ", battleFruit.getX(), battleFruit.getY());
-		this.setMap(" M ", metapod.getX(), metapod.getY());
-		this.setMap(" M ", weedle.getX(), weedle.getY());
-		this.setMap(" M ", rattata.getX(), rattata.getY()); 
+		this.setMap(" I ", 0, 4);
+		this.setMap(" I ", 5, 5);
+		this.setMap(" M ", 2, 4);
+		this.setMap(" M ", 6, 6);
+		this.setMap(" M ", 7, 2); 
 	}
 
 	Map(Map m){
@@ -89,6 +89,3 @@ public class Map{
 			
 	}
 }
-
-
-

@@ -17,6 +17,14 @@ class Creature{
 		this.yCoord = y;
 	}
 
+
+	Creature(String name, int hitPoints, int level, int attackDamage){
+		this.name = name;
+		this.hitPoints = hitPoints;
+		this.level = level;
+		this.attackDamage = attackDamage;
+	}
+
 	Creature(){
 		this("default", 10, 1, 1, 0, 0);
 	}
@@ -84,4 +92,3 @@ class Creature{
 	}
 
 }	
-
