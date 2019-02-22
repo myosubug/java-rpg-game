@@ -26,7 +26,7 @@ class Creature{
 	}
 
 	Creature(){
-		this("default", 10, 1, 1, 0, 0);
+		this("default", 10, 1, 1);
 	}
 
 	//METHODS
