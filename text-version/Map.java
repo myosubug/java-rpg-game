@@ -1,12 +1,20 @@
 public class Map{
+
+	/**
+	 * Declaring member variables, the 2d array map and object that needs to be on the map.
+	 */
 	private String[][] mapGrid;		//this will be the 2d array for any specific map screen
-	private Item HP, battleFruit;
-	private Player pikachu;
-	private Creature metapod, weedle, rattata;
+	private Item HP, battleFruit;   //items that will be randomly appearing on the map
+	private Player pikachu;	        //the player character
+	private Creature metapod, weedle, rattata; //different kinds of monsters on the map
 
 	//CONSTRUCTORS
-	//Sean has merged createEmptyMap() method to this constructor as it is useless to do it 2 steps while we can do it once
-	//at constructor 
+	/**
+	 * Note: all maps are 8x8
+	 * this constructor not only does create 2d array and filled each array with " - " so that it represents default cell
+	 * but also member variables are delcared to be instances by using their own constructors.
+	 * Initial potision of the objects are also set on this constructor.
+	 */
 	Map(){
 		this.mapGrid = new String[8][8];
 		for(int i = 0; i < this.mapGrid.length; i++){
@@ -34,13 +42,15 @@ public class Map{
 	}
 
 	//METHODS
-	/**Note, all maps are 8x8*/
+	/**
+	 * getters and setters for Map and member variables
+	 */
 	public void setMap(String name, int x, int y){
 		this.mapGrid[x][y] = name;
 	}
 
 
-	public String[][] getMap(){ 	//NOTE: NEEDS TO BE ENCAPSULATED, SHOULD RETURN A COPY OF mapGrid
+	public String[][] getMap(){ 
 		return this.mapGrid;
 	}
 
@@ -68,24 +78,4 @@ public class Map{
 		return this.battleFruit;
 	}
 
-	public void printMap(){
-		String [][] m = this.getMap();
-		for(int i = 0; i < m.length; i++){
-			System.out.println();
-			System.out.println();
-			for(int j = 0; j < m[0].length; j++){
-				System.out.print(m[i][j]);
-			}
-		}
-		System.out.println();
-	}
-
-	//main method working, printMap() function is located in Map.java now
-
-	public static void main(String[] args) {
-		Map test = new Map();
-		test.printMap();
-	
-			
-	}
 }

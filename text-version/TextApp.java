@@ -1,37 +1,30 @@
 import java.util.Scanner;
-
 import javax.lang.model.util.ElementScanner6;
-
 import java.util.Random;
 
 public class TextApp extends Map{
 
-	//Variables
+	//Declaring member variable
 
 	private Map currentMap;
 
 
 	//Constructors
-
-	/*NOTE: instead of putting these things in the text app, I think maybe they could go in the map object?
-		SO a particular map would have a health potion and a rattata and another map would have a battle fruit and a weedle
-		This way we don't have to hard code the locations of each thing within the actual app
-
-		Sean: that's good idea, I will try to move everything to Map calss and let TextApp.java to just load currentMap!
-
-			I have extended textapp.java with Map.java so that we can access all the thing we put on the map.
-		*/
-
 	TextApp(){
-		this.currentMap = new Map();
+		this.currentMap = new Map(); //creates a new map when the game is launched.
 	}
 
 	//Methods
-
-	public Map getCurrentMap(){		//NEEDS TO BE ENCAPSULATED
+	//getters for the current map of this game.
+	public Map getCurrentMap(){		
 		return this.currentMap;
 	}
 
+	/**
+	 * prints the current status of the map
+	 * while monster and item's positions are static, player still can move around the map.
+	 * so it shows the player's location on the map.
+	 */
 	public void printToConsole(){
 		String[][] temp = currentMap.getMap();
 		for(int i = 0; i < temp.length; i++){
@@ -52,14 +45,14 @@ public class TextApp extends Map{
 
 	//Main Method
 	public static void main(String[] args){
-		Random rand = new Random();
-		String mapObject;
-		String[][] tempMap;
-		TextApp test = new TextApp();
-		Scanner keyboard = new Scanner(System.in);
-		Boolean game = true;
+		Random rand = new Random();     //variable for generating random numbers
+		String mapObject;				//variable for detecting map objects: "I" for items, "M" for monsters
+		String[][] tempMap;				//temporary copy of current map
+		TextApp test = new TextApp();   //test object for this game.
+		Scanner keyboard = new Scanner(System.in); //variable for taking user input
+		Boolean game = true;            //if this boolean value becomes false, the game ends
 
-		//Intro for now
+		//Game Intro
 		System.out.println();
 		System.out.println();
 		System.out.println("=========================================================");
@@ -70,19 +63,20 @@ public class TextApp extends Map{
 
 		test.printToConsole();
 		System.out.println();
-		//updated movement
-		System.out.println("Use WASD to move");
+		System.out.println("Use WASD to move");           //instruction for basic game operation.
 		System.out.println("Press 0 to quit the game");
 		System.out.println();
 
 
-		//MAIN GAME LOOP
+		//Main game loop, this game will be terminated only if game value is false.
 		while (game == true){
 
-			if(test.getPikachu().getLevel() == 3){
-				System.out.println("You have reached level 3 and you have become strong enough to challenge Ash for now!");
+			//End game condition : if the player reaches level 5, this will end the loop.
+			if(test.getPikachu().getLevel() == 5){
+				System.out.println("You have reached level 5 and you have become strong enough to challenge Ash for now!");
 				game = false;
 				System.exit(0);
+				System.out.println();
 			}
 	
 
@@ -98,46 +92,54 @@ public class TextApp extends Map{
 				System.out.println();
 			}
 
-			else if (input.equals("0")){ 		//quits if user presses 0
+			//quits if user presses 0
+			else if (input.equals("0")){ 		
 				System.out.println("Bye!");
 				game = false;
 				System.exit(0);
 			}
 
-			// have added instructions for inputs rather than w,a,s,d
+			//if user input is wrong, it will prompts the user again for correct input.
 			else {
 				System.out.println("Please enter correct input for the movement,\nyou can go: Left(a) Right(d) Up(w) Down(s).");
 			}
 
 
-			//interaction starts when player meets something else rather than " - " in the map.
-			tempMap = test.getCurrentMap().getMap(); //getting copy of map
+			/**
+			 * interaction starts when player meets something else rather than " - " on the map.
+			 */
+			tempMap = test.getCurrentMap().getMap(); 								 //getting copy of the current map
 			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()]; //saving comparison string for interaction
-			double itemRate = Math.random();
+			double itemRate = Math.random();										 //this will generate random chances of getting random items.
 
-			//object interaction
+			//if the player is loacted at " I " on the map, the player gets a random item.
 			if (mapObject == " I "){
 				System.out.println("Found an item! Let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
 
+				//this random change will give a random item to player, HP potion or Battle Fruit
 				if (itemRate > 0.50)
 					test.getPikachu().addItemToInventory(test.getHP());
 				else
 					test.getPikachu().addItemToInventory(test.getBattleFruit());
 
+				//once the player obtains an item, it will display updated inventory.
 				test.getPikachu().displayInventory();
 				System.out.println();
+
+				//then prompt user to enter another input for movement.
 				System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
 				System.out.println();
 				continue;
 
 			}
 
-			//Battle interaction
+			//if the player is loacted at " M " on the map, the player get to choose fight or run from a monster.
 			else if (mapObject == " M "){
 				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f) or Run away(r)");
 					String input2 = keyboard.nextLine();
 					String inputCap2 = input2.toUpperCase();
 
+					//if player choose to fight, a random monster from wild will be selected.
 					if (inputCap2.equals("F")){
 						System.out.println("Preparing battle...");
 						System.out.println();
@@ -150,9 +152,12 @@ public class TextApp extends Map{
 							m = test.getRattata();
 						else
 							m = test.getWeedle();
+
+						//once the monster is selected, the actual battle interaction begins.
 						Interaction fight = new Interaction(test.getPikachu(), m);
 						fight.battle();
 
+						//after the battle, the current map is shown to the player and ask user input for new movement.
 						test.printToConsole();
 						System.out.println();
 						System.out.println("Use WASD to move");
@@ -160,6 +165,7 @@ public class TextApp extends Map{
 						System.out.println();
 					}
 
+					//if player choose to run, the current map is shown to the player and ask user input for new movement.
 					else if (inputCap2.equals("R")){
 						System.out.println("Success!");
 						System.out.println();
@@ -170,10 +176,12 @@ public class TextApp extends Map{
 						System.out.println();
 					}
 
+					//this is a termination condition if the player just wants to quit the game.
 					else if (input2.equals("0")){
 						System.exit(0);
 					}
 
+					//if the player didn't enter correct input, it will prompt the player again to enter correct input.
 					else{
 						System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
 						System.out.println();

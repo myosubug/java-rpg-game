@@ -1,4 +1,6 @@
 class Creature{
+
+	//Declaring member variables
 	private String name;
 	private int hitPoints;
 	private int level;
@@ -30,7 +32,7 @@ class Creature{
 	}
 
 	//METHODS
-
+	//Getters and setters for member variables
 	public String getName(){
 		return name;
 	}
@@ -60,7 +62,7 @@ class Creature{
 	}
 
 	public void setHP(int hp){
-		if (hp > 30)
+		if (hp > 30) //if hp is updated (healed) more than 30, this condition sets the upper limit as 30
 			this.hitPoints = 30;
 		this.hitPoints = hp;
 	}
@@ -73,22 +75,21 @@ class Creature{
 		this.yCoord = y;
 	}
 
+	/**
+	 * this method updates player's level, hp and attackdamage when player levels up after battle.
+	 * returns nothing and takes no parameter.
+	 */
 	public void levelUp(){
 		this.level += 1;
 		this.hitPoints += 3;
 		this.attackDamage += 1;
 	}
 
+	/**
+	 * this toString() prints out the creature's name and current HP
+	 */
 	public String toString(){
 		return "Name: " + this.getName() + " HP: " + this.getHP();
-	}
-
-
-	//tested with main, it works and I (Sean) have brought level system to creature and let player class override levelup method so that it can give
-	//specific stats later 
-	public static void main (String [] args){
-	Creature c1 = new Creature();
-	System.out.println(c1.toString());
 	}
 
 }	
