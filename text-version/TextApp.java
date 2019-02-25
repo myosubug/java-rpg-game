@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner6;
 import java.util.Random;
 
 public class TextApp extends Map{

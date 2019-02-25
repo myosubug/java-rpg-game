@@ -38,7 +38,9 @@ class Player extends Creature{
    /**
     * this method takes a String parameter as input (W,A,S,D) and moves accoding to its direction.
     * this doesn't return anything.
-    * as the array starts from left top (0,0), up, down, left, right has been impletmented along with the direction. 
+    * as the array starts from left top (0,0), up, down, left, right has been impletmented along with the direction.
+    * this method will also prevents the player from going over the range of this 8 x 8 size map.
+    * if the user input is out of range on this map, it will ask user again for correct input. 
     * @param pad
     */
     public void move(String pad){
