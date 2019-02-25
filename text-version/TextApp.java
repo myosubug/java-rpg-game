@@ -79,6 +79,14 @@ public class TextApp extends Map{
 		//MAIN GAME LOOP
 		while (game == true){
 
+			if(test.getPikachu().getLevel() == 3){
+				System.out.println("You have reached level 3 and you have become strong enough to challenge Ash for now!");
+				game = false;
+				System.exit(0);
+			}
+	
+
+
 			//Takes user input for movement
 			String input = keyboard.nextLine();
 			String inputCap = input.toUpperCase();
