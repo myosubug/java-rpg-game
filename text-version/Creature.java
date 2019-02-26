@@ -67,7 +67,8 @@ class Creature{
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
 		if (hp > upperLimit) 
 			this.hitPoints = upperLimit;
-		this.hitPoints = hp;
+		else
+			this.hitPoints = hp;
 	}
 
 	public void setAttack(int ad){
