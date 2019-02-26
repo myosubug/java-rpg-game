@@ -61,9 +61,12 @@ class Creature{
 		this.name = name;
 	}
 
+
+	//if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
 	public void setHP(int hp){
-		if (hp > 30) //if hp is updated (healed) more than 30, this condition sets the upper limit as 30
-			this.hitPoints = 30;
+		int upperLimit = 30 + (this.getLevel() - 1) * 3;
+		if (hp > upperLimit) 
+			this.hitPoints = upperLimit;
 		this.hitPoints = hp;
 	}
 
