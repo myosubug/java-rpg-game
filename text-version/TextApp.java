@@ -15,7 +15,7 @@ public class TextApp extends Map{
 
 	//Methods
 	//getters for the current map of this game.
-	public Map getCurrentMap(){		
+	public Map getCurrentMap(){
 		return this.currentMap;
 	}
 
@@ -77,7 +77,7 @@ public class TextApp extends Map{
 				System.exit(0);
 				System.out.println();
 			}
-	
+
 
 
 			//Takes user input for movement
@@ -92,7 +92,7 @@ public class TextApp extends Map{
 			}
 
 			//quits if user presses 0
-			else if (input.equals("0")){ 		
+			else if (input.equals("0")){
 				System.out.println("Bye!");
 				game = false;
 				System.exit(0);
@@ -128,7 +128,9 @@ public class TextApp extends Map{
 				//then prompt user to enter another input for movement.
 				System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
 				System.out.println();
+
 				continue;
+
 
 			}
 
