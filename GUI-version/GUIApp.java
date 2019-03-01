@@ -55,7 +55,6 @@ public class GUIApp extends Application {
 
         
         final Canvas canvas = new Canvas(400,400);
-        canvas.setStyle("-fx-border-color: red;");
         root.getChildren().add(canvas);
 
         
