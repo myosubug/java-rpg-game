@@ -86,7 +86,7 @@ public class GUIApp extends Application {
         gc = canvas.getGraphicsContext2D();
         
         
-        Image image = new Image("file:img/text_pixel.jpg");
+        Image image = new Image("file:img/pikachu.gif");
         gc.drawImage(image, pikachuX, pikachuY);
         //Sprite pikachu = new Sprite();
         
