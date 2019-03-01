@@ -17,8 +17,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,12 +47,18 @@ public class GUIApp extends Application {
 
         primaryStage.setTitle("Liberate Pikachu!");
         VBox root = new VBox();
-        Scene theScene = new Scene(root, 400, 600);
+        Scene theScene = new Scene(root, 400, 580);
         primaryStage.setScene(theScene);
+        
+        
+        
 
         
         final Canvas canvas = new Canvas(400,400);
+        canvas.setStyle("-fx-border-color: red;");
         root.getChildren().add(canvas);
+
+        
 
         /** 
          * this is good for when key press and release needs to change its status
@@ -103,19 +110,24 @@ public class GUIApp extends Application {
 
 
        BorderPane root2 = new BorderPane();
-       Label output = new Label("Use arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.");
+       Label output = new Label("\nUse arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.\n");
        Label filler = new Label("");
+       filler.minHeight(50);
+       filler.minWidth(100);
        output.setMinWidth(400);
        output.setMaxHeight(100);
-       output.setText("         this better work");
+       output.setStyle("-fx-border-color: black;");
+       //output.setText("         this better work");
        root2.setTop(output);
+       
+      
 
        GridPane moveButtons = new GridPane();
        Button btnLeft = new Button("←");
        Button btnRight = new Button("→");
        Button btnUp = new Button("↑");
        Button btnDown = new Button("↓");
-
+       
        btnLeft.setMaxWidth(Double.MAX_VALUE);
        btnRight.setMaxWidth(Double.MAX_VALUE);
        btnUp.setMaxWidth(Double.MAX_VALUE);
