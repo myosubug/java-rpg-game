@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
@@ -15,6 +17,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +30,11 @@ public class GUIApp extends Application {
 
 
     static GraphicsContext gc;
-    static ArrayList <String> userInput = new ArrayList<String>();
+    //static ArrayList <String> userInput = new ArrayList<String>();
+    static int pikachuX = 0;
+    static int pikachuY = 0;
+    
+
 
     public static void main(String[] args) {
         launch(args);
@@ -35,25 +43,71 @@ public class GUIApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        VBox root = new VBox();
 
-        final Canvas canvas = new Canvas(400,400);
-        Rectangle rect = new Rectangle(0, 0, 40, 40);
+        primaryStage.setTitle("Liberate Pikachu!");
+        VBox root = new VBox();
+        Scene theScene = new Scene(root, 400, 600);
+        primaryStage.setScene(theScene);
+
         
+        final Canvas canvas = new Canvas(400,400);
+        root.getChildren().add(canvas);
+
+        /** 
+         * this is good for when key press and release needs to change its status
+        theScene.setOnKeyPressed(
+            new EventHandler<KeyEvent>()
+            {
+                public void handle(KeyEvent e)
+                {
+                    String code = e.getCode().toString().toUpperCase();
+                    if(!userInput.contains(code))
+                        userInput.add(code);    
+                }
+            });
+        
+        theScene.setOnKeyReleased(
+            new EventHandler<KeyEvent>()
+            {
+                public void handle(KeyEvent e){
+                    String code = e.getCode().toString().toUpperCase();
+                    userInput.remove(code);
+                }
+            });
+
+        */
+
         gc = canvas.getGraphicsContext2D();
         
         
-        root.getChildren().add(canvas);
+        Image image = new Image("file:img/text_pixel.jpg");
+        gc.drawImage(image, pikachuX, pikachuY);
+        //Sprite pikachu = new Sprite();
+        
+        //gc.drawImage(image, 0, 0);
+            
+        new AnimationTimer(){
+        
+            @Override
+            public void handle(long now) {
+                gc.clearRect(0, 0, 400, 400);
+                gc.drawImage(image, pikachuX, pikachuY);
+            }
+        }.start();
+    
+
+
+        
 
         //setting up gridpane, root
 
 
        BorderPane root2 = new BorderPane();
-       TextArea output = new TextArea();
-       output.setText("Use arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.");
+       Label output = new Label("Use arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.");
        Label filler = new Label("");
        output.setMinWidth(400);
        output.setMaxHeight(100);
+       output.setText("         this better work");
        root2.setTop(output);
 
        GridPane moveButtons = new GridPane();
@@ -72,6 +126,81 @@ public class GUIApp extends Application {
        moveButtons.add(btnRight,2, 1);
        moveButtons.add(btnDown,1, 2);
 
+       btnUp.setOnAction((e) -> {
+        if(pikachuY - 40 >= 0 && pikachuY - 40 <= 400)
+            pikachuY -= 40;
+        else
+            ;
+    });
+
+    btnRight.setOnAction((e) -> {
+        if(pikachuX + 40 >= 0 && pikachuX +40 <= 360)
+            pikachuX += 40;
+        else
+            ;
+    });
+
+    btnDown.setOnAction((e) -> {
+        if(pikachuY +40 >= 0 && pikachuY +40 <= +360)
+            pikachuY += 40;
+        else
+            ;
+    });
+
+    btnLeft.setOnAction((e) -> {
+        if(pikachuX -40 >= 0 && pikachuX - 40 <= 400)
+            pikachuX -= 40;
+        else
+            ;
+    });
+
+
+    theScene.setOnKeyPressed(
+            new EventHandler<KeyEvent>()
+            {
+                public void handle(KeyEvent e)
+                {
+                    switch(e.getCode()){
+                        case W:
+                            if(pikachuY - 40 >= 0 && pikachuY - 40 <= 400){
+                                pikachuY -= 40;
+                                btnUp.requestFocus();
+                            }
+                            else
+                                ;
+                            break;
+                        case D:
+                            if(pikachuX + 40 >= 0 && pikachuX +40 <= 360){
+                                pikachuX += 40;
+                                btnRight.requestFocus();
+                            }
+                            else
+                                ;
+                            break;
+                        case S:
+                            if(pikachuY +40 >= 0 && pikachuY +40 <= +360){
+                                pikachuY += 40;
+                                btnDown.requestFocus();
+                            }
+                            else
+                                ;
+                            break;
+                        case A:
+                            if(pikachuX -40 >= 0 && pikachuX - 40 <= 400){
+                                pikachuX -= 40;
+                                btnLeft.requestFocus();
+                            }
+                            else
+                                ;
+                            break;
+                    }  
+                }
+            });
+
+
+            
+         
+
 
        GridPane actionButtons = new GridPane();
        Button btnA = new Button("A");
@@ -89,15 +218,19 @@ public class GUIApp extends Application {
        root2.setRight(actionButtons);
        root.getChildren().add(root2);
        
-        primaryStage.setTitle("Liberate Pikachu!");
-        primaryStage.setScene(new Scene(root, 400, 600));
-        primaryStage.show();
+      
+
+
+       primaryStage.show();
 
 
         // ============== setting up the interface up to here ==============================
         
     }
 
+    /**
+     * 
+     
     public static void keyboardAction(){
 
         root.setOnKeyPressed(
@@ -123,14 +256,15 @@ public class GUIApp extends Application {
     }
 
 
-    public static render(){
+    public static void render(){
         gc.clearRect(0, 0, 400, 400);
 
         if(userInput.contains("W")){
-            gc.
+            gc.drawImage(image, pikachuX, pikachuY + 40);
         }
     }
 
+    */
 
  
 }
