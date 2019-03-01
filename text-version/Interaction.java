@@ -21,7 +21,7 @@ public class Interaction extends Creature{
      * this method takes no parameter and returns nothing.
      * However, it prepares a battle between the player and a monster by taking user input for each different situation
      */
-    public void battle() {
+    public String battle() {
         //take user input for choices : fight or use item
         Scanner keyboard = new Scanner(System.in);
 
@@ -44,9 +44,19 @@ public class Interaction extends Creature{
                 if(monsterAttackChance > 0.50){
                     System.out.println();
                     System.out.println();
-                    System.out.println("The monster have attacked you back!");
+                    System.out.println("The monster has attacked you back!");
                     System.out.println();
                     this.player.setHP(this.player.getHP() - this.monster.getAttack());
+                    System.out.println();
+                    System.out.println(this.player.toString());
+                }
+
+                //lets you know if monster doesn't hit
+                else if(monsterAttackChance <= 0.50){
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("The monster missed you!");
+                    System.out.println();
                     System.out.println();
                     System.out.println(this.player.toString());
                 }
@@ -69,24 +79,6 @@ public class Interaction extends Creature{
                   System.out.println("Your attack went up by " + item.getAttackIncrease());
                 }
 
-                //if the item is "HP potion", it will increase the player's HP by 10
-            /*    if (itemName.equals("HP Potion")){
-                    this.player.setHP(this.player.getHP() + 10);
-                    System.out.println("Your HP has increased by 10");
-                    input = keyboard.nextLine();
-                    inputCap = input.toUpperCase();
-                    continue;
-                }
-
-                //if the item is "Battle Fruit", it will increase the player's attack damage by 1
-                else if (itemName.equals("Battle Fruit")){
-                    this.player.setAttack(this.player.getAttack() + 1);
-                    System.out.println("Your attack has increased by 1");
-                    input = keyboard.nextLine();
-                    inputCap = input.toUpperCase();
-                    continue;
-                } */
-
                 continue;
 
             }
@@ -106,6 +98,8 @@ public class Interaction extends Creature{
         if (this.player.getHP() <= 0){
             System.out.println("You have lost the battle, please restart the game");
             System.exit(0);
+
+            return "lose";
         }
 
         //if the player survives and won the battle, player's level increases by 1
@@ -116,6 +110,8 @@ public class Interaction extends Creature{
             System.out.println();
             System.out.println(this.player.toString());
             System.out.println();
+
+            return "win";
         }
     }
 }
