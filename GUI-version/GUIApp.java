@@ -50,16 +50,16 @@ public class GUIApp extends Application {
         Scene theScene = new Scene(root, 400, 580);
         primaryStage.setScene(theScene);
 
-        //setting up canvas, which will be out game display area
+        //setting up canvas, which will be our game display area
         final Canvas canvas = new Canvas(400,400);
         root.getChildren().add(canvas);
 
 
 
-        //importing image from local directory and add it to canvas
+        //importing pikachu sprite image from local directory and add it to canvas
         gc = canvas.getGraphicsContext2D();
-        Image image = new Image("file:img/pikachu.gif");
-        gc.drawImage(image, pikachuX, pikachuY);
+        Image pikachuImage = new Image("file:img/pikachu.gif");
+        gc.drawImage(pikachuImage, pikachuX, pikachuY);
 
 
        //setting up a borderpane to place status message section as label object
@@ -183,7 +183,7 @@ public class GUIApp extends Application {
         @Override
         public void handle(long now) {
             gc.clearRect(0, 0, 400, 400);
-            gc.drawImage(image, pikachuX, pikachuY);
+            gc.drawImage(pikachuImage, pikachuX, pikachuY);
         }
     }.start();
 
