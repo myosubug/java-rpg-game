@@ -34,7 +34,7 @@ public class GUIApp extends Application {
     //static ArrayList <String> userInput = new ArrayList<String>();
     static int pikachuX = 0;
     static int pikachuY = 0;
-    
+
 
 
     public static void main(String[] args) {
@@ -54,15 +54,15 @@ public class GUIApp extends Application {
         final Canvas canvas = new Canvas(400,400);
         root.getChildren().add(canvas);
 
-        
+
 
         //importing image from local directory and add it to canvas
         gc = canvas.getGraphicsContext2D();
         Image image = new Image("file:img/pikachu.gif");
         gc.drawImage(image, pikachuX, pikachuY);
 
-      
-       //setting up a borderpane to place status message section as label object 
+
+       //setting up a borderpane to place status message section as label object
        BorderPane root2 = new BorderPane();
        Label output = new Label("\nUse arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.\n");
        Label filler = new Label("");
@@ -72,15 +72,15 @@ public class GUIApp extends Application {
        output.setMaxHeight(100);
        output.setStyle("-fx-border-color: black;");
        root2.setTop(output);
-       
-      
+
+
        //setting up buttons up/down/left/right and two action buttons
        GridPane moveButtons = new GridPane();
-       Button btnLeft = new Button("←");
-       Button btnRight = new Button("→");
-       Button btnUp = new Button("↑");
-       Button btnDown = new Button("↓");
-       
+       Button btnLeft = new Button("L");
+       Button btnRight = new Button("R");
+       Button btnUp = new Button("U");
+       Button btnDown = new Button("D");
+
        btnLeft.setMaxWidth(Double.MAX_VALUE);
        btnRight.setMaxWidth(Double.MAX_VALUE);
        btnUp.setMaxWidth(Double.MAX_VALUE);
@@ -99,7 +99,7 @@ public class GUIApp extends Application {
 
        btnA.setMinWidth(60);
        btnB.setMinWidth(60);
- 
+
        actionButtons.add(btnA, 0, 1);
        actionButtons.add(btnB, 2, 1);
 
@@ -173,13 +173,13 @@ public class GUIApp extends Application {
                         else
                             ;
                         break;
-                }  
+                }
             }
         });
 
 
     new AnimationTimer(){
-        
+
         @Override
         public void handle(long now) {
             gc.clearRect(0, 0, 400, 400);
@@ -193,17 +193,17 @@ public class GUIApp extends Application {
     root2.setCenter(filler);
     root2.setRight(actionButtons);
     root.getChildren().add(root2);
-    
+
     primaryStage.show();
 
     // ============== setting up the interface up to here ==============================
     }
 
-     
+
 
     /**
      * THESE ARE EXTRA CODES THAT MIGHT BE USEFUL LATER TO I SAVED THEM UNDER HERE
-     * 
+     *
      *
                 public static void keyboardAction(){
 
@@ -238,7 +238,7 @@ public class GUIApp extends Application {
                     }
                 }
     */
-    
-    
- 
+
+
+
 }
