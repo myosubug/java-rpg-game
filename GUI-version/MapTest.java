@@ -24,6 +24,8 @@ public class MapTest extends Application{
 
   //Variables
   static GraphicsContext graphics;
+  private int xCoord;
+  private int yCoord;
 
   //Main method
   public static void main(String[] args) {
@@ -38,7 +40,6 @@ public class MapTest extends Application{
     //these are set to the pixel location of the square
     int xCoord;
     int yCoord;
-
     String[][] temp = workingMap.getMap();
 
     for(int i = 0; i < temp.length; i++){
@@ -57,6 +58,9 @@ public class MapTest extends Application{
         }
       }
     }
+
+
+
   }
 
 
@@ -65,6 +69,10 @@ public class MapTest extends Application{
   //Start method
   @Override
   public void start(Stage primaryStage) throws Exception{
+
+    //importing images from local directory
+    Image bgGreen = new Image("file:img/green.png");
+    Image bgGrey = new Image("file:img/grey.png");
 
     //setting up main layout and stage
     primaryStage.setTitle("Liberate Pikachu!");
@@ -75,16 +83,12 @@ public class MapTest extends Application{
     //setting up canvas, which will be the game display area
     final Canvas canvas = new Canvas(400,400);
     root.getChildren().add(canvas);
+    graphics = canvas.getGraphicsContext2D();
 
     //fetches 2d array from Map class
     Map currentMap = new Map();
 
-    //importing images from local directory
-    graphics = canvas.getGraphicsContext2D();
-    Image bgGreen = new Image("file:img/green.gif");
-    Image bgGrey = new Image("file:img/grey.gif");
-
-    //displays map on screen
+    //prints that array as tiles on the background
     this.MapToCanvas(currentMap, bgGreen, bgGrey);
 
     primaryStage.show();

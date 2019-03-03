@@ -56,7 +56,7 @@ public class GUIApp extends Application {
 
 
 
-        //importing pikachu sprite image from local directory and add it to canvas
+        //importing image from local directory and add it to canvas
         gc = canvas.getGraphicsContext2D();
         Image pikachuImage = new Image("file:img/pikachu.gif");
         gc.drawImage(pikachuImage, pikachuX, pikachuY);
