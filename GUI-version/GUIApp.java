@@ -204,41 +204,41 @@ public class GUIApp extends Application {
     /**
      * THESE ARE EXTRA CODES THAT MIGHT BE USEFUL LATER TO I SAVED THEM UNDER HERE
      * 
-     
-    public static void keyboardAction(){
+     *
+                public static void keyboardAction(){
 
-        root.setOnKeyPressed(
-            new EventHandler<KeyEvent>()
-            {
-                @Override
-                public void handle(KeyEvent e)
-                {
-                    String key = e.getCode().toString().toUpperCase();
-                    userInput.add(key);
+                    root.setOnKeyPressed(
+                        new EventHandler<KeyEvent>()
+                        {
+                            @Override
+                            public void handle(KeyEvent e)
+                            {
+                                String key = e.getCode().toString().toUpperCase();
+                                userInput.add(key);
+                            }
+                        });
+
+                        root.setOnKeyRelease(
+                            new EventHandler<KeyEvent>(){
+                                @Override
+                                public void handle(KeyEvent e)
+                                {
+                                    userInput.remove(e.getCode().toString().toUpperCase());
+                                }
+                        });
+
                 }
-            });
 
-            root.setOnKeyRelease(
-                new EventHandler<KeyEvent>(){
-                    @Override
-                    public void handle(KeyEvent e)
-                    {
-                        userInput.remove(e.getCode().toString().toUpperCase());
+
+                public static void render(){
+                    gc.clearRect(0, 0, 400, 400);
+
+                    if(userInput.contains("W")){
+                        gc.drawImage(image, pikachuX, pikachuY + 40);
                     }
-            });
-
-    }
-
-
-    public static void render(){
-        gc.clearRect(0, 0, 400, 400);
-
-        if(userInput.contains("W")){
-            gc.drawImage(image, pikachuX, pikachuY + 40);
-        }
-    }
-
-    
+                }
     */
+    
+    
  
 }

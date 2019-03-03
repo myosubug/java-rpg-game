@@ -23,8 +23,8 @@ public class Map{
 			}
 		}
 
-		this.HP = new Item("HP Potion");
-		this.battleFruit = new Item("Battle Fruit");
+		this.HP = new Item("HP Potion", 10, 0);
+		this.battleFruit = new Item("Battle Fruit", 0, 1);
 		this.pikachu = new Player();
 		this.metapod = new Creature("Metapod", 20, 1, 7);
 		this.weedle = new Creature("Weedle", 21, 1, 6);
@@ -34,7 +34,7 @@ public class Map{
 		this.setMap(" I ", 5, 5);
 		this.setMap(" M ", 2, 4);
 		this.setMap(" M ", 6, 6);
-		this.setMap(" M ", 7, 2); 
+		this.setMap(" M ", 7, 2);
 	}
 
 	Map(Map m){
@@ -50,7 +50,7 @@ public class Map{
 	}
 
 
-	public String[][] getMap(){ 
+	public String[][] getMap(){
 		return this.mapGrid;
 	}
 
