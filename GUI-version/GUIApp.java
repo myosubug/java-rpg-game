@@ -24,9 +24,6 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.sun.javafx.geom.Rectangle;
-
-
 public class GUIApp extends Application {
 
 
