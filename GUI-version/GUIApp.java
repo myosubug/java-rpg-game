@@ -17,21 +17,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.geometry.Rectangle2D;
 
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.sun.javafx.geom.Rectangle;
+
 
 
 public class GUIApp extends Application {
 
 
-    static GraphicsContext gc;
     //static ArrayList <String> userInput = new ArrayList<String>();
+
+    static GraphicsContext gc;
     static int pikachuX = 0;
     static int pikachuY = 0;
 
