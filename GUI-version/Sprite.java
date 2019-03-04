@@ -1,5 +1,5 @@
 import javafx.geometry.*;
-import scene.canvas.GraphicsContext;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Sprite {
@@ -10,7 +10,9 @@ public class Sprite {
     private double width;
     private double height;
 
-    public Spite(Image image){
+  
+    
+    public Sprite(Image image){
         this.image = image;
         this.width = image.getWidth();
         this.height = image.getHeight();
@@ -18,10 +20,26 @@ public class Sprite {
         this.positionY = 0;
     }
 
-    public setPosition(double x, double y){
+    public double getPositionX() {
+        return this.positionX;
+    }
+
+    public double getPositionY() {
+        return this.positionY;
+    }
+
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
+    }
+
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPosition(double x, double y){
         this.positionX = x;
         this.positionY = y;
-    }
+    } 
 
     public void render(javafx.scene.canvas.GraphicsContext gc){
         gc.drawImage(this.image, this.positionX, this.positionY);
@@ -31,7 +49,7 @@ public class Sprite {
         return new Rectangle2D(this.positionX, this.positionY, this.width, this.height);
     }
 
-    public boolean collision(Sprite sprite){
+    public boolean intersects(Sprite sprite){
         return sprite.getBoundary().intersects(this.getBoundary());
     }
 

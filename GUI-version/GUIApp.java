@@ -29,8 +29,11 @@ public class GUIApp extends Application {
 
     static GraphicsContext gc;
     //static ArrayList <String> userInput = new ArrayList<String>();
-    static int pikachuX = 0;
-    static int pikachuY = 0;
+    Image ball = new Image("file:img/ball.gif");
+    Image pikachuimg = new Image("file:img/pikachu.gif");
+    Sprite ballimage = new Sprite(ball);
+    Sprite pikachu = new Sprite(pikachuimg);
+   
     
 
 
@@ -55,8 +58,11 @@ public class GUIApp extends Application {
 
         //importing image from local directory and add it to canvas
         gc = canvas.getGraphicsContext2D();
-        Image image = new Image("file:img/pikachu.gif");
-        gc.drawImage(image, pikachuX, pikachuY);
+        
+     
+
+        ballimage.setPosition(160, 160);
+
 
       
        //setting up a borderpane to place status message section as label object 
@@ -73,10 +79,10 @@ public class GUIApp extends Application {
       
        //setting up buttons up/down/left/right and two action buttons
        GridPane moveButtons = new GridPane();
-       Button btnLeft = new Button("←");
-       Button btnRight = new Button("→");
-       Button btnUp = new Button("↑");
-       Button btnDown = new Button("↓");
+       Button btnLeft = new Button("L");
+       Button btnRight = new Button("R");
+       Button btnUp = new Button("U");
+       Button btnDown = new Button("D");
        
        btnLeft.setMaxWidth(Double.MAX_VALUE);
        btnRight.setMaxWidth(Double.MAX_VALUE);
@@ -103,34 +109,38 @@ public class GUIApp extends Application {
 
     //adding button events, two action buttons' action will be added below of this tooo
     //the first 4 of these are button actions
+    
     btnUp.setOnAction((e) -> {
-        if(pikachuY - 40 >= 0 && pikachuY - 40 <= 400)
-            pikachuY -= 40;
+        if(pikachu.getPositionX()- 40 >= 0 && pikachu.getPositionX() - 40 <= 400)
+            pikachu.setPositionX(pikachu.getPositionX()- 40);
         else
             ;
     });
 
     btnRight.setOnAction((e) -> {
-        if(pikachuX + 40 >= 0 && pikachuX +40 <= 360)
-            pikachuX += 40;
+        if(pikachu.getPositionY() + 40 >= 0 && pikachu.getPositionY() +40 <= 360)
+            pikachu.setPositionY(pikachu.getPositionY()- 40);
         else
             ;
     });
 
     btnDown.setOnAction((e) -> {
-        if(pikachuY +40 >= 0 && pikachuY +40 <= +360)
-            pikachuY += 40;
+        if(pikachu.getPositionX() +40 >= 0 && pikachu.getPositionX() +40 <= +360)
+        pikachu.setPositionX(pikachu.getPositionX() + 40);
         else
             ;
     });
 
     btnLeft.setOnAction((e) -> {
-        if(pikachuX -40 >= 0 && pikachuX - 40 <= 400)
-            pikachuX -= 40;
+        if(pikachu.getPositionY() -40 >= 0 && pikachu.getPositionY() - 40 <= 400)
+            pikachu.setPositionY(pikachu.getPositionY()- 40);
         else
             ;
     });
 
+
+
+        /*
     //these 4 are for keyboard action that is pressed as w/a/s/d
     theScene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -175,12 +185,23 @@ public class GUIApp extends Application {
         });
 
 
+        */
+
+
     new AnimationTimer(){
         
         @Override
         public void handle(long now) {
             gc.clearRect(0, 0, 400, 400);
-            gc.drawImage(image, pikachuX, pikachuY);
+            pikachu.render(gc);
+            ballimage.render(gc);
+          
+            output.setText("Pikachu location:"+pikachu.getPositionX()+", "+pikachu.getPositionY());
+            if (pikachu.intersects(ballimage)){
+                System.out.println("collided");
+            } else {
+                output.setText("no collision yet");
+            } 
         }
     }.start();
 
@@ -196,6 +217,8 @@ public class GUIApp extends Application {
     // ============== setting up the interface up to here ==============================
     }
 
+
+        
      
 
     /**
