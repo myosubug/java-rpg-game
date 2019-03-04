@@ -10,13 +10,13 @@ public class Map{
 
 	//CONSTRUCTORS
 	/**
-	 * Note: all maps are 8x8
+	 * Note: all maps are 10x10
 	 * this constructor not only does create 2d array and filled each array with " - " so that it represents default cell
 	 * but also member variables are delcared to be instances by using their own constructors.
 	 * Initial potision of the objects are also set on this constructor.
 	 */
 	Map(){
-		this.mapGrid = new String[8][8];
+		this.mapGrid = new String[10][10];
 		for(int i = 0; i < this.mapGrid.length; i++){
 			for(int j = 0; j < this.mapGrid[i].length; j++){
 				mapGrid[i][j] = " - ";
