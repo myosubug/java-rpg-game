@@ -4,10 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -18,7 +15,7 @@ import javafx.scene.image.Image;
 import javafx.geometry.Rectangle2D;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import java.util.Random;
+
 
 
 
@@ -74,10 +71,10 @@ public class GUIApp extends Application {
         //this is where our game logic will be rendered
         new AnimationTimer(){
             @Override
-                public void handle(long now) {
+            public void handle(long now) {
                 gc.clearRect(0, 0, 400, 400);
                 gc.drawImage(pikachuImage, pikachuX, pikachuY);
-                }
+            }
         }.start();
 
 
