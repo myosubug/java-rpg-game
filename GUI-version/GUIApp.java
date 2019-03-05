@@ -11,12 +11,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.scene.paint.Color;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.geometry.Rectangle2D;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import java.util.Random;
 
 
@@ -24,10 +25,22 @@ import java.util.Random;
 
 public class GUIApp extends Application {
 
-
-    //static ArrayList <String> userInput = new ArrayList<String>();
-
-    static GraphicsContext gc;
+    //setting up instance variables, everything except pikachux, y will have no significant changes
+    //pikachu x,y will be implmented through sprite class again
+    static VBox root = new VBox();
+    static Scene theScene = new Scene(root, 400, 580);
+    static Canvas canvas = new Canvas(400,400);
+    static GraphicsContext gc = canvas.getGraphicsContext2D();
+    static BorderPane statusOutputAndButtons = new BorderPane();
+    static Label output = new Label("\nUse arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.\n");
+    static GridPane moveButtons = new GridPane();
+    static Button btnLeft = new Button("L");
+    static Button btnRight = new Button("R");
+    static Button btnUp = new Button("U");
+    static Button btnDown = new Button("D");
+    static GridPane actionButtons = new GridPane();
+    static Button btnJ = new Button("J");
+    static Button btnK = new Button("K");
     static int pikachuX = 0;
     static int pikachuY = 0;
 
@@ -42,96 +55,116 @@ public class GUIApp extends Application {
 
         //setting up main layout and stage
         primaryStage.setTitle("Liberate Pikachu!");
-        VBox root = new VBox();
-        Scene theScene = new Scene(root, 400, 580);
         primaryStage.setScene(theScene);
-
-        //setting up canvas, which will be our game display area
-        final Canvas canvas = new Canvas(400,400);
         root.getChildren().add(canvas);
+        root.getChildren().add(statusOutputAndButtons);
+        settingUpStatusOutputAndButton();
 
-
-
-        //importing image from local directory and add it to canvas
-        gc = canvas.getGraphicsContext2D();
+        //connecting button and keys to event handler
+        btnLeft.setOnAction(new ButtonMovementLeft());
+        btnDown.setOnAction(new ButtonMovementDown());
+        btnRight.setOnAction(new ButtonMovementRight());
+        btnUp.setOnAction(new ButtonMovementUp());
+        addKeyEvent(theScene);
+      
+        //adding sprite but there will be better ways to do this, still implementing
         Image pikachuImage = new Image("file:img/pikachu.gif");
         gc.drawImage(pikachuImage, pikachuX, pikachuY);
 
-
-       //setting up a borderpane to place status message section as label object
-       BorderPane root2 = new BorderPane();
-       Label output = new Label("\nUse arrow keys or WASD to move around. \nAction buttons will be used to make choices in game.\n");
-       Label filler = new Label("");
-       filler.minHeight(50);
-       filler.minWidth(100);
-       output.setMinWidth(400);
-       output.setMaxHeight(100);
-       output.setStyle("-fx-border-color: black;");
-       root2.setTop(output);
+        //this is where our game logic will be rendered
+        new AnimationTimer(){
+            @Override
+                public void handle(long now) {
+                gc.clearRect(0, 0, 400, 400);
+                gc.drawImage(pikachuImage, pikachuX, pikachuY);
+                }
+        }.start();
 
 
-       //setting up buttons up/down/left/right and two action buttons
-       GridPane moveButtons = new GridPane();
-       Button btnLeft = new Button("L");
-       Button btnRight = new Button("R");
-       Button btnUp = new Button("U");
-       Button btnDown = new Button("D");
+    primaryStage.show();
+    }
 
-       btnLeft.setMaxWidth(Double.MAX_VALUE);
-       btnRight.setMaxWidth(Double.MAX_VALUE);
-       btnUp.setMaxWidth(Double.MAX_VALUE);
-       btnDown.setMaxWidth(Double.MAX_VALUE);
+    // ======================= setting up the interface up to here ======================= 
+    public static void settingUpStatusOutputAndButton(){
 
-       moveButtons.add(btnUp, 1, 0);
-       moveButtons.add(btnLeft, 0, 1);
-       moveButtons.add(btnRight,2, 1);
-       moveButtons.add(btnDown,1, 2);
+         //setting up a borderpane to place status message section as label object
+        output.setMinWidth(400);
+        output.setMaxHeight(100);
+        output.setStyle("-fx-border-color: black;");
+
+         //setting up buttons up/down/left/right and two action buttons
+        statusOutputAndButtons.setTop(output);
+        moveButtons = new GridPane();
+       
+ 
+        btnLeft.setMaxWidth(Double.MAX_VALUE);
+        btnRight.setMaxWidth(Double.MAX_VALUE);
+        btnUp.setMaxWidth(Double.MAX_VALUE);
+        btnDown.setMaxWidth(Double.MAX_VALUE);
+ 
+        moveButtons.add(btnUp, 1, 0);
+        moveButtons.add(btnLeft, 0, 1);
+        moveButtons.add(btnRight,2, 1);
+        moveButtons.add(btnDown,1, 2);
+
+        //action button layout setting up
+       
+ 
+        btnJ.setMinWidth(60);
+        btnK.setMinWidth(60);
+ 
+        actionButtons.add(btnJ, 0, 1);
+        actionButtons.add(btnK, 2, 1);
+
+        statusOutputAndButtons.setLeft(moveButtons);
+        statusOutputAndButtons.setRight(actionButtons);
 
 
-       //action button layout setting up
-       GridPane actionButtons = new GridPane();
-       Button btnA = new Button("J");
-       Button btnB = new Button("K");
+    } 
 
-       btnA.setMinWidth(60);
-       btnB.setMinWidth(60);
+    // ======================= setting up button and key events here ======================= 
+    public class ButtonMovementUp implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent ButtonMovementEventUp){
+            if(pikachuY - 40 >= 0 && pikachuY - 40 <= 400)
+                pikachuY -= 40;
+            else
+                ;
+        }
+    }
 
-       actionButtons.add(btnA, 0, 1);
-       actionButtons.add(btnB, 2, 1);
+    public class ButtonMovementRight implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent ButtonMovementEventRight){
+            if(pikachuX + 40 >= 0 && pikachuX +40 <= 360)
+                pikachuX += 40;
+            else
+                ;
+        }
+    }
 
+    public class ButtonMovementDown implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent ButtonMovementEventDown){
+            if(pikachuY +40 >= 0 && pikachuY +40 <= +360)
+                pikachuY += 40;
+            else
+                ;
+        }
+    }
 
-    //adding button events, two action buttons' action will be added below of this tooo
-    //the first 4 of these are button actions
-    btnUp.setOnAction((e) -> {
-        if(pikachuY - 40 >= 0 && pikachuY - 40 <= 400)
-            pikachuY -= 40;
-        else
-            ;
-    });
+    public class ButtonMovementLeft implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent ButtonMovementEventLeft){
+            if(pikachuX -40 >= 0 && pikachuX - 40 <= 400)
+                pikachuX -= 40;
+            else
+                ;
+        }
+    }
 
-    btnRight.setOnAction((e) -> {
-        if(pikachuX + 40 >= 0 && pikachuX +40 <= 360)
-            pikachuX += 40;
-        else
-            ;
-    });
-
-    btnDown.setOnAction((e) -> {
-        if(pikachuY +40 >= 0 && pikachuY +40 <= +360)
-            pikachuY += 40;
-        else
-            ;
-    });
-
-    btnLeft.setOnAction((e) -> {
-        if(pikachuX -40 >= 0 && pikachuX - 40 <= 400)
-            pikachuX -= 40;
-        else
-            ;
-    });
-
-    //these 4 are for keyboard action that is pressed as w/a/s/d
-    theScene.setOnKeyPressed(
+    public static void addKeyEvent(Scene scene){
+        scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
         {
         public void handle(KeyEvent e)
@@ -173,68 +206,6 @@ public class GUIApp extends Application {
             }
         });
 
-
-    new AnimationTimer(){
-
-        @Override
-        public void handle(long now) {
-            gc.clearRect(0, 0, 400, 400);
-            gc.drawImage(pikachuImage, pikachuX, pikachuY);
-        }
-    }.start();
-
-
-
-    root2.setLeft(moveButtons);
-    root2.setCenter(filler);
-    root2.setRight(actionButtons);
-    root.getChildren().add(root2);
-
-    primaryStage.show();
-
-    // ============== setting up the interface up to here ==============================
     }
-
-
-
-    /**
-     * THESE ARE EXTRA CODES THAT MIGHT BE USEFUL LATER TO I SAVED THEM UNDER HERE
-     *
-     *
-                public static void keyboardAction(){
-
-                    root.setOnKeyPressed(
-                        new EventHandler<KeyEvent>()
-                        {
-                            @Override
-                            public void handle(KeyEvent e)
-                            {
-                                String key = e.getCode().toString().toUpperCase();
-                                userInput.add(key);
-                            }
-                        });
-
-                        root.setOnKeyRelease(
-                            new EventHandler<KeyEvent>(){
-                                @Override
-                                public void handle(KeyEvent e)
-                                {
-                                    userInput.remove(e.getCode().toString().toUpperCase());
-                                }
-                        });
-
-                }
-
-
-                public static void render(){
-                    gc.clearRect(0, 0, 400, 400);
-
-                    if(userInput.contains("W")){
-                        gc.drawImage(image, pikachuX, pikachuY + 40);
-                    }
-                }
-    */
-
-
 
 }
