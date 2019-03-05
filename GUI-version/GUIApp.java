@@ -84,10 +84,10 @@ public class GUIApp extends Application {
     primaryStage.show();
     }
 
-    // ======================= setting up the interface up to here ======================= 
+    // ======================= setting up the layout of status window and buttons here ======================= 
     public static void settingUpStatusOutputAndButton(){
 
-         //setting up a borderpane to place status message section as label object
+        //setting up a borderpane to place status message section as label object
         output.setMinWidth(400);
         output.setMaxHeight(100);
         output.setStyle("-fx-border-color: black;");
@@ -95,8 +95,7 @@ public class GUIApp extends Application {
          //setting up buttons up/down/left/right and two action buttons
         statusOutputAndButtons.setTop(output);
         moveButtons = new GridPane();
-       
- 
+        
         btnLeft.setMaxWidth(Double.MAX_VALUE);
         btnRight.setMaxWidth(Double.MAX_VALUE);
         btnUp.setMaxWidth(Double.MAX_VALUE);
@@ -108,8 +107,6 @@ public class GUIApp extends Application {
         moveButtons.add(btnDown,1, 2);
 
         //action button layout setting up
-       
- 
         btnJ.setMinWidth(60);
         btnK.setMinWidth(60);
  
@@ -118,8 +115,6 @@ public class GUIApp extends Application {
 
         statusOutputAndButtons.setLeft(moveButtons);
         statusOutputAndButtons.setRight(actionButtons);
-
-
     } 
 
     // ======================= setting up button and key events here ======================= 
