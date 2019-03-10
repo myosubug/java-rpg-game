@@ -32,7 +32,7 @@ public class GUIApp extends Application {
     private static Image gamebackground;
     private static Player pikachu = new Player();
     private static Map firstMap = new Map();
-    Collision collisionCheck = new Collision();
+    private Collision collisionCheck = new Collision();
     
 
 
@@ -78,7 +78,7 @@ public class GUIApp extends Application {
         gamebackground = new Image("file:img/map.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
-        
+          
 
         root.getChildren().add(canvas);
     

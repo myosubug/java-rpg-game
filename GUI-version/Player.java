@@ -6,7 +6,7 @@ class Player extends Creature{
 
     //Constructor, calls its super class, Creature to create the player's character, Pikachu.
     Player() {
-        super("Pikachu", 30, 1, 5, 320, 320);
+        super("Pikachu", 30, 1, 5, 0, 0);
     }
 
     /**
