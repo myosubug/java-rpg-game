@@ -1,27 +1,34 @@
+import java.util.ArrayList;
+
 public class Boss extends Creature{
   //extra variables to control boss' abilities
   private Inventory bossInventory;
 
   private String introMessage;
-  private ArrayList<String> attackMessages = new ArrayList<String>;
+  private String attackMessage1;
+  private String attackMessage2;
   private String deathMessage;
 
-  //used to store stats and attack damage of a special attack
-  private ArrayList<int> specialAttack1 = new ArrayList<int>;
 
   //CONSTRUCTORS
-  public Boss(Inventory bossItems, String bossIntroMessage, ArrayList<String> inFightMessages, String bossDeathMessage, ArrayList<int> specialAttack ){
+  public Boss(Inventory bossItems, String bossIntroMessage, String attackMessage1, String attackMessage2, String bossDeathMessage){
     this.bossInventory = bossItems;
     this.introMessage = bossIntroMessage;
-    this.attackMessages = inFightMessages;
+    this.attackMessage1 = attackMessage1;
+    this.attackMessage2 = attackMessage2;
     this.deathMessage = bossDeathMessage;
-    this.specialAttack1 = specialAttack;
   }
 
   public Boss(){
-    super("Boss", 100, 10, 10, 0, 0)
-    this.bossInventory = new Inventory(new Item("Super Potion", 20, 1, this.getX(), this.getY()), new Item("Super Berry", 2, 3, this.getX(), this.getY()) );
+    super("Boss", 100, 10, 10, 0, 0);
+    this.bossInventory = new Inventory();
+    Item superPotion = new Item("Super Potion", 20, 1, this.getX(), this.getY());
+    bossInventory.addItem(superPotion);
 
+    Item superBerry = new Item("Super Berry", 2, 3, this.getX(), this.getY());
+    this.bossInventory.addItem(superBerry);
 
   }
+
+
 }
