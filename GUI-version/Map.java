@@ -1,81 +1,56 @@
+import java.util.ArrayList;
+
 public class Map{
 
 	/**
 	 * Declaring member variables, the 2d array map and object that needs to be on the map.
 	 */
-	private String[][] mapGrid;		//this will be the 2d array for any specific map screen
+	private ArrayList<Item> itemLocation= new ArrayList<Item>();
+	private ArrayList<Creature> monsterLocation = new ArrayList<Creature>();
+	private String mapFileLocation;
+
 	private Item HP, battleFruit;   //items that will be randomly appearing on the map
-	private Player pikachu;	        //the player character
 	private Creature metapod, weedle, rattata; //different kinds of monsters on the map
 
+
+
 	//CONSTRUCTORS
-	/**
-	 * Note: all maps are 10x10
-	 * this constructor not only does create 2d array and filled each array with " - " so that it represents default cell
-	 * but also member variables are delcared to be instances by using their own constructors.
-	 * Initial potision of the objects are also set on this constructor.
-	 */
-	Map(){
-		this.mapGrid = new String[10][10];
-		for(int i = 0; i < this.mapGrid.length; i++){
-			for(int j = 0; j < this.mapGrid[i].length; j++){
-				mapGrid[i][j] = " - ";
-			}
-		}
+	Map() {
 
-		this.HP = new Item("HP Potion", 10, 0);
-		this.battleFruit = new Item("Battle Fruit", 0, 1);
-		this.pikachu = new Player();
-		this.metapod = new Creature("Metapod", 20, 1, 7);
-		this.weedle = new Creature("Weedle", 21, 1, 6);
-		this.rattata = new Creature("Rattata", 24, 1, 5);
 
-		this.setMap(" I ", 0, 4);
-		this.setMap(" I ", 5, 5);
-		this.setMap(" M ", 2, 4);
-		this.setMap(" M ", 6, 6);
-		this.setMap(" M ", 7, 2);
-	}
+	this.HP = new Item("HP Potion", 10, 0, 32, 32);
+	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
+	this.metapod = new Creature("Metapod", 20, 1, 7, 224, 160);
+	this.weedle = new Creature("Weedle", 21, 1, 6, 320, 320);
+	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
 
-	Map(Map m){
-		this();
+	itemLocation.add(HP);
+	itemLocation.add(battleFruit);
+	monsterLocation.add(metapod);
+	monsterLocation.add(weedle);
+	monsterLocation.add(rattata);
+
 	}
 
 	//METHODS
 	/**
 	 * getters and setters for Map and member variables
 	 */
-	public void setMap(String name, int x, int y){
-		this.mapGrid[x][y] = name;
+
+	public ArrayList<Item> getItemLocation() {
+		return this.itemLocation;
 	}
 
 
-	public String[][] getMap(){
-		return this.mapGrid;
+	public ArrayList<Creature> getMonsterLocation() {
+		return this.monsterLocation;
 	}
 
-	public Player getPikachu(){
-		return this.pikachu;
+
+	public String getMapFileLocation(){
+		return this.mapFileLocation;
 	}
 
-	public Creature getMetapod(){
-		return this.metapod;
-	}
 
-	public Creature getWeedle(){
-		return this.weedle;
-	}
-
-	public Creature getRattata(){
-		return this.rattata;
-	}
-
-	public Item getHP(){
-		return this.HP;
-	}
-
-	public Item getBattleFruit(){
-		return this.battleFruit;
-	}
 
 }

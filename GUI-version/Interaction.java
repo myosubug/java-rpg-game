@@ -1,19 +1,20 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class Interaction extends Creature{
+public class Interaction {
     /**
      * Declaring member variables, as the battle in this game only takes two creatures,
      * this class is extended from Creature class to properly access the intances of Creature.
      */
     Player player;
     Creature monster;
+    String outputMessage;
 
     //Constructor
     Interaction(Player player, Creature monster){
         this.player = player;
         this.monster = monster;
-        System.out.println("Battle started with "+this.monster.getName());
+        outputMessage = "Battle started with "+this.monster.getName();
 
     }
 
@@ -21,10 +22,9 @@ public class Interaction extends Creature{
      * this method takes no parameter and returns nothing.
      * However, it prepares a battle between the player and a monster by taking user input for each different situation
      */
-    public String battle() {
-        //take user input for choices : fight or use item
-        Scanner keyboard = new Scanner(System.in);
-
+    public String battle(boolean userInput) {
+        
+       
         //this while block infinitely loops until either the player's hp or a monster's hp is not 0
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){
             System.out.println();

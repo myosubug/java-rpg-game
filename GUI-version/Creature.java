@@ -1,5 +1,7 @@
 class Creature{
 
+
+
 	//Declaring member variables
 	private String name;
 	private int hitPoints;
@@ -55,6 +57,14 @@ class Creature{
 
 	public int getY(){
 		return this.yCoord;
+	}
+
+	public void setX(int x){
+		this.xCoord = x;
+	}
+
+	public void setY(int y){
+		this.yCoord = y;
 	}
 
 	public void setName(String name){

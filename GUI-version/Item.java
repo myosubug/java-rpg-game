@@ -6,12 +6,16 @@ class Item{
 	private String name;
 	private int hPIncrease;
 	private int attackIncrease;
+	private int xCoord;
+	private int yCoord;
 
 	//CONSTRUCTOR
-	Item(String name, int hPIncrease, int attackIncrease){
+	Item(String name, int hPIncrease, int attackIncrease, int x, int y){
 		this.name = name;
 		this.hPIncrease = hPIncrease;
 		this.attackIncrease = attackIncrease;
+		this.xCoord = x;
+		this.yCoord = y;
 	}
 
 	//getter and setters for the member variable
@@ -21,6 +25,14 @@ class Item{
 
 	public String toString(){
 		return this.name;
+	}
+
+	public int getX(){
+		return this.xCoord;
+	}
+
+	public int getY(){
+		return this.yCoord;
 	}
 
 	public int getAttackIncrease(){
