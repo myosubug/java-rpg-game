@@ -23,8 +23,10 @@ public class Interaction {
      * However, it prepares a battle between the player and a monster by taking user input for each different situation
      */
     public String battle(boolean userInput) {
-        
-       
+        //NOTE: I think a lot of this should be moved to the classes of the fighting creatures
+        //eg: this changes in hp, etc.
+        //printouts can stay here
+
         //this while block infinitely loops until either the player's hp or a monster's hp is not 0
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){
             System.out.println();

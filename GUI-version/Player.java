@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Player extends Creature{
     //declaring member variable, the player will use array list as a item bag
-    private ArrayList<Item> inventory = new ArrayList<Item>();
+    private Inventory playerInventory;
 
     //Constructor, calls its super class, Creature to create the player's character, Pikachu.
     Player() {
@@ -12,7 +12,6 @@ class Player extends Creature{
     /**
      * this method returns nothing but adds an item (parameter) to inventory arraylist.
      * @param newItem
-     */
     public void addItemToInventory (Item newItem) {
         this.inventory.add(newItem);
     }
@@ -20,7 +19,7 @@ class Player extends Creature{
     //getter for array list
     public ArrayList<Item> getInventory() {
         return this.inventory;
-    }
+    } */
 
     /**
      * this method returns nothing and takes no parameter.

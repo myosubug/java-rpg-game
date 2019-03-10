@@ -1,7 +1,5 @@
 class Creature{
-
-
-
+	
 	//Declaring member variables
 	private String name;
 	private int hitPoints;
@@ -75,7 +73,7 @@ class Creature{
 	//if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
 	public void setHP(int hp){
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
-		if (hp > upperLimit) 
+		if (hp > upperLimit)
 			this.hitPoints = upperLimit;
 		else
 			this.hitPoints = hp;
@@ -106,4 +104,4 @@ class Creature{
 		return "Name: " + this.getName() + " HP: " + this.getHP();
 	}
 
-}	
+}

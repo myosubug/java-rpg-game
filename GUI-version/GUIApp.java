@@ -33,13 +33,13 @@ public class GUIApp extends Application {
     private static Player pikachu = new Player();
     private static Map firstMap = new Map();
     private Collision collisionCheck = new Collision();
-    
+
 
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        
+
 
         //setting up main layout and stage
         initilization();
@@ -48,7 +48,7 @@ public class GUIApp extends Application {
 
         //connecting button and keys to event handler
         addKeyEvent(theScene);
-      
+
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -62,7 +62,7 @@ public class GUIApp extends Application {
     primaryStage.show();
     }
 
-    // ======================= setting up the layout of status window here ======================= 
+    // ======================= setting up the layout of status window here =======================
     public void initilization(){
 
 
@@ -78,10 +78,10 @@ public class GUIApp extends Application {
         gamebackground = new Image("file:img/map.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
-          
+
 
         root.getChildren().add(canvas);
-    
+
         //setting up a borderpane to place status message section as label object
         output = new Label("\nUse WASD to move around. Press J for yes, K for no.\n");
         output.setMinWidth(640);
@@ -90,12 +90,13 @@ public class GUIApp extends Application {
 
          //setting up buttons up/down/left/right and two action buttons
         root.getChildren().add(output);
-        
-    
-    } 
 
-    // ======================= setting up button and key events here ======================= 
 
+    }
+
+    // ======================= setting up button and key events here =======================
+
+    //NOTE: should be moved to an EventHandler class
     public void addKeyEvent(Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -109,10 +110,12 @@ public class GUIApp extends Application {
                             pikachu.setY(pikachu.getY() - 32);
                             if(collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("item")){
                                 itemInteractionHandler();
-                            } else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
+                            }
+                            else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
                                 output.setText("Found a monster!");
-                            
-                            } else
+                            }
+
+                            else
                                 output.setText("Use WASD to move around. Press J for yes, K for no.");
                         }
                         else
@@ -122,13 +125,15 @@ public class GUIApp extends Application {
                         if(pikachu.getX() + 32 >= 0 && pikachu.getX() + 32 <= 608){
                             pikachuImage = new Image("file:img/right.gif");
                             pikachu.setX(pikachu.getX() + 32);
-                            
+
                             if(collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("item")){
                                 itemInteractionHandler();
-                            } else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
+                            }
+                            else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
                                 output.setText("Found a monster!");
-                            
-                            } else
+
+                            }
+                            else
                                 output.setText("Use WASD to move around. Press J for yes, K for no.");
                         }
                         else
@@ -140,13 +145,15 @@ public class GUIApp extends Application {
                             pikachu.setY(pikachu.getY() + 32);
                             if(collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("item")){
                                 itemInteractionHandler();
-                            } else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
+                            }
+                            else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
                                 output.setText("Found a monster!");
-                            
-                            } else
+
+                            }
+                            else
                                 output.setText("Use WASD to move around. Press J for yes, K for no.");
                         }
-                        
+
                         else
                             ;
                         break;
@@ -156,10 +163,12 @@ public class GUIApp extends Application {
                             pikachu.setX(pikachu.getX() - 32);
                             if(collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("item")){
                                 itemInteractionHandler();
-                            } else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
+                            }
+                            else if (collisionCheck(firstMap.getItemLocation(), firstMap.getMonsterLocation()).equals("monster")){
                                 output.setText("Found a monster!");
-                            
-                            } else
+
+                            }
+                            else
                                 output.setText("Use WASD to move around. Press J for yes, K for no.");
                         }
                         else
@@ -180,6 +189,7 @@ public class GUIApp extends Application {
     //public void mapInitialization(){
    // }
 
+   //NOTE: this should be moved to Collision class
     public String collisionCheck(ArrayList<Item> itemLocation, ArrayList<Creature> monsterLocation){
         if (collisionCheck.isItemFound(pikachu, itemLocation))
             return "item";
@@ -190,7 +200,7 @@ public class GUIApp extends Application {
     }
 
 
-
+    //NOTE: this should be moved to an EventHandler class
     public void itemInteractionHandler(){
         int tempIndex = collisionCheck.getItemIndex();
         pikachu.addItemToInventory(firstMap.getItemLocation().get(tempIndex));
