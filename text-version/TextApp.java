@@ -8,6 +8,7 @@ public class TextApp extends Map{
 	private Map currentMap;
 
 
+
 	//Constructors
 	TextApp(){
 		this.currentMap = new Map(); //creates a new map when the game is launched.
@@ -58,6 +59,7 @@ public class TextApp extends Map{
 		Creature metapod = new Creature("Metapod", 20, 1, 7);
 		Creature weedle = new Creature("Weedle", 21, 1, 6);
 		Creature rattata = new Creature("Rattata", 24, 1, 5);
+
 
 		//Game Intro
 		System.out.println();
@@ -119,6 +121,9 @@ public class TextApp extends Map{
 			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()]; //saving comparison string for interaction
 			double itemRate = Math.random();										 //this will generate random chances of getting random items.
 
+
+
+
 			//if the player is loacted at " I " on the map, the player gets a random item.
 			if (mapObject == " I "){
 				System.out.println("Found an item! Let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
@@ -145,66 +150,89 @@ public class TextApp extends Map{
 			}
 
 			//if the player is loacted at " M " on the map, the player get to choose fight or run from a monster.
-			else if (mapObject == " M "){
+			else if (mapObject == " M ") {
 				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f) or Run away(r)");
-					String input2 = keyboard.nextLine();
-					String inputCap2 = input2.toUpperCase();
+				String input2 = keyboard.nextLine();
+				String inputCap2 = input2.toUpperCase();
 
-					//if player choose to fight, a random monster from wild will be selected.
-					if (inputCap2.equals("F")){
-						System.out.println("Preparing battle...");
-						System.out.println();
-						//now we need fight interaction here
-						int randomMonster =  rand.nextInt(3);
-						Creature m = new Creature();
-						if (randomMonster == 0)
-							m = test.getMetapod();
-						else if (randomMonster == 1)
-							m = test.getRattata();
+				//if player choose to fight, a random monster from wild will be selected.
+				if (inputCap2.equals("F")) {
+					System.out.println("Preparing battle...");
+					System.out.println();
+					//now we need fight interaction here
+					int randomMonster = rand.nextInt(3);
+					Creature m = new Creature();
+					if (randomMonster == 0)
+						m = test.getMetapod();
+					else if (randomMonster == 1)
+						m = test.getRattata();
+					else
+						m = test.getWeedle();
+
+					//once the monster is selected, the actual battle interaction begins.
+					Interaction fight = new Interaction(test.getPikachu(), m);
+					String battleResult = fight.battle();
+
+					if (battleResult == "win") {
+						test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
+					}
+
+					//after the battle, the current map is shown to the player and ask user input for new movement.
+					test.printToConsole();
+					System.out.println();
+					System.out.println("Use WASD to move");
+					System.out.println("Press 0 to quit the game");
+					System.out.println();
+				}
+
+
+				//if player choose to run, the current map is shown to the player and ask user input for new movement.
+				else if (inputCap2.equals("R")) {
+					System.out.println("Success!");
+					System.out.println();
+					test.printToConsole();
+					System.out.println();
+					System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
+					System.out.println("Press 0 to quit the game");
+					System.out.println();
+				}
+
+				//this is a termination condition if the player just wants to quit the game.
+				else if (input2.equals("0")) {
+					System.exit(0);
+				}
+
+				//if the player didn't enter correct input, it will prompt the player again to enter correct input.
+				else {
+					System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
+					System.out.println();
+					continue;
+				}
+
+			}
+
+
+			// Encounter rate if not in M or I
+			// random number generator for encounter rate and creature chance
+			double encounterRate = Math.random() * 9 + 1;
+			double creatureChance = Math.random();
+			Creature randomFight = new Creature();
+
+			else if ( (mapObject != " M ") || (mapObject != " I ") ){
+				if (encounterRate <= 0.01)
+					System.out.println("you are fighting");
+					if (creatureChance >= 0.066)
+						randomFight = test.getMetapod();
+						else if (creatureChance <= 0.033)
+							randomFight = test.getRattata();
 						else
-							m = test.getWeedle();
-
-						//once the monster is selected, the actual battle interaction begins.
-						Interaction fight = new Interaction(test.getPikachu(), m);
-						String battleResult = fight.battle();
-
-						if (battleResult == "win"){
-							test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
-						}
-
-						//after the battle, the current map is shown to the player and ask user input for new movement.
-						test.printToConsole();
-						System.out.println();
-						System.out.println("Use WASD to move");
-						System.out.println("Press 0 to quit the game");
-						System.out.println();
-					}
-
-					//if player choose to run, the current map is shown to the player and ask user input for new movement.
-					else if (inputCap2.equals("R")){
-						System.out.println("Success!");
-						System.out.println();
-						test.printToConsole();
-						System.out.println();
-						System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
-						System.out.println("Press 0 to quit the game");
-						System.out.println();
-					}
-
-					//this is a termination condition if the player just wants to quit the game.
-					else if (input2.equals("0")){
-						System.exit(0);
-					}
-
-					//if the player didn't enter correct input, it will prompt the player again to enter correct input.
-					else{
-						System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
-						System.out.println();
-						continue;
-					}
-
+							randomFight = test.getWeedle();
+						Interaction encounter = new Interaction(test.getPikachu(), randomFight);
+						String goFight = encounter.battle();
 					continue;
 			}
+			continue;
+
 		}
 		//closing keyboad scanner
 		keyboard.close();
