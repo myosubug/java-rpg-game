@@ -40,6 +40,9 @@ public class Interaction extends Creature{
                 System.out.println();
                 System.out.println(this.monster.toString());
 
+                if (this.monster.getHP() <= 0)
+                    break;
+
                 //the monster also have chance to attack the player back by 50%
                 if(monsterAttackChance > 0.50){
                     System.out.println();
