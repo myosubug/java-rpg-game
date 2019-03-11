@@ -80,6 +80,7 @@ public class TextApp extends Map{
 		//Main game loop, this game will be terminated only if game value is false.
 		while (game == true){
 
+
 			//End game condition : if the player reaches level 5, this will end the loop.
 			if(test.getPikachu().getLevel() == 5){
 				System.out.println("You have reached level 5 and you have become strong enough to challenge Ash for now!");
@@ -206,7 +207,6 @@ public class TextApp extends Map{
 				else {
 					System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
 					System.out.println();
-					continue;
 				}
 
 			}
@@ -214,24 +214,35 @@ public class TextApp extends Map{
 
 			// Encounter rate if not in M or I
 			// random number generator for encounter rate and creature chance
-			double encounterRate = Math.random() * 9 + 1;
-			double creatureChance = Math.random();
-			Creature randomFight = new Creature();
 
-			else if ( (mapObject != " M ") || (mapObject != " I ") ){
-				if (encounterRate <= 0.01)
-					System.out.println("you are fighting");
-					if (creatureChance >= 0.066)
-						randomFight = test.getMetapod();
-						else if (creatureChance <= 0.033)
-							randomFight = test.getRattata();
-						else
-							randomFight = test.getWeedle();
-						Interaction encounter = new Interaction(test.getPikachu(), randomFight);
-						String goFight = encounter.battle();
-					continue;
-			}
-			continue;
+            else if ((mapObject != " M " ) || (mapObject != " I ")) {
+
+                double encounter = Math.random();
+                if (encounter <= 0.1) {
+                    int randomMonster = rand.nextInt(3);
+                    Creature m = new Creature();
+                    if (randomMonster == 0)
+                        m = test.getMetapod();
+                    else if (randomMonster == 1)
+                        m = test.getRattata();
+                    else
+                        m = test.getWeedle();
+                    Interaction fight = new Interaction(test.getPikachu(), m);
+                    String battleResult = fight.battle();
+                    if (battleResult == "win") {
+                        test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
+                    }
+
+                    //after the battle, the current map is shown to the player and ask user input for new movement.
+                    test.printToConsole();
+                    System.out.println();
+                    System.out.println("Use WASD to move");
+                    System.out.println("Press 0 to quit the game");
+                    System.out.println();
+                }
+            }
+
+
 
 		}
 		//closing keyboad scanner
