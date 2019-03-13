@@ -101,6 +101,7 @@ public class Map{
 	    return itemList.get(index);
 	}
 
+
 	/**
 	method reads a text file to get map data
 	*/

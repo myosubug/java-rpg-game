@@ -41,4 +41,10 @@ public class Collision {
     public int getMonsterIndex(){
         return this.monsterIndex;
     }
+
+    public boolean getMonsterFound(){
+        return this.monsterFound;
+    }
+
+    
 }

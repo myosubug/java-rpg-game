@@ -44,14 +44,11 @@ class Item{
 		return this.hPIncrease;
 	}
 
-	public void useItem(){
-
-		if (hPIncrease > 0)
-			 System.out.println("Your HP has increased by " + hPIncrease);
-
-		if (attackIncrease > 0)
-			System.out.println("Your attack went up by " + attackIncrease);
-
+	public int useItem(){
+		if (this.getName().equals("HP potion"))
+			 return hPIncrease;
+		else 
+			return attackIncrease;
 	}
 
 
