@@ -7,7 +7,7 @@ public class Map{
 
 	/**
 	 * Declaring member variables, the 2d array map and object that needs to be on the map.
-	 */
+	*/
 	private ArrayList<Item> itemLocation= new ArrayList<Item>();
 	private ArrayList<Creature> monsterLocation = new ArrayList<Creature>();
 	private ArrayList<char[]> mapData = new ArrayList<char[]>();
@@ -17,25 +17,7 @@ public class Map{
 	private Item HP, battleFruit;   //items that will be randomly appearing on the map
 	private Creature metapod, weedle, rattata; //different kinds of monsters on the map
 
-
-
 	//CONSTRUCTORS
-<<<<<<< HEAD
-	//makes a simple map with the basic items and creatures
-	/*public Map() {
-		this.HP = new Item("HP Potion", 10, 0, 32, 32);
-		this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
-		this.metapod = new Creature("Metapod", 20, 1, 7, 224, 160);
-		this.weedle = new Creature("Weedle", 21, 1, 6, 320, 320);
-		this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
-
-		itemLocation.add(HP);
-		itemLocation.add(battleFruit);
-		monsterLocation.add(metapod);
-		monsterLocation.add(weedle);
-		monsterLocation.add(rattata);
-
-	} */
 
 	public Map(int mapLineWidth, String mapToRead){
 		this.mapLineWidth = mapLineWidth;
@@ -69,22 +51,6 @@ public class Map{
 		monsterLocation.add(metapod);
 		monsterLocation.add(weedle);
 		monsterLocation.add(rattata);
-=======
-	Map() {
-
-
-	this.HP = new Item("HP Potion", 10, 0, 32, 32);
-	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
-	this.metapod = new Creature("Metapod", 20, 1, 7, 0, 0);
-	this.weedle = new Creature("Weedle", 21, 1, 6, 96, 96);
-	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
-
-	itemLocation.add(HP);
-	itemLocation.add(battleFruit);
-	monsterLocation.add(metapod);
-	monsterLocation.add(weedle);
-	monsterLocation.add(rattata);
->>>>>>> 82b35c29525bd09ae9db7dd0ba74301b04a7f521
 
 	}
 
