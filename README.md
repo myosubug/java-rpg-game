@@ -17,3 +17,6 @@ How to start text-version:
     4. Use command "javac TextApp.java" to compile.
 
     5. Use command "java TextApp" to run the game.
+
+
+checking git connection

@@ -20,6 +20,7 @@ public class Map{
 
 
 	//CONSTRUCTORS
+<<<<<<< HEAD
 	//makes a simple map with the basic items and creatures
 	/*public Map() {
 		this.HP = new Item("HP Potion", 10, 0, 32, 32);
@@ -68,6 +69,22 @@ public class Map{
 		monsterLocation.add(metapod);
 		monsterLocation.add(weedle);
 		monsterLocation.add(rattata);
+=======
+	Map() {
+
+
+	this.HP = new Item("HP Potion", 10, 0, 32, 32);
+	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
+	this.metapod = new Creature("Metapod", 20, 1, 7, 0, 0);
+	this.weedle = new Creature("Weedle", 21, 1, 6, 96, 96);
+	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
+
+	itemLocation.add(HP);
+	itemLocation.add(battleFruit);
+	monsterLocation.add(metapod);
+	monsterLocation.add(weedle);
+	monsterLocation.add(rattata);
+>>>>>>> 82b35c29525bd09ae9db7dd0ba74301b04a7f521
 
 	}
 
