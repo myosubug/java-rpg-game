@@ -20,8 +20,8 @@ public class Map{
 
 	this.HP = new Item("HP Potion", 10, 0, 32, 32);
 	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
-	this.metapod = new Creature("Metapod", 20, 1, 7, 224, 160);
-	this.weedle = new Creature("Weedle", 21, 1, 6, 320, 320);
+	this.metapod = new Creature("Metapod", 20, 1, 7, 0, 0);
+	this.weedle = new Creature("Weedle", 21, 1, 6, 96, 96);
 	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
 
 	itemLocation.add(HP);
