@@ -37,29 +37,33 @@ public class Interaction {
         this.monster = monster;
     }
 
-    /*
-    public void addActionKeyEvent(Scene scene, Label output){
-        scene.setOnKeyPressed(
-        new EventHandler<KeyEvent>()
-        {
-        public void handle(KeyEvent e)
-            {
-            switch(e.getCode()){
-                    case J:
-                        output.setText("j pressed");
-                        break;
-                    case D:
-                        output.setText("k pressed");
-                        break;
-                    }
-            }
-        });
-    
+    public void battle(Label output){
+        double fightRate = Math.random();
+        if(fightRate < 0.40)
+            output.setText("Won");
+        else
+            output.setText("Lost");
+        
+        /*
+        
+        while(this.player.getHP() > 0 && this.monster.getHP() > 0){
+            double fightRate = Math.random();
+            if(fightRate < 0.40)
+                this.monster.setHP(this.monster.getHP()-this.player.getAttack());
+            else
+                this.player.setHP(this.player.getHP()-this.monster.getAttack());
+        }
+        if (this.player.getHP() <= 0){
+            output.setText("YOU HAVE LOST THE BATTLE!");
+        } else{
+            this.player.levelUp();
+            output.setText("You have won the battle!\n"+player.toString()+"\n");
 
+        }
+        */
+        
+        
     }
-
-
-    */
 
     
 
