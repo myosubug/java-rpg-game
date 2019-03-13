@@ -33,7 +33,7 @@ public class GUIApp extends Application {
     private Map firstMap = new Map();
     private Collision collisionCheck = new Collision();
     private Interaction interaction;
-    private static KeyEvent keyPressed;
+
 
 
 
