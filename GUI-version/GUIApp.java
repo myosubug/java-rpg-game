@@ -30,7 +30,7 @@ public class GUIApp extends Application {
     private static Image pikachuImage;
     private static Image gamebackground;
     private Player pikachu = new Player();
-    private Map firstMap = new Map();
+    private Map firstMap = new Map(20, ".\\map1.txt");
     private Collision collisionCheck = new Collision();
     private Interaction interaction;
 
