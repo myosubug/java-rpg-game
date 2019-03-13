@@ -30,11 +30,7 @@ class Player extends Creature{
         int order = 1;
         String result = "";
         for(Item i : this.getInventory()){
-<<<<<<< HEAD
             result += order+": "+i.toString()+"\n";
-=======
-            result += order+": "+i.toString()+" \n";
->>>>>>> 8cdef93ebaae79db02c0487889987ec76d6845bb
             order++;
         }
         return result;
