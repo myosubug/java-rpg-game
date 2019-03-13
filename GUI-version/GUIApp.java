@@ -46,7 +46,8 @@ public class GUIApp extends Application {
         initilization();
         primaryStage.setTitle("Liberate Pikachu!");
         primaryStage.setScene(theScene);
-        gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
+
+
         //connecting button and keys to event handler
         addMovementKeyEvent(theScene);
 
@@ -66,16 +67,11 @@ public class GUIApp extends Application {
     // ======================= setting up the layout of status window here =======================
     public void initilization(){
 
-
-        pikachu.setX(0);
-        pikachu.setY(0);
-
-
         root = new VBox();
         theScene = new Scene(root, 640, 800);
 
         canvas = new Canvas(640, 640);
-        pikachuImage = new Image("file:img/pikachu.gif");
+        pikachuImage = new Image("file:img/front.gif");
         gamebackground = new Image("file:img/map.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
