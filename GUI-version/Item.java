@@ -9,6 +9,7 @@ class Item{
 	private int xCoord;
 	private int yCoord;
 
+
 	//CONSTRUCTOR
 	Item(String name, int hPIncrease, int attackIncrease, int x, int y){
 		this.name = name;
@@ -52,6 +53,8 @@ class Item{
 			System.out.println("Your attack went up by " + attackIncrease);
 
 	}
+
+
 
 
 

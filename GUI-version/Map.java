@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Map{
 
@@ -46,11 +48,28 @@ public class Map{
 		this.weedle = new Creature("Weedle", 21, 1, 6, 320, 320);
 		this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
 
-		itemLocation.add(HP);
-		itemLocation.add(battleFruit);
-		monsterLocation.add(metapod);
-		monsterLocation.add(weedle);
-		monsterLocation.add(rattata);
+		itemList.add(HP);
+		itemList.add(battleFruit);
+		monsterList.add(metapod);
+		monsterList.add(weedle);
+		monsterList.add(rattata);
+	}
+	*/
+
+	public Map(){
+
+
+	this.HP = new Item("HP Potion", 10, 0, 32, 32);
+	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
+	this.metapod = new Creature("Metapod", 20, 1, 7, 0, 0);
+	this.weedle = new Creature("Weedle", 21, 1, 6, 96, 96);
+	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
+
+	itemList.add(HP);
+	itemList.add(battleFruit);
+	monsterList.add(metapod);
+	monsterList.add(weedle);
+	monsterList.add(rattata);
 
 	}
 
@@ -60,13 +79,13 @@ public class Map{
 	 * getters and setters for Map and member variables
 	 */
 
-	public ArrayList<Item> getItemLocation() {
-		return this.itemLocation;
+	public ArrayList<Item> getItemList() {
+		return this.itemList;
 	}
 
 
-	public ArrayList<Creature> getMonsterLocation() {
-		return this.monsterLocation;
+	public ArrayList<Creature> getMonsterList() {
+		return this.monsterList;
 	}
 
 
@@ -75,9 +94,15 @@ public class Map{
 	}
 
 
+	public Item getRandomItem(){
+		int index = ThreadLocalRandom.current().nextInt(this.itemList.size());
+	    return itemList.get(index);
+	}
+
 	/**
 	method reads a text file to get map data
 	*/
+	/*
 	public static ArrayList<char[]> readMapFile(String fileName) throws FileNotFoundException{
 
 		try{
@@ -110,7 +135,10 @@ public class Map{
 			return null;
 	  }
 
+
 	}
+
+	*/
 
 
 
