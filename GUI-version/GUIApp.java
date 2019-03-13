@@ -30,7 +30,7 @@ public class GUIApp extends Application {
     private static Image gamebackground;
     private static int monsterIndex;
     private Player pikachu = new Player();
-    private Map firstMap = new Map(20, ".\\map1.txt");
+    private Map firstMap = new Map();
     private Collision collisionCheck = new Collision();
     private Interaction interaction;
 
@@ -162,7 +162,7 @@ public class GUIApp extends Application {
                             }
                             else
                                 output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
-                        } 
+                        }
                         else
                             output.setText("Use WASD to move around.");
                         break;
@@ -198,9 +198,9 @@ public class GUIApp extends Application {
                         break;
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
-                        
-                        
-                        
+
+
+
                 }
             }
         });
@@ -218,13 +218,13 @@ public class GUIApp extends Application {
 
     }
 
-    
+
     public void monsterInteractionHandler(){
             Creature monster = firstMap.getMonsterList().get(monsterIndex);
             interaction = new Interaction(pikachu, monster);
             interaction.battle(output);
      }
-     
+
 
     public static void main(String[] args) {
         launch(args);
