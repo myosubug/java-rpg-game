@@ -37,30 +37,26 @@ public class Interaction {
         this.monster = monster;
     }
 
-    public void battle(Label output){
-        double fightRate = Math.random();
-        if(fightRate < 0.40)
-            output.setText("Won");
-        else
-            output.setText("Lost");
-        
-        /*
-        
+    public void battle(Label output){      
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){
             double fightRate = Math.random();
-            if(fightRate < 0.40)
-                this.monster.setHP(this.monster.getHP()-this.player.getAttack());
-            else
-                this.player.setHP(this.player.getHP()-this.monster.getAttack());
+            if(fightRate < 0.80){
+                this.monster.setHP(-this.player.getAttack());
+                System.out.println(this.monster.getHP());
+            }
+            else{
+                this.player.setHP(-this.monster.getAttack());
+                System.out.println(this.player.getHP());
+            }
         }
         if (this.player.getHP() <= 0){
-            output.setText("YOU HAVE LOST THE BATTLE!");
+            output.setText("===========YOU HAVE LOST THE BATTLE!===========");
         } else{
             this.player.levelUp();
             output.setText("You have won the battle!\n"+player.toString()+"\n");
-
+            this.monster.setHP(25);
         }
-        */
+        
         
         
     }
