@@ -10,6 +10,8 @@ public class Map{
 	/**
 	 * Declaring member variables, the 2d array map and object that needs to be on the map.
 	*/
+	private ArrayList<Item> itemList= new ArrayList<Item>();
+	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private ArrayList<Item> itemLocation= new ArrayList<Item>();
 	private ArrayList<Creature> monsterLocation = new ArrayList<Creature>();
 	private ArrayList<char[]> mapData = new ArrayList<char[]>();
@@ -54,7 +56,7 @@ public class Map{
 		monsterList.add(weedle);
 		monsterList.add(rattata);
 	}
-	*/
+
 
 	public Map(){
 
@@ -102,7 +104,7 @@ public class Map{
 	/**
 	method reads a text file to get map data
 	*/
-	/*
+
 	public static ArrayList<char[]> readMapFile(String fileName) throws FileNotFoundException{
 
 		try{
@@ -138,7 +140,7 @@ public class Map{
 
 	}
 
-	*/
+
 
 
 
