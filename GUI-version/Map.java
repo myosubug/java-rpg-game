@@ -20,7 +20,6 @@ public class Map{
 
 
 	//CONSTRUCTORS
-<<<<<<< HEAD
 	//makes a simple map with the basic items and creatures
 	/*public Map() {
 		this.HP = new Item("HP Potion", 10, 0, 32, 32);
@@ -69,7 +68,6 @@ public class Map{
 		monsterLocation.add(metapod);
 		monsterLocation.add(weedle);
 		monsterLocation.add(rattata);
-=======
 	Map() {
 
 
@@ -84,7 +82,6 @@ public class Map{
 	monsterLocation.add(metapod);
 	monsterLocation.add(weedle);
 	monsterLocation.add(rattata);
->>>>>>> 82b35c29525bd09ae9db7dd0ba74301b04a7f521
 
 	}
 
