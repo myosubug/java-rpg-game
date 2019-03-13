@@ -212,6 +212,22 @@ public class GUIApp extends Application {
     }
 
 
+<<<<<<< HEAD
+=======
+   //NOTE: this should be moved to Collision class
+   /*
+   public String collisionCheck(ArrayList<Item> itemLocation, ArrayList<Creature> monsterLocation){
+        if (collisionCheck.isItemFound(pikachu, itemLocation))
+            return "item";
+        else if (collisionCheck.isMonsterFound(pikachu, monsterLocation))
+            return "monster";
+        else
+            return "nothing";
+    }
+    */
+
+    //NOTE: this should be moved to an EventHandler class
+>>>>>>> 8cdef93ebaae79db02c0487889987ec76d6845bb
     public void itemInteractionHandler(){
 
         double randomRate = Math.random();
@@ -224,9 +240,17 @@ public class GUIApp extends Application {
 
     
     public void monsterInteractionHandler(){
+<<<<<<< HEAD
             Creature monster = firstMap.getMonsterList().get(monsterIndex);
             interaction = new Interaction(pikachu, monster);
             interaction.battle(output);
+=======
+        int monsterIndex = collisionCheck.getMonsterIndex();
+        Creature monster = firstMap.getMonsterLocation().get(monsterIndex);
+        interaction = new Interaction(pikachu, monster);
+        output.setText("You have encountered a " + monster.getName() + "!\nWill you fight or run? (To fight, press J. To run away press K)");
+        //interaction.addActionKeyEvent(theScene, output);
+>>>>>>> 8cdef93ebaae79db02c0487889987ec76d6845bb
      }
      
 
