@@ -17,19 +17,8 @@ public class Test{
       Scanner scanner = new Scanner(mapFile);
       char[][] results = new char[20][20];
 
-      //while there are lines remaining in the file
-      while (scanner.hasNextLine()){
-        //gets each individual character from text file and adds it as a list element
-        for (int i = 0; i < lineWidth; i++){
-          for (int j = 0; j < lineWidth; j++){
-            if (scanner.hasNext())
-              results[i][j] = scanner.next().charAt(0);
-
-            else{
-              continue;
-            }
-          }
-        }
+      for (int row = 0; scanner.hasNextLine() && row < 20; row++) {
+        results[row] = scanner.nextLine().toCharArray();
       }
 
       scanner.close();

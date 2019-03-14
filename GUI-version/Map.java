@@ -14,7 +14,7 @@ public class Map{
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private ArrayList<Item> itemLocation= new ArrayList<Item>();
 	private ArrayList<Creature> monsterLocation = new ArrayList<Creature>();
-	private ArrayList<char[]> mapData = new ArrayList<char[]>();
+	private char[][] mapData = new char[20][20];
 	private String mapFileLocation;
 	private int mapLineWidth;
 
@@ -24,24 +24,15 @@ public class Map{
 	//CONSTRUCTORS
 
 	public Map(int mapLineWidth, String mapToRead){
-		this.mapLineWidth = mapLineWidth;
 
 		//will try to load map data from text file
 		try{
-			this.mapData = readMapFile(mapToRead);
+			this.mapData = readMapFile(mapToRead, mapLineWidth);
 		}
 		//if it's unable to load file, will create a map with no obstacles instead
 		catch(FileNotFoundException ex){
-			char[] blankLine = new char[mapLineWidth];
-			for (int i = 0; i < mapLineWidth; i++){
-				String dash = "-";
-				char blankSymbol = dash.charAt(0);
-				blankLine[i] = blankSymbol;
-			}
-
-			for (int i = 0; i < mapLineWidth; i++){
-				this.mapData.add(blankLine);
-			}
+			System.out.print("Cannot read text file");
+			this.mapData = null;
 		}
 
 		this.HP = new Item("HP Potion", 10, 0, 32, 32);
@@ -106,27 +97,16 @@ public class Map{
 	method reads a text file to get map data
 	*/
 
-	public static ArrayList<char[]> readMapFile(String fileName) throws FileNotFoundException{
-
+	public static char[][] readMapFile(String fileName, int lengthOfSide) throws FileNotFoundException{
+		char[][] mapData = new char[lengthOfSide][lengthOfSide];
 		try{
 			int lineWidth = 20;
-
 			File mapFile = new File(fileName);
 			Scanner scanner = new Scanner(mapFile);
-			ArrayList<char[]> results = new ArrayList<char[]>();
+			char[][] results = new char[20][20];
 
-			//while there are lines remaining in the file
-			while (scanner.hasNextLine()){
-				//creates a list for characters in this row
-				char[] currentRow = new char[lineWidth];
-
-				//gets each individual character from text file and adds it as a list element
-				for (int i = 0; i < lineWidth; i++){
-					currentRow[i] = scanner.next().charAt(0);
-				}
-
-				//adds the 1d list to the 2d array of map data results
-				results.add(currentRow);
+			for (int row = 0; scanner.hasNextLine() && row < lengthOfSide; row++) {
+				results[row] = scanner.nextLine().toCharArray();
 			}
 
 			scanner.close();
@@ -134,12 +114,11 @@ public class Map{
 		}
 
 		catch (FileNotFoundException ex) {
-	    System.out.println("Unable to open " + fileName);
+			System.out.println("Unable to open " + fileName);
 			return null;
-	  }
-
-
+		}
 	}
+
 
 
 
