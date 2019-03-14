@@ -42,15 +42,13 @@ public class Interaction {
             double fightRate = Math.random();
             if(fightRate < 0.80){
                 this.monster.setHP(-this.player.getAttack());
-                System.out.println(this.monster.getHP());
             }
             else{
                 this.player.setHP(-this.monster.getAttack());
-                System.out.println(this.player.getHP());
             }
         }
         if (this.player.getHP() <= 0){
-            output.setText("===========YOU HAVE LOST THE BATTLE!===========");
+            output.setText("===========YOU HAVE LOST THE BATTLE!===========\n===========PLEASE RE-START THE GAME===========");
         } else{
             this.player.levelUp();
             output.setText("You have won the battle!\n"+player.toString()+"\n");

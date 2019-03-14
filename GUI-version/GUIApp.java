@@ -174,7 +174,7 @@ public class GUIApp extends Application {
                         break;
                     case Z:
                         if(pikachu.getInventory().get(0).getName().equals("HP Potion"))
-                            pikachu.setHP(pikachu.getInventory().get(0).useItem());
+                            pikachu.setHP(pikachu.getInventory().get(0).getHPIncrease());
                         else if (pikachu.getInventory().get(0).getName().equals("Battle Fruit"))
                             pikachu.setAttack(pikachu.getInventory().get(0).useItem());
                         output.setText("Used "+pikachu.getInventory().get(0).getName()+"\n"+pikachu.toString());
@@ -182,7 +182,7 @@ public class GUIApp extends Application {
                         break;
                     case X:
                         if(pikachu.getInventory().get(1).getName().equals("HP Potion"))
-                            pikachu.setHP(pikachu.getInventory().get(1).useItem());
+                            pikachu.setHP(pikachu.getInventory().get(1).getHPIncrease());
                         else if (pikachu.getInventory().get(1).getName().equals("Battle Fruit"))
                             pikachu.setAttack(pikachu.getInventory().get(1).useItem());
                         output.setText("Used "+pikachu.getInventory().get(1).getName()+"\n"+pikachu.toString());
@@ -190,7 +190,7 @@ public class GUIApp extends Application {
                         break;
                     case C:
                         if(pikachu.getInventory().get(2).getName().equals("HP Potion"))
-                            pikachu.setHP(pikachu.getInventory().get(2).useItem());
+                            pikachu.setHP(pikachu.getInventory().get(2).getHPIncrease());
                         else if (pikachu.getInventory().get(2).getName().equals("Battle Fruit"))
                             pikachu.setAttack(pikachu.getInventory().get(2).useItem());
                         output.setText("Used "+pikachu.getInventory().get(2).getName()+"\n"+pikachu.toString());
@@ -211,7 +211,7 @@ public class GUIApp extends Application {
     public void itemInteractionHandler(){
 
         double randomRate = Math.random();
-        if (randomRate <= 0.02 && pikachu.getInventory().size() < 3){
+        if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
             pikachu.addItemToInventory(firstMap.getRandomItem());
             output.setText("Item has been found!\nItem has been added to your inventory!\n"+pikachu.displayInventory());
         }
