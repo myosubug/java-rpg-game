@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-class Player extends Creature{
+public class Player extends Creature{
+
     //declaring member variable, the player will use array list as a item bag
     private ArrayList<Item> inventory = new ArrayList<Item>();
 
@@ -11,7 +12,7 @@ class Player extends Creature{
 
     /**
      * this method returns nothing but adds an item (parameter) to inventory arraylist.
-     * @param newItem
+     * @param newItem this is an item that will be added to player's inventory
      */
     public void addItemToInventory (Item newItem) {
         this.inventory.add(newItem);

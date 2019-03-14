@@ -19,8 +19,9 @@ import java.util.ArrayList;
 
 public class GUIApp extends Application {
 
-    //setting up instance variables, everything except pikachux, y will have no significant changes
-    //pikachu x,y will be implmented through sprite class again
+    /**
+     * these are member variables that are used in this class
+     */
     private static VBox root;
     private static Scene theScene;
     private static Canvas canvas;
@@ -48,9 +49,10 @@ public class GUIApp extends Application {
         primaryStage.setScene(theScene);
 
 
-        //connecting button and keys to event handler
+        //connecting keys to event handler
         addMovementKeyEvent(theScene);
 
+        //animation starts
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -64,7 +66,12 @@ public class GUIApp extends Application {
     primaryStage.show();
     }
 
-    // ======================= setting up the layout of status window here =======================
+    /**
+     * this method initalizes layout of JavaFX on this application
+     * including layout style, size of each different children nodes
+     * initial messages for output (label)
+     * also initially sets the player character location as 0, 0
+     */
     public void initilization(){
 
         root = new VBox();
@@ -91,9 +98,19 @@ public class GUIApp extends Application {
 
     }
 
-    // ======================= setting up button and key events here =======================
-
-    //NOTE: should be moved to an EventHandler class
+    /**
+     * This method take cares of all the keyboard event in this game
+     * it takes the current Scene as a parameter and based on the key pressed, 
+     * it's taking care of different actions
+     * WASD - these are movement keys that updates pikachu's current location also checks for
+     *        item interaction or monster interaction.
+     *        these key event make sure that Pikachu doesn't go over the boundaries of canvas
+     * J - this is the key to start battle with the monster where pikachu currently is at
+     * L - this is the key for escape from battle
+     * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
+     * B - this is the key to check pikachu's current inventory. 
+     * @param scene this is the current Scene variable in this JavaFx application
+     */
     public void addMovementKeyEvent(Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -207,9 +224,13 @@ public class GUIApp extends Application {
 
     }
 
-
+    /**
+     * this methods gives a player (pikachu) an random item by random chance.
+     * everytime pikahu makes a movement, this method is called and by 4% chance, 
+     * pikachu can get a random item and it's added to pikachu's current inventory, which is an arraylist
+     * pikachu only can have 3 items at max, and more item will be disregarded.
+     */
     public void itemInteractionHandler(){
-
         double randomRate = Math.random();
         if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
             pikachu.addItemToInventory(firstMap.getRandomItem());
@@ -218,7 +239,11 @@ public class GUIApp extends Application {
 
     }
 
-
+    /**
+     * this methods handles a monster battle event if player is at a tile where monster is.
+     * this method creates instance of Interaction class and takes player and the monster that player have met as parameter
+     * also prints out the result of the battle as output in Label of the JavaFX application
+     */
     public void monsterInteractionHandler(){
             Creature monster = firstMap.getMonsterList().get(monsterIndex);
             interaction = new Interaction(pikachu, monster);
