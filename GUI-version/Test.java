@@ -34,7 +34,7 @@ public class Test{
   public static void main(String[] args) {
     char[][] testMapData = new char[20][20];
     try{
-      testMapData = readMapFile("map1.txt");
+      testMapData = readMapFile("mapData/map1.txt");
     }
 
     //if it's unable to load file, will create a map with no obstacles instead

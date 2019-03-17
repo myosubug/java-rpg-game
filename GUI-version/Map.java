@@ -12,9 +12,7 @@ public class Map{
 	*/
 	private ArrayList<Item> itemList= new ArrayList<Item>();
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
-	private ArrayList<Item> itemLocation= new ArrayList<Item>();
-	private ArrayList<Creature> monsterLocation = new ArrayList<Creature>();
-	private char[][] mapData = new char[20][20];
+	private char[][] mapData;
 	private String mapFileLocation;
 	private int mapLineWidth;
 
@@ -48,25 +46,6 @@ public class Map{
 		monsterList.add(rattata);
 	}
 
-
-	public Map(){
-
-
-	this.HP = new Item("HP Potion", 10, 0, 32, 32);
-	this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
-	this.metapod = new Creature("Metapod", 20, 1, 7, 0, 0);
-	this.weedle = new Creature("Weedle", 21, 1, 6, 96, 96);
-	this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
-
-	itemList.add(HP);
-	itemList.add(battleFruit);
-	monsterList.add(metapod);
-	monsterList.add(weedle);
-	monsterList.add(rattata);
-
-	}
-
-
 	//METHODS
 	/**
 	 * getters and setters for Map and member variables
@@ -93,12 +72,29 @@ public class Map{
 	}
 
 
+	public Creature getRandomMonster(){
+		int index = ThreadLocalRandom.current().nextInt(this.monsterList.size());
+	    return monsterList.get(index);
+	}
+
+	public char[][] getMapData(){
+		return this.mapData;
+	}
+
+	public void printMap(){
+		for (int i = 0; i < 20; i++){
+			System.out.println("");
+			for (int j = 0; j < 20; j++){
+			  System.out.print(this.mapData[i][j]);
+			}
+		}
+	}
+
 	/**
 	method reads a text file to get map data
 	*/
 
 	public static char[][] readMapFile(String fileName, int lengthOfSide) throws FileNotFoundException{
-		char[][] mapData = new char[lengthOfSide][lengthOfSide];
 		try{
 			int lineWidth = 20;
 			File mapFile = new File(fileName);

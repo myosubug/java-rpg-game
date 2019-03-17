@@ -27,13 +27,11 @@ class Player extends Creature{
      * it displays each item that is in the current inventory.
      */
     public String displayInventory(){
-        int order = 1;
         String result = "";
         for(Item i : this.getInventory()){
-            result += order+": "+i.toString()+"\n";
-            order++;
+            result += "* "+i.toString()+"\n";
         }
-        return result;
+        return result +"\n To use items, use Z,X,C to use one of 3 items in order.";
     }
 
     //this toString() method overrides toString() method from Creature when it is called on player's class instance

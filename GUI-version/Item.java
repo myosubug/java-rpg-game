@@ -51,8 +51,4 @@ class Item{
 			return attackIncrease;
 	}
 
-
-
-
-
 }
