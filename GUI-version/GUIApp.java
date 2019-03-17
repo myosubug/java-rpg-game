@@ -174,13 +174,18 @@ public class GUIApp extends Application {
     }
 
      public void itemSelect(int invenNum){
+        try{
 		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))
             pikachu.setHP(pikachu.getInventory().get(invenNum).getHPIncrease());
         else if (pikachu.getInventory().get(invenNum).getName().equals("Battle Fruit"))
             pikachu.setAttack(pikachu.getInventory().get(invenNum).useItem());
         output.setText("Used "+pikachu.getInventory().get(invenNum).getName()+"\n"+pikachu.toString());
         pikachu.getInventory().remove(invenNum);
-	}
+        } catch (Exception e){
+            System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
+            output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
