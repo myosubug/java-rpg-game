@@ -131,10 +131,12 @@ public class GUIApp extends Application {
                         break;
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        break;
+                    default:
+                        output.setText("Please press correct keys to operate.");
                 }
             }
         });
-
     }
 
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){

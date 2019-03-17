@@ -12,9 +12,9 @@ public class Collision {
     }
 
     public boolean miniBossCollisionCheck (int pikachuX, int pikachuY, char[][] mapData){
-        pikachuX /= 32;
-        pikachuY /= 32;
-        if (mapData[pikachuX][pikachuY] == '*')
+        int pikachuXDivided = pikachuX / 32;
+        int pikachuYDivided = pikachuY / 32;
+        if (mapData[pikachuYDivided][pikachuXDivided] == '*')
             return true;
         else
             return false;
