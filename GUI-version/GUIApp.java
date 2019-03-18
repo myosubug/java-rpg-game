@@ -22,7 +22,7 @@ public class GUIApp extends Application {
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
     private static VBox root;
-    private static Scene theScene;
+    private static Scene gameScene;
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
@@ -44,11 +44,11 @@ public class GUIApp extends Application {
         //setting up main layout and stage
         initilization();
         primaryStage.setTitle("Liberate Pikachu!");
-        primaryStage.setScene(theScene);
+        primaryStage.setScene(gameScene);
 
 
         //connecting button and keys to event handler
-        addMovementKeyEvent(theScene);
+        addMovementKeyEvent(gameScene);
 
         new AnimationTimer(){
             @Override
@@ -67,7 +67,7 @@ public class GUIApp extends Application {
     public void initilization(){
 
         root = new VBox();
-        theScene = new Scene(root, 640, 800);
+        gameScene = new Scene(root, 640, 800);
         pikachu.setX(0);
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
