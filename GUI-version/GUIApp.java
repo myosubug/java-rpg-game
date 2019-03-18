@@ -13,23 +13,29 @@ import javafx.scene.image.Image;
 import javafx.event.ActionEvent;
 import java.util.ArrayList;
 
+import javafx.scene.layout.BorderPane;
+
 
 
 
 
 public class GUIApp extends Application {
 
-    //setting up instance variables, everything except pikachux, y will have no significant changes
-    //pikachu x,y will be implmented through sprite class again
+    /**
+     * these are member variables that are used in this class
+     */
     private static VBox root;
     private static Scene gameScene;
     private static Canvas canvas;
+    private Stage primaryStage;
+
     private static GraphicsContext gc;
     private static Label output;
     private static Image pikachuImage;
     private static Image gamebackground;
+    private static int monsterIndex;
     private Player pikachu = new Player();
-    private Map gameMap = new Map(20, "mapData/map1.txt");
+    private Map firstMap = new Map();
     private Collision collisionCheck = new Collision();
     private Interaction interaction;
 
@@ -50,6 +56,7 @@ public class GUIApp extends Application {
         //connecting button and keys to event handler
         addMovementKeyEvent(gameScene);
 
+        //animation starts
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -63,7 +70,12 @@ public class GUIApp extends Application {
     primaryStage.show();
     }
 
-    // ======================= setting up the layout of status window here =======================
+    /**
+     * this method initalizes layout of JavaFX on this application
+     * including layout style, size of each different children nodes
+     * initial messages for output (label)
+     * also initially sets the player character location as 0, 0
+     */
     public void initilization(){
 
         root = new VBox();
@@ -77,10 +89,12 @@ public class GUIApp extends Application {
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
 
 
+
+
         root.getChildren().add(canvas);
 
         //setting up a borderpane to place status message section as label object
-        output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+        output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
         output.setMinWidth(640);
         output.setMinHeight(160);
         output.setStyle("-fx-border-color: black;");
@@ -91,9 +105,19 @@ public class GUIApp extends Application {
 
     }
 
-    // ======================= setting up button and key events here =======================
-
-    //NOTE: should be moved to an EventHandler class
+    /**
+     * This method take cares of all the keyboard event in this game
+     * it takes the current Scene as a parameter and based on the key pressed, 
+     * it's taking care of different actions
+     * WASD - these are movement keys that updates pikachu's current location also checks for
+     *        item interaction or monster interaction.
+     *        these key event make sure that Pikachu doesn't go over the boundaries of canvas
+     * J - this is the key to start battle with the monster where pikachu currently is at
+     * L - this is the key for escape from battle
+     * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
+     * B - this is the key to check pikachu's current inventory. 
+     * @param scene this is the current Scene variable in this JavaFx application
+     */
     public void addMovementKeyEvent(Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -103,91 +127,160 @@ public class GUIApp extends Application {
             {
             switch(e.getCode()){
                     case W:
-                        pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif");
+                        if(pikachu.getY() - 32 >= 0 && pikachu.getY() - 32 <= 608){
+                            pikachuImage = new Image("file:img/back.gif");
+                            pikachu.setY(pikachu.getY() - 32);
+                            itemInteractionHandler();
+                            collisionCheck.isMonsterFound(pikachu, firstMap.getMonsterList());
+                            if(collisionCheck.getMonsterFound() == true){
+
+                                monsterIndex = collisionCheck.getMonsterIndex();
+                                output.setText("You have encountered with "+firstMap.getMonsterList().get(monsterIndex).getName()+"\nWill you fight or run? (If yes, press J, or to run away press L)");
+
+                                //Creates a new window from BattleEcounter class
+                                BattleEncounter.display("Battle encounter", "WWW");
+
+
+
+                            }
+                            else
+                                output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
+                        }
+                        else
+                            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
                         break;
                     case D:
-                        pikachuMovement(pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif");
+                        if(pikachu.getX() + 32 >= 0 && pikachu.getX() + 32 <= 608){
+                            pikachuImage = new Image("file:img/right.gif");
+                            pikachu.setX(pikachu.getX() + 32);
+                            itemInteractionHandler();
+                            collisionCheck.isMonsterFound(pikachu, firstMap.getMonsterList());
+                            if(collisionCheck.getMonsterFound() == true){
+                                monsterIndex = collisionCheck.getMonsterIndex();
+                                output.setText("You have encountered with "+firstMap.getMonsterList().get(monsterIndex).getName()+"\nWill you fight or run? (If yes, press J, or to run away press L)");
+
+                                //Creates a new window from BattleEcounter class
+                                BattleEncounter.display("Battle encounter", "DDD");
+
+                            }
+                            else
+                                output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
+                        }
+                        else
+                            output.setText("Use WASD to move around.");
                         break;
                     case S:
-                        pikachuMovement(pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif");
+                        if(pikachu.getY() + 32 >= 0 && pikachu.getY() + 32 <= +608){
+                            pikachuImage = new Image("file:img/front.gif");
+                            pikachu.setY(pikachu.getY() + 32);
+                            itemInteractionHandler();
+                            collisionCheck.isMonsterFound(pikachu, firstMap.getMonsterList());
+                            if(collisionCheck.getMonsterFound() == true){
+
+                                monsterIndex = collisionCheck.getMonsterIndex();
+                                output.setText("You have encountered with "+firstMap.getMonsterList().get(monsterIndex).getName()+"\nWill you fight or run? (If yes, press J, or to run away press L)");
+
+                                //Creates a new window from BattleEcounter class
+                                BattleEncounter.display("Battle encounter", "SSS");
+
+
+                            }
+                            else
+                                output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
+                        }
+                        else
+                            output.setText("Use WASD to move around.");
                         break;
                     case A:
-                        pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif");
+                        if(pikachu.getX() - 32 >= 0 && pikachu.getX() - 32 <= 608){
+                            pikachuImage = new Image("file:img/left.gif");
+                            pikachu.setX(pikachu.getX() - 32);
+                            itemInteractionHandler();
+                            collisionCheck.isMonsterFound(pikachu, firstMap.getMonsterList());
+                            if(collisionCheck.getMonsterFound() == true){
+                                monsterIndex = collisionCheck.getMonsterIndex();
+                                output.setText("You have encountered with "+firstMap.getMonsterList().get(monsterIndex).getName()+"\nWill you fight or run? (If yes, press J, or to run away press L)");
+
+                                //Creates a new window from BattleEcounter class
+                                BattleEncounter.display("Battle encounter", "AAA");
+                            }
+                            else
+                                output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order from 1 to 3.");
+                        }
+                        else
+                            output.setText("Use WASD to move around.");
                         break;
                     case J:
-                        randomMonsterBattle();
+                        monsterInteractionHandler();
                         break;
                     case L:
                         output.setText("Use WASD to get out of battle");
                         break;
                     case Z:
-                        itemSelect(0);
+                        if(pikachu.getInventory().get(0).getName().equals("HP Potion"))
+                            pikachu.setHP(pikachu.getInventory().get(0).getHPIncrease());
+                        else if (pikachu.getInventory().get(0).getName().equals("Battle Fruit"))
+                            pikachu.setAttack(pikachu.getInventory().get(0).useItem());
+                        output.setText("Used "+pikachu.getInventory().get(0).getName()+"\n"+pikachu.toString());
+                        pikachu.getInventory().remove(0);
                         break;
                     case X:
-                        itemSelect(1);
+                        if(pikachu.getInventory().get(1).getName().equals("HP Potion"))
+                            pikachu.setHP(pikachu.getInventory().get(1).getHPIncrease());
+                        else if (pikachu.getInventory().get(1).getName().equals("Battle Fruit"))
+                            pikachu.setAttack(pikachu.getInventory().get(1).useItem());
+                        output.setText("Used "+pikachu.getInventory().get(1).getName()+"\n"+pikachu.toString());
+                        pikachu.getInventory().remove(1);
                         break;
                     case C:
-                        itemSelect(2);
+                        if(pikachu.getInventory().get(2).getName().equals("HP Potion"))
+                            pikachu.setHP(pikachu.getInventory().get(2).getHPIncrease());
+                        else if (pikachu.getInventory().get(2).getName().equals("Battle Fruit"))
+                            pikachu.setAttack(pikachu.getInventory().get(2).useItem());
+                        output.setText("Used "+pikachu.getInventory().get(2).getName()+"\n"+pikachu.toString());
+                        pikachu.getInventory().remove(2);
                         break;
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
-                        break;
-                    default:
-                        output.setText("Please press correct keys to operate.");
+
+
+
+
+
                 }
             }
         });
+
     }
 
-    public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
-        boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
-        if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
-            pikachuImage = new Image(imgLocation);
-            pikachu.setX(pikachuX);
-            pikachu.setY(pikachuY);
-            itemInteractionHandler();
-            monsterInteractionHandler();
-        }
-        else
-            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
-    }
-
-
+    /**
+     * this methods gives a player (pikachu) an random item by random chance.
+     * everytime pikahu makes a movement, this method is called and by 4% chance, 
+     * pikachu can get a random item and it's added to pikachu's current inventory, which is an arraylist
+     * pikachu only can have 3 items at max, and more item will be disregarded.
+     */
     public void itemInteractionHandler(){
-
         double randomRate = Math.random();
         if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
-            pikachu.addItemToInventory(gameMap.getRandomItem());
+            pikachu.addItemToInventory(firstMap.getRandomItem());
             output.setText("Item has been found!\nItem has been added to your inventory!\n"+pikachu.displayInventory());
         }
 
     }
 
-
+    /**
+     * this methods handles a monster battle event if player is at a tile where monster is.
+     * this method creates instance of Interaction class and takes player and the monster that player have met as parameter
+     * also prints out the result of the battle as output in Label of the JavaFX application
+     */
     public void monsterInteractionHandler(){
-            double randomRate = Math.random();
-            if (randomRate <= 0.04)
-                output.setText("You have encountered a monster! Press J to fight, or press L to run away.");
-    }
-
-    public void randomMonsterBattle(){
-            interaction = new Interaction(pikachu, gameMap.getRandomMonster());
+            Creature monster = firstMap.getMonsterList().get(monsterIndex);
+            interaction = new Interaction(pikachu, monster);
             interaction.battle(output);
-    }
+     }
 
-     public void itemSelect(int invenNum){
-        try{
-		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))
-            pikachu.setHP(pikachu.getInventory().get(invenNum).getHPIncrease());
-        else if (pikachu.getInventory().get(invenNum).getName().equals("Battle Fruit"))
-            pikachu.setAttack(pikachu.getInventory().get(invenNum).useItem());
-        output.setText("Used "+pikachu.getInventory().get(invenNum).getName()+"\n"+pikachu.toString());
-        pikachu.getInventory().remove(invenNum);
-        } catch (Exception e){
-            System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
-            output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
-        }
-    }
+
+
 
     public static void main(String[] args) {
         launch(args);
