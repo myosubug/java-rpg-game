@@ -51,7 +51,6 @@ public class Interaction {
             output.setText("===========YOU HAVE LOST THE BATTLE!===========\n===========PLEASE RE-START THE GAME===========");
         } else{
             this.player.levelUp();
-            battleResult = true;
             output.setText("You have won the battle with "+ this.monster.getName() +"\n"+player.toString()+"\n");
             this.monster.setHP(25);
         }

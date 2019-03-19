@@ -126,8 +126,6 @@ public class GUIApp extends Application {
     public void initilization(){
 
         //adding menu and save and load funcions
-
-
         mainMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem save = new MenuItem("Save");
@@ -268,7 +266,6 @@ public class GUIApp extends Application {
         }
 
     }
-
 
     public void monsterInteractionHandler(){
             double randomRate = Math.random();
