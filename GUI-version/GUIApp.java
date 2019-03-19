@@ -36,7 +36,7 @@ public class GUIApp extends Application {
     private static int updated = 1;
     private static Image pikachuImage;
     private static Image gamebackground;
-    private static boolean battleFinished;
+    private static boolean battleFinished = true;
     private Player pikachu = new Player();
     private Map gameMap = new Map(20, "mapData/map1.txt");
     private Interaction randomInteraction = new Interaction(pikachu, gameMap.getRandomMonster());
