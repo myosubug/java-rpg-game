@@ -2,9 +2,14 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,6 +27,7 @@ public class GUIApp extends Application {
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
     private static VBox root;
+    private static MenuBar mainMenu;
     private static Scene gameScene;
     private static Canvas canvas;
     private static GraphicsContext gc;
@@ -64,10 +70,64 @@ public class GUIApp extends Application {
     }
 
     // ======================= setting up the layout of status window here =======================
+
+    /**
+     * this is the event class for the menu
+     * if save button is clicked then it prints out "save button clicked" in console
+     * else if load button is clicked then it prints out "load button clicked" in console
+     * we need to find a way to save it and load properly through these two events
+     * @return
+     */
+
+    private EventHandler<ActionEvent> saveAndLoad(){
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                MenuItem saveOrLoad = (MenuItem) event.getSource();
+                String menuButton = saveOrLoad.getText();
+                if ("save".equalsIgnoreCase(menuButton)){
+                    /**FileChooser fileChooser = new FileChooser();
+
+                    FileChooser.ExtensionFilter eFilter = new FileChooser.ExtensionFilter("Text File", fileChooser.getExtensionFilters().add(eFilter));
+
+                    File saveFile = fileChooser.showSaveDialog(ownerWindow);
+                    if(file != null){
+
+                    */
+                    System.out.println("save button clicked");
+
+                
+                } else if ("load".equalsIgnoreCase(menuButton)){
+                    System.out.println("load button clicked");
+                }
+            }
+        };
+    }
+
+
+
+
     public void initilization(){
 
-        root = new VBox();
-        gameScene = new Scene(root, 640, 800);
+        //adding menu and save and load funcions
+
+
+        mainMenu = new MenuBar();
+        Menu file = new Menu("File");
+        MenuItem save = new MenuItem("Save");
+        MenuItem load = new MenuItem("Load");
+        EventHandler<ActionEvent> saveAndLoadAction = saveAndLoad();
+
+        save.setOnAction(saveAndLoadAction);
+        load.setOnAction(saveAndLoadAction);
+
+        file.getItems().add(save);
+        file.getItems().add(load);
+        mainMenu.getMenus().add(file);
+
+
+        root = new VBox(mainMenu);
+        gameScene = new Scene(root, 640, 830);
         pikachu.setX(0);
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
