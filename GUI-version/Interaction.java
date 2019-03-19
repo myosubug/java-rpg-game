@@ -11,9 +11,6 @@ public class Interaction {
      */
     private Player player;
     private Creature monster;
-    private boolean battleResult;
-    
- 
 
 
     //Constructor
@@ -39,9 +36,6 @@ public class Interaction {
         this.monster = monster;
     }
 
-    public boolean getBattleResult(){
-        return this.battleResult;
-    }
 
     public void battle(Label output){      
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){
