@@ -32,6 +32,8 @@ public class GUIApp extends Application {
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
+    private static int gameLevel = 1;
+    private static boolean updated = false;
     private static Image pikachuImage;
     private static Image gamebackground;
     private Player pikachu = new Player();
@@ -62,6 +64,13 @@ public class GUIApp extends Application {
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gamebackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
+                if(gameLevel == 2 && updated == false){
+                    gamebackground = new Image("file:img/map2.png");
+                    gameMap = new Map(20, "mapData/map2.txt");
+                    pikachu.setX(0);
+                    pikachu.setY(384);
+                    updated = true;
+                }
             }
         }.start();
 
@@ -132,7 +141,7 @@ public class GUIApp extends Application {
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
-        gamebackground = new Image("file:img/map.png");
+        gamebackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
 
@@ -201,12 +210,16 @@ public class GUIApp extends Application {
 
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean mapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
             pikachuImage = new Image(imgLocation);
             pikachu.setX(pikachuX);
             pikachu.setY(pikachuY);
             itemInteractionHandler();
             monsterInteractionHandler();
+            if(mapUpdateCheck == true){
+                gameLevel = 2;
+            }
         }
         else
             output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
