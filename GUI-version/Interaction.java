@@ -9,8 +9,10 @@ public class Interaction {
      * Declaring member variables, as the battle in this game only takes two creatures,
      * this class is extended from Creature class to properly access the intances of Creature.
      */
-    Player player;
-    Creature monster;
+    private Player player;
+    private Creature monster;
+    private boolean battleResult;
+    
  
 
 
@@ -37,6 +39,10 @@ public class Interaction {
         this.monster = monster;
     }
 
+    public boolean getBattleResult(){
+        return this.battleResult;
+    }
+
     public void battle(Label output){      
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){
             double fightRate = Math.random();
@@ -51,12 +57,10 @@ public class Interaction {
             output.setText("===========YOU HAVE LOST THE BATTLE!===========\n===========PLEASE RE-START THE GAME===========");
         } else{
             this.player.levelUp();
+            battleResult = true;
             output.setText("You have won the battle with "+ this.monster.getName() +"\n"+player.toString()+"\n");
             this.monster.setHP(25);
         }
-        
-        
-        
     }
 
     

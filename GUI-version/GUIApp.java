@@ -36,10 +36,11 @@ public class GUIApp extends Application {
     private static int updated = 1;
     private static Image pikachuImage;
     private static Image gamebackground;
+    private static boolean battleFinished;
     private Player pikachu = new Player();
     private Map gameMap = new Map(20, "mapData/map1.txt");
+    private Interaction randomInteraction = new Interaction(pikachu, gameMap.getRandomMonster());
     private Collision collisionCheck = new Collision();
-    private Interaction interaction;
 
 
 
@@ -176,6 +177,7 @@ public class GUIApp extends Application {
         @Override
         public void handle(KeyEvent e)
             {
+            if(battleFinished == true){
             switch(e.getCode()){
                     case W:
                         pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif");
@@ -188,12 +190,6 @@ public class GUIApp extends Application {
                         break;
                     case A:
                         pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif");
-                        break;
-                    case J:
-                        randomMonsterBattle();
-                        break;
-                    case L:
-                        output.setText("Use WASD to get out of battle");
                         break;
                     case Z:
                         itemSelect(0);
@@ -209,10 +205,38 @@ public class GUIApp extends Application {
                         break;
                     default:
                         output.setText("Please press correct keys to operate.");
+                    }
+                }
+            else if (battleFinished == false){
+                switch(e.getCode()){
+                    case J:
+                        randomInteraction.battle(output);
+                        battleFinished = true;
+                        break;
+                    case L:
+                        output.setText("Use WASD to get out of battle");
+                        battleFinished = true;
+                        break;
+                    case Z:
+                        itemSelect(0);
+                        break;
+                    case X:
+                        itemSelect(1);
+                        break;
+                    case C:
+                        itemSelect(2);
+                        break;
+                    case B:
+                        output.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        break;
+                    default:
+                        output.setText("You have encountered a monster! Press J to fight, or press L to run away.\nTo use items, press B and press Z, X or C to use one of 3 items in order.");
+                    }
                 }
             }
         });
     }
+
 
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
@@ -248,16 +272,13 @@ public class GUIApp extends Application {
 
     public void monsterInteractionHandler(){
             double randomRate = Math.random();
-            if (randomRate <= 0.04)
+            if (randomRate <= 0.04){
                 output.setText("You have encountered a monster! Press J to fight, or press L to run away.");
+                battleFinished = false;
+            }
     }
 
-    public void randomMonsterBattle(){
-            interaction = new Interaction(pikachu, gameMap.getRandomMonster());
-            interaction.battle(output);
-    }
-
-     public void itemSelect(int invenNum){
+    public void itemSelect(int invenNum){
         try{
 		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))
             pikachu.setHP(pikachu.getInventory().get(invenNum).getHPIncrease());
