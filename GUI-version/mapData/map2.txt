@@ -10,7 +10,7 @@ xxxxxxx------x------
 xxxxxxx-------x---xx
 xxxxxx--------xx--xx
 xxxx----------xx--xx
---xxx---------xx-xxx
+@-xxx---------xx-xxx
 --xxxx-------xxx----
 --xxxx--------------
 --xxxx-------xxxxx--

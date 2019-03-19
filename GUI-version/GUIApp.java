@@ -33,7 +33,7 @@ public class GUIApp extends Application {
     private static GraphicsContext gc;
     private static Label output;
     private static int gameLevel = 1;
-    private static boolean updated = false;
+    private static int updated = 1;
     private static Image pikachuImage;
     private static Image gamebackground;
     private Player pikachu = new Player();
@@ -64,12 +64,18 @@ public class GUIApp extends Application {
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gamebackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
-                if(gameLevel == 2 && updated == false){
+                if(gameLevel == 2 && updated == 1){
                     gamebackground = new Image("file:img/map2.png");
                     gameMap = new Map(20, "mapData/map2.txt");
                     pikachu.setX(0);
                     pikachu.setY(384);
-                    updated = true;
+                    updated = 2;
+                } else if(gameLevel == 1 && updated == 2){
+                    gamebackground = new Image("file:img/map1.png");
+                    gameMap = new Map(20, "mapData/map1.txt");
+                    pikachu.setX(608);
+                    pikachu.setY(384);
+                    updated = 1;
                 }
             }
         }.start();
@@ -210,15 +216,18 @@ public class GUIApp extends Application {
 
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
-        boolean mapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
             pikachuImage = new Image(imgLocation);
             pikachu.setX(pikachuX);
             pikachu.setY(pikachuY);
             itemInteractionHandler();
             monsterInteractionHandler();
-            if(mapUpdateCheck == true){
+            if(secondMapUpdateCheck == true){
                 gameLevel = 2;
+            } else if (firstMapUpdateCheck == true){
+                gameLevel = 1;
             }
         }
         else

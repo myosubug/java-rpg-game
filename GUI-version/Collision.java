@@ -29,5 +29,14 @@ public class Collision {
         else
             return false;
     }
+
+    public boolean firstMapUpdateCheck(int pikachuX, int pikachuY, char[][] mapData){
+        int pikachuXDivided = pikachuX / 32;
+        int pikachuYDivided = pikachuY / 32;
+        if (mapData[pikachuYDivided][pikachuXDivided] == '@')
+            return true;
+        else
+            return false;
+    }
     
 }
