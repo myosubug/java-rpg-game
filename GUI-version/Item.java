@@ -1,6 +1,7 @@
 import java.util.jar.*;
+import java.io.*;
 
-class Item{
+class Item implements Serializable{
 
 	//Declaring member variable
 	private String name;
@@ -47,7 +48,7 @@ class Item{
 	public int useItem(){
 		if (this.getName().equals("HP potion"))
 			 return hPIncrease;
-		else 
+		else
 			return attackIncrease;
 	}
 

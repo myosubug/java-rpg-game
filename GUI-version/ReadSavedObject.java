@@ -6,7 +6,7 @@ public class ReadSavedObject implements Serializable{
   public static void main(String[] args){
     System.out.println("Type the name of the map you would like to load:");
     Scanner keyboard = new Scanner(System.in);
-    String mapName = keyboard.nextLine() + ".ser";
+    String mapName = "./temp/" + keyboard.nextLine() + ".ser";
 
     char[][] testMap = new char[20][20];
 

@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Map{
+public class Map implements Serializable{
 
 	/**
 	 * Declaring member variables, the 2d array map and object that needs to be on the map.
@@ -94,7 +93,7 @@ public class Map{
 	method reads a text file to get map data
 	*/
 
-	public static char[][] readMapFile(String fileName, int lengthOfSide) throws FileNotFoundException{
+	public char[][] readMapFile(String fileName, int lengthOfSide) throws FileNotFoundException{
 		try{
 			int lineWidth = 20;
 			File mapFile = new File(fileName);
@@ -113,15 +112,32 @@ public class Map{
 			System.out.println("Unable to open " + fileName);
 			return null;
 		}
+
 	}
 
 
+		/**
+		Method is used to save the map state when player saves game.
+		Needed because of hardcoded boss and miniboss locations
+		which are deleted from map after defeat.
+		*/
+		public void saveMap(){
+			if (this.mapData != null){
+				try{
+					//saves bytestream to temp folder
+					FileOutputStream fileOut = new FileOutputStream("./temp/currentmap.ser");
+					ObjectOutputStream mapOut = new ObjectOutputStream(fileOut);
+					mapOut.writeObject(this.mapData);
+					mapOut.close();
+					fileOut.close();
+				}
 
+				catch(IOException i){
+					i.printStackTrace();
+				}
+			}
 
-
-
-
-
-
-
-}
+			else
+				System.out.println("No map data to save.");
+		}
+	}

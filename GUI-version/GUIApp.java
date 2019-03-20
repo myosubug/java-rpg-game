@@ -18,12 +18,13 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.event.ActionEvent;
 import java.util.ArrayList;
+import java.io.*;
 
 
 
 
 
-public class GUIApp extends Application {
+public class GUIApp extends Application implements Serializable{
 
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
@@ -60,7 +61,7 @@ public class GUIApp extends Application {
 
         //setting up main layout and stage
         initilization(primaryStage);
-    
+
         //connecting button and keys to event handler
         addMovementKeyEvent(primaryStage, gameScene);
 
@@ -105,17 +106,12 @@ public class GUIApp extends Application {
                 MenuItem saveOrLoad = (MenuItem) event.getSource();
                 String menuButton = saveOrLoad.getText();
                 if ("save".equalsIgnoreCase(menuButton)){
-                    /**FileChooser fileChooser = new FileChooser();
-
-                    FileChooser.ExtensionFilter eFilter = new FileChooser.ExtensionFilter("Text File", fileChooser.getExtensionFilters().add(eFilter));
-
-                    File saveFile = fileChooser.showSaveDialog(ownerWindow);
-                    if(file != null){
-
-                    */
                     System.out.println("save button clicked");
+                    pikachu.saveCreature();
+                    gameMap.saveMap();
 
-                
+
+
                 } else if ("load".equalsIgnoreCase(menuButton)){
                     System.out.println("load button clicked");
                 }
@@ -144,7 +140,7 @@ public class GUIApp extends Application {
         mainMenu.getMenus().add(file);
 
 
-        root = new AnchorPane();       
+        root = new AnchorPane();
         introScene = new Scene(root, 640, 830);
         start = new Button("Start game");
         start.setOnAction(e -> primary.setScene(gameScene));
@@ -152,7 +148,7 @@ public class GUIApp extends Application {
         start.setLayoutY(320);
         root.getChildren().add(start);
 
-    
+
         primary.setScene(introScene);
 
 
@@ -184,9 +180,9 @@ public class GUIApp extends Application {
         //battleOutput.setLayoutY(0);
         //battleOutput.setText("battle scene work in progress...");
         //root3.getChildren().add(battleOutput);
-  
 
-        
+
+
 
 
     }

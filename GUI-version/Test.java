@@ -53,7 +53,7 @@ public class Test implements Serializable{
 
       //testing save functionality
       try{
-        FileOutputStream fileOut = new FileOutputStream("testMap.ser");
+        FileOutputStream fileOut = new FileOutputStream("./temp/testMap.ser");
         ObjectOutputStream mapOut = new ObjectOutputStream(fileOut);
         mapOut.writeObject(testMapData);
         mapOut.close();

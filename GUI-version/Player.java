@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.*;
 
-class Player extends Creature{
+class Player extends Creature implements Serializable{
     //declaring member variable, the player will use array list as a item bag
     private ArrayList<Item> inventory = new ArrayList<Item>();
 

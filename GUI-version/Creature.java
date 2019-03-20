@@ -1,5 +1,7 @@
-class Creature{
-	
+import java.io.*;
+
+public class Creature implements Serializable{
+
 	//Declaring member variables
 	private String name;
 	private int hitPoints;
@@ -102,6 +104,29 @@ class Creature{
 	 */
 	public String toString(){
 		return "Name: " + this.getName() + " HP: " + this.getHP();
+	}
+
+	/**
+	* this method saves a creature object to temp folder when game is saved
+	*/
+	/**
+	Method is used to save the map state when player saves game.
+	Needed because of hardcoded boss and miniboss locations
+	which are deleted from map after defeat.
+	*/
+	public void saveCreature(){
+		try{
+			//saves bytestream to temp folder
+			FileOutputStream fileOut = new FileOutputStream("./temp/" + this.getName() + ".ser");
+			ObjectOutputStream creatureOut = new ObjectOutputStream(fileOut);
+			creatureOut.writeObject(this);
+			creatureOut.close();
+			fileOut.close();
+		}
+
+		catch(IOException i){
+			i.printStackTrace();
+		}
 	}
 
 }
