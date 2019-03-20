@@ -27,9 +27,12 @@ public class GUIApp extends Application {
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
     private static VBox root;
+    private static VBox root2;
     private static MenuBar mainMenu;
+    private static Scene introScene;
     private static Scene gameScene;
     private static Canvas canvas;
+    private static Button start;
     private static GraphicsContext gc;
     private static Label output;
     private static int gameLevel = 1;
@@ -52,9 +55,8 @@ public class GUIApp extends Application {
 
 
         //setting up main layout and stage
-        initilization();
-        primaryStage.setTitle("Liberate Pikachu!");
-        primaryStage.setScene(gameScene);
+        initilization(primaryStage);
+        
 
 
         //connecting button and keys to event handler
@@ -122,9 +124,10 @@ public class GUIApp extends Application {
 
 
 
-    public void initilization(){
+    public void initilization(Stage primary){
 
         //adding menu and save and load funcions
+        primary.setTitle("Liberate Pikachu!");
         mainMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem save = new MenuItem("Save");
@@ -139,8 +142,15 @@ public class GUIApp extends Application {
         mainMenu.getMenus().add(file);
 
 
-        root = new VBox(mainMenu);
-        gameScene = new Scene(root, 640, 830);
+        root = new VBox(mainMenu);        
+        introScene = new Scene(root, 640, 830);
+        start = new Button("Start game");
+        root.getChildren().add(start);
+        primary.setScene(introScene);
+
+
+        root2 = new VBox(mainMenu);
+        gameScene = new Scene(root2, 640, 830);
         pikachu.setX(0);
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
@@ -149,8 +159,7 @@ public class GUIApp extends Application {
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
 
-
-        root.getChildren().add(canvas);
+        root2.getChildren().add(canvas);
 
         //setting up a borderpane to place status message section as label object
         output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
@@ -159,7 +168,9 @@ public class GUIApp extends Application {
         output.setStyle("-fx-border-color: black;");
 
          //setting up buttons up/down/left/right and two action buttons
-        root.getChildren().add(output);
+        root2.getChildren().add(output);
+
+        start.setOnAction(e -> primary.setScene(gameScene));
 
 
     }
