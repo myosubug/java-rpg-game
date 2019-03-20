@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -26,15 +27,18 @@ public class GUIApp extends Application {
 
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
-    private static VBox root;
+    private static AnchorPane root;
     private static VBox root2;
+    private static AnchorPane root3;
     private static MenuBar mainMenu;
     private static Scene introScene;
     private static Scene gameScene;
+    private static Scene battleScene;
     private static Canvas canvas;
     private static Button start;
     private static GraphicsContext gc;
     private static Label output;
+    private static Label battleOutput;
     private static int gameLevel = 1;
     private static int updated = 1;
     private static boolean eastOrWest;
@@ -58,7 +62,7 @@ public class GUIApp extends Application {
         initilization(primaryStage);
     
         //connecting button and keys to event handler
-        addMovementKeyEvent(gameScene);
+        addMovementKeyEvent(primaryStage, gameScene);
 
         new AnimationTimer(){
             @Override
@@ -140,13 +144,16 @@ public class GUIApp extends Application {
         mainMenu.getMenus().add(file);
 
 
-        root = new VBox(mainMenu);        
+        root = new AnchorPane();       
         introScene = new Scene(root, 640, 830);
         start = new Button("Start game");
         start.setOnAction(e -> primary.setScene(gameScene));
+        start.setLayoutX(320);
+        start.setLayoutY(320);
         root.getChildren().add(start);
-        primary.setScene(introScene);
 
+    
+        primary.setScene(introScene);
 
 
         root2 = new VBox(mainMenu);
@@ -158,17 +165,27 @@ public class GUIApp extends Application {
         gamebackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
-
         root2.getChildren().add(canvas);
 
         //setting up a borderpane to place status message section as label object
         output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
         output.setMinWidth(640);
-        output.setMinHeight(160);
+        output.setMaxHeight(150);
         output.setStyle("-fx-border-color: black;");
 
          //setting up buttons up/down/left/right and two action buttons
         root2.getChildren().add(output);
+
+        root3 = new AnchorPane();
+        battleScene = new Scene(root3, 640, 830);
+        //battleOutput.setMaxWidth(640);
+        //battleOutput.setMaxHeight(150);
+        //battleOutput.setLayoutX(0);
+        //battleOutput.setLayoutY(0);
+        //battleOutput.setText("battle scene work in progress...");
+        //root3.getChildren().add(battleOutput);
+  
+
         
 
 
@@ -177,7 +194,7 @@ public class GUIApp extends Application {
     // ======================= setting up button and key events here =======================
 
     //NOTE: should be moved to an EventHandler class
-    public void addMovementKeyEvent(Scene scene){
+    public void addMovementKeyEvent(Stage primary, Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
         {
@@ -221,7 +238,7 @@ public class GUIApp extends Application {
             else if (battleFinished == false){
                 switch(e.getCode()){
                     case J:
-                        randomInteraction.battle(output);
+                        primary.setScene(battleScene);
                         battleFinished = true;
                         break;
                     case L:
