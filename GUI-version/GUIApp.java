@@ -36,6 +36,7 @@ public class GUIApp extends Application {
     private static Scene battleScene;
     private static Canvas canvas;
     private static Button start;
+    private static Button endBattle;
     private static GraphicsContext gc;
     private static Label output;
     private static Label battleOutput;
@@ -178,6 +179,11 @@ public class GUIApp extends Application {
 
         root3 = new AnchorPane();
         battleScene = new Scene(root3, 640, 830);
+        endBattle = new Button("End Battle");
+        endBattle.setOnAction(e -> primary.setScene(gameScene));
+        endBattle.setLayoutX(320);
+        endBattle.setLayoutY(320);
+        root3.getChildren().add(endBattle);
         //battleOutput.setMaxWidth(640);
         //battleOutput.setMaxHeight(150);
         //battleOutput.setLayoutX(0);
