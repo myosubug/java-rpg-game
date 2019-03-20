@@ -56,9 +56,7 @@ public class GUIApp extends Application {
 
         //setting up main layout and stage
         initilization(primaryStage);
-        
-
-
+    
         //connecting button and keys to event handler
         addMovementKeyEvent(gameScene);
 
@@ -145,8 +143,10 @@ public class GUIApp extends Application {
         root = new VBox(mainMenu);        
         introScene = new Scene(root, 640, 830);
         start = new Button("Start game");
+        start.setOnAction(e -> primary.setScene(gameScene));
         root.getChildren().add(start);
         primary.setScene(introScene);
+
 
 
         root2 = new VBox(mainMenu);
@@ -169,8 +169,7 @@ public class GUIApp extends Application {
 
          //setting up buttons up/down/left/right and two action buttons
         root2.getChildren().add(output);
-
-        start.setOnAction(e -> primary.setScene(gameScene));
+        
 
 
     }
