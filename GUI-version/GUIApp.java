@@ -34,6 +34,7 @@ public class GUIApp extends Application {
     private static Label output;
     private static int gameLevel = 1;
     private static int updated = 1;
+    private static boolean eastOrWest;
     private static Image pikachuImage;
     private static Image gamebackground;
     private static boolean battleFinished = true;
@@ -69,13 +70,11 @@ public class GUIApp extends Application {
                     gamebackground = new Image("file:img/map2.png");
                     gameMap = new Map(20, "mapData/map2.txt");
                     pikachu.setX(0);
-                    pikachu.setY(384);
                     updated = 2;
                 } else if(gameLevel == 1 && updated == 2){
                     gamebackground = new Image("file:img/map1.png");
                     gameMap = new Map(20, "mapData/map1.txt");
                     pikachu.setX(608);
-                    pikachu.setY(384);
                     updated = 1;
                 }
             }
@@ -178,15 +177,19 @@ public class GUIApp extends Application {
             if(battleFinished == true){
             switch(e.getCode()){
                     case W:
+                        eastOrWest = false;
                         pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif");
                         break;
                     case D:
+                        eastOrWest = true;
                         pikachuMovement(pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif");
                         break;
                     case S:
+                        eastOrWest = false;
                         pikachuMovement(pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif");
                         break;
                     case A:
+                        eastOrWest = true;
                         pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif");
                         break;
                     case Z:
@@ -246,9 +249,9 @@ public class GUIApp extends Application {
             pikachu.setY(pikachuY);
             itemInteractionHandler();
             monsterInteractionHandler();
-            if(secondMapUpdateCheck == true){
+            if(secondMapUpdateCheck == true && eastOrWest){
                 gameLevel = 2;
-            } else if (firstMapUpdateCheck == true){
+            } else if (firstMapUpdateCheck == true && eastOrWest){
                 gameLevel = 1;
             }
         }

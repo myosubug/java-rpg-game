@@ -16,5 +16,5 @@ xx--x--------xxxxx-#
 ----xxxxx----------#
 ---xxxxxxxxx-------#
 ---xxxxxxxxx------x#
-------x-xxxx-----xxx
----------xxx-----x-x
+------x-xxxx-----xx#
+---------xxx-----x-#
