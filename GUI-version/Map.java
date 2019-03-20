@@ -127,7 +127,7 @@ public class Map implements Serializable{
 					//saves bytestream to temp folder
 					FileOutputStream fileOut = new FileOutputStream("./temp/currentmap.ser");
 					ObjectOutputStream mapOut = new ObjectOutputStream(fileOut);
-					mapOut.writeObject(this.mapData);
+					mapOut.writeObject(this);
 					mapOut.close();
 					fileOut.close();
 				}
