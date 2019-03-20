@@ -41,15 +41,14 @@ public class GUIApp extends Application implements Serializable{
     private static GraphicsContext gc;
     private static Label output;
     private static Label battleOutput;
-    private static int gameLevel = 1;
     private static int updated = 1;
     private static boolean eastOrWest;
     private static Image pikachuImage;
     private static Image gamebackground;
     private static boolean battleFinished = true;
     private Player pikachu = new Player();
-    private Map gameMap = new Map(20, "mapData/map1.txt");
-    private Interaction randomInteraction = new Interaction(pikachu, gameMap.getRandomMonster());
+    private ArrayList<Map> gameMapList = new ArrayList<Map>();
+    private Map gameMap;
     private Collision collisionCheck = new Collision();
 
 
@@ -72,14 +71,14 @@ public class GUIApp extends Application implements Serializable{
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gamebackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
-                if(gameLevel == 2 && updated == 1){
+                if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
                     gamebackground = new Image("file:img/map2.png");
-                    gameMap = new Map(20, "mapData/map2.txt");
+                    gameMap = gameMapList.get(1);
                     pikachu.setX(0);
                     updated = 2;
-                } else if(gameLevel == 1 && updated == 2){
+                } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
                     gamebackground = new Image("file:img/map1.png");
-                    gameMap = new Map(20, "mapData/map1.txt");
+                    gameMap = gameMapList.get(0);
                     pikachu.setX(608);
                     updated = 1;
                 }
@@ -128,6 +127,11 @@ public class GUIApp extends Application implements Serializable{
     public void initilization(Stage primary){
 
         //adding menu and save and load funcions
+        gameMapList.add(new Map(20, "mapData/map1.txt"));
+        gameMapList.add(new Map(20, "mapData/map2.txt"));
+
+        gameMap = gameMapList.get(0);
+
         primary.setTitle("Liberate Pikachu!");
         mainMenu = new MenuBar();
         Menu file = new Menu("File");
@@ -188,6 +192,8 @@ public class GUIApp extends Application implements Serializable{
         //battleOutput.setLayoutY(0);
         //battleOutput.setText("battle scene work in progress...");
         //root3.getChildren().add(battleOutput);
+
+
 
 
 
@@ -281,9 +287,9 @@ public class GUIApp extends Application implements Serializable{
             itemInteractionHandler();
             monsterInteractionHandler();
             if(secondMapUpdateCheck == true && eastOrWest){
-                gameLevel = 2;
+                pikachu.setCurrentGameLevel(2);
             } else if (firstMapUpdateCheck == true && eastOrWest){
-                gameLevel = 1;
+                pikachu.setCurrentGameLevel(1);
             }
         }
         else

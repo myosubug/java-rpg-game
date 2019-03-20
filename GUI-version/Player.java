@@ -4,6 +4,7 @@ import java.io.*;
 class Player extends Creature implements Serializable{
     //declaring member variable, the player will use array list as a item bag
     private ArrayList<Item> inventory = new ArrayList<Item>();
+    private int currentGameLevel = 1;
 
     //Constructor, calls its super class, Creature to create the player's character, Pikachu.
     Player() {
@@ -21,6 +22,14 @@ class Player extends Creature implements Serializable{
     //getter for array list
     public ArrayList<Item> getInventory() {
         return this.inventory;
+    }
+
+    public int getCurrentGameLevel(){
+        return currentGameLevel;
+    }
+
+    public void setCurrentGameLevel(int level){
+        this.currentGameLevel = level;
     }
 
     /**
