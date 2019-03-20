@@ -118,7 +118,7 @@ public class Map implements Serializable{
 
 		/**
 		Method is used to save the map state when player saves game.
-		Needed because of hardcoded boss and miniboss locations
+		Needed because of boss and miniboss locations
 		which are deleted from map after defeat.
 		*/
 		public void saveMap(){
@@ -140,4 +140,33 @@ public class Map implements Serializable{
 			else
 				System.out.println("No map data to save.");
 		}
+
+		/**
+		Method loads a saved map
+		*/
+		public Map loadMap(){
+			Map outputMap = new Map(20, "blankMap");
+
+			try{
+				FileInputStream fileIn = new FileInputStream("./temp/currentmap.ser");
+	      ObjectInputStream mapIn = new ObjectInputStream(fileIn);
+
+				outputMap = (Map) mapIn.readObject();
+				mapIn.close();
+				fileIn.close();
+				return outputMap;
+			}
+
+			catch(IOException i){
+				i.printStackTrace();
+				return null;
+			}
+
+			catch(ClassNotFoundException c){
+				System.out.println("No map found.");
+				c.printStackTrace();
+				return null;
+			}
+		}
+
 	}
