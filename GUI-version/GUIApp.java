@@ -105,15 +105,15 @@ public class GUIApp extends Application implements Serializable{
                 MenuItem saveOrLoad = (MenuItem) event.getSource();
                 String menuButton = saveOrLoad.getText();
                 if ("save".equalsIgnoreCase(menuButton)){
-                    System.out.println("save button clicked");
                     pikachu.savePlayer();
                     gameMap.saveMap();
+                    output.setText("Save completed");
 
                 } else if ("load".equalsIgnoreCase(menuButton)){
-                    System.out.println("load button clicked");
                     pikachu = pikachu.loadPlayer();
                     gameMap = gameMap.loadMap();
                     isGameLoaded = true;
+                    output.setText("Your previous game is loaded!");
                 }
             }
         };
