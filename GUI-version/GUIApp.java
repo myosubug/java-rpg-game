@@ -31,19 +31,16 @@ public class GUIApp extends Application implements Serializable{
     private static AnchorPane root;
     private static VBox root2;
     private static AnchorPane root3;
-    private static MenuBar mainMenu;
     private static Scene introScene;
     private static Scene gameScene;
     private static Scene battleScene;
     private static Canvas canvas;
-    private static Button start;
-    private static Button endBattle;
     private static GraphicsContext gc;
     private static Label output;
     private static int updated = 1;
     private static boolean eastOrWest;
     private static Image pikachuImage;
-    private static Image gamebackground;
+    private static Image gameBackground;
     private static boolean battleFinished = true;
     private Player pikachu = new Player();
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
@@ -68,15 +65,15 @@ public class GUIApp extends Application implements Serializable{
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, 640, 640);
-                gc.drawImage(gamebackground, 0, 0, 640, 640);
+                gc.drawImage(gameBackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
                 if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
-                    gamebackground = new Image("file:img/map2.png");
+                    gameBackground = new Image("file:img/map2.png");
                     gameMap = gameMapList.get(1);
                     pikachu.setX(0);
                     updated = 2;
                 } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
-                    gamebackground = new Image("file:img/map1.png");
+                    gameBackground = new Image("file:img/map1.png");
                     gameMap = gameMapList.get(0);
                     pikachu.setX(608);
                     updated = 1;
@@ -132,7 +129,7 @@ public class GUIApp extends Application implements Serializable{
         gameMap = gameMapList.get(0);
 
         primary.setTitle("Liberate Pikachu!");
-        mainMenu = new MenuBar();
+        MenuBar mainMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem save = new MenuItem("Save");
         MenuItem load = new MenuItem("Load");
@@ -148,11 +145,32 @@ public class GUIApp extends Application implements Serializable{
 
         root = new AnchorPane();
         introScene = new Scene(root, 640, 830);
-        start = new Button("Start game");
+        Button start = new Button("Start a new game");
+        Button loading = new Button("Load a saved game");
+        Button exit = new Button("Exit");
         start.setOnAction(e -> primary.setScene(gameScene));
-        start.setLayoutX(320);
-        start.setLayoutY(320);
+        loading.setOnAction(e -> {
+            primary.setScene(gameScene);
+            pikachu = pikachu.loadPlayer();
+            gameMap = gameMap.loadMap();
+        });
+        exit.setOnAction(e -> System.exit(0));
+        start.setMinWidth(150);
+        start.setMinHeight(50);
+        loading.setMinWidth(150);
+        loading.setMinHeight(50);
+        exit.setMinWidth(150);
+        exit.setMinHeight(50);
+        start.setLayoutX(250);
+        start.setLayoutY(540);
+        loading.setLayoutX(250);
+        loading.setLayoutY(600);
+        exit.setLayoutX(250);
+        exit.setLayoutY(660);
+        root.setStyle("-fx-background-image: url(file:img/intro.png);");
         root.getChildren().add(start);
+        root.getChildren().add(loading);
+        root.getChildren().add(exit);
 
 
         primary.setScene(introScene);
@@ -164,7 +182,7 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
-        gamebackground = new Image("file:img/map1.png");
+        gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
         root2.getChildren().add(canvas);
@@ -180,17 +198,11 @@ public class GUIApp extends Application implements Serializable{
 
         root3 = new AnchorPane();
         battleScene = new Scene(root3, 640, 830);
-        endBattle = new Button("End Battle");
+        Button endBattle = new Button("End Battle");
         endBattle.setOnAction(e -> primary.setScene(gameScene));
         endBattle.setLayoutX(320);
         endBattle.setLayoutY(320);
         root3.getChildren().add(endBattle);
-        //battleOutput.setMaxWidth(640);
-        //battleOutput.setMaxHeight(150);
-        //battleOutput.setLayoutX(0);
-        //battleOutput.setLayoutY(0);
-        //battleOutput.setText("battle scene work in progress...");
-        //root3.getChildren().add(battleOutput);
 
 
 
