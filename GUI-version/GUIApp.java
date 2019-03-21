@@ -40,7 +40,6 @@ public class GUIApp extends Application implements Serializable{
     private static Button endBattle;
     private static GraphicsContext gc;
     private static Label output;
-    private static Label battleOutput;
     private static int updated = 1;
     private static boolean eastOrWest;
     private static Image pikachuImage;
