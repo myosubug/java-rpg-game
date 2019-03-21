@@ -42,6 +42,7 @@ public class GUIApp extends Application implements Serializable{
     private static Image pikachuImage;
     private static Image gameBackground;
     private static boolean battleFinished = true;
+    private static boolean isGameLoaded = false;
     private Player pikachu = new Player();
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
     private Map gameMap;
@@ -70,13 +71,15 @@ public class GUIApp extends Application implements Serializable{
                 if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
                     gameBackground = new Image("file:img/map2.png");
                     gameMap = gameMapList.get(1);
-                    pikachu.setX(0);
                     updated = 2;
+                    if (isGameLoaded == false)
+                        pikachu.setX(0);
                 } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
                     gameBackground = new Image("file:img/map1.png");
                     gameMap = gameMapList.get(0);
-                    pikachu.setX(608);
                     updated = 1;
+                    if(isGameLoaded == false)
+                        pikachu.setX(608);
                 }
             }
         }.start();
@@ -106,12 +109,11 @@ public class GUIApp extends Application implements Serializable{
                     pikachu.savePlayer();
                     gameMap.saveMap();
 
-
-
                 } else if ("load".equalsIgnoreCase(menuButton)){
                     System.out.println("load button clicked");
                     pikachu = pikachu.loadPlayer();
                     gameMap = gameMap.loadMap();
+                    isGameLoaded = true;
                 }
             }
         };
