@@ -307,6 +307,7 @@ public class GUIApp extends Application implements Serializable{
         }
         else
             output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+        isGameLoaded = false;
     }
 
 
