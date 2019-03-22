@@ -20,10 +20,6 @@ import javafx.event.ActionEvent;
 import java.util.ArrayList;
 import java.io.*;
 
-
-
-
-
 public class GUIApp extends Application implements Serializable{
 
     //setting up instance variables, everything except pikachux, y will have no significant changes
@@ -49,12 +45,8 @@ public class GUIApp extends Application implements Serializable{
     private Collision collisionCheck = new Collision();
 
 
-
-
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-
 
         //setting up main layout and stage
         initilization(primaryStage);
@@ -84,8 +76,11 @@ public class GUIApp extends Application implements Serializable{
             }
         }.start();
 
-
     primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     // ======================= setting up the layout of status window here =======================
@@ -107,7 +102,7 @@ public class GUIApp extends Application implements Serializable{
                 if ("save".equalsIgnoreCase(menuButton)){
                     pikachu.savePlayer();
                     gameMap.saveMap();
-                    output.setText("Save completed");
+                    output.setText("Save completed!");
 
                 } else if ("load".equalsIgnoreCase(menuButton)){
                     pikachu = pikachu.loadPlayer();
@@ -118,9 +113,6 @@ public class GUIApp extends Application implements Serializable{
             }
         };
     }
-
-
-
 
     public void initilization(Stage primary){
 
@@ -206,17 +198,8 @@ public class GUIApp extends Application implements Serializable{
         endBattle.setLayoutY(320);
         root3.getChildren().add(endBattle);
 
-
-
-
-
-
-
     }
 
-    // ======================= setting up button and key events here =======================
-
-    //NOTE: should be moved to an EventHandler class
     public void addMovementKeyEvent(Stage primary, Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -288,7 +271,6 @@ public class GUIApp extends Application implements Serializable{
         });
     }
 
-
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
@@ -309,7 +291,6 @@ public class GUIApp extends Application implements Serializable{
             output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
         isGameLoaded = false;
     }
-
 
     public void itemInteractionHandler(){
 
@@ -342,10 +323,4 @@ public class GUIApp extends Application implements Serializable{
             output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
         }
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-
 }
