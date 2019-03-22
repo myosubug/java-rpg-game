@@ -1,8 +1,8 @@
 import java.util.Random;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 
 public class Interaction {
     /**
@@ -14,11 +14,6 @@ public class Interaction {
 
 
     //Constructor
-    Interaction(Player player, Creature monster){
-        this.player = player;
-        this.monster = monster;
-  
-    }
 
     public Player getPlayer() {
         return this.player;
@@ -53,6 +48,25 @@ public class Interaction {
             this.player.levelUp();
             output.setText("You have won the battle with "+ this.monster.getName() +"\n"+player.toString()+"\n");
             this.monster.setHP(25);
+        }
+    }
+
+
+
+    public void itemInteractionHandler(Player pikachu, Map gameMap, Label output){
+
+        double randomRate = Math.random();
+        if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
+            pikachu.addItemToInventory(gameMap.getRandomItem());
+            output.setText("Item has been found!\nItem has been added to your inventory!\n"+pikachu.displayInventory());
+        }
+
+    }
+
+    public void monsterInteractionHandler(Stage primary, Scene battleScene){
+        double randomRate = Math.random();
+        if (randomRate <= 0.04){
+            primary.setScene(battleScene);
         }
     }
 

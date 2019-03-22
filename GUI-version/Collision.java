@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class Collision {
 
     public boolean objectCollisionCheck (int pikachuX, int pikachuY, char[][] mapData){
