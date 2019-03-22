@@ -147,6 +147,7 @@ public class GUIApp extends Application implements Serializable{
             primary.setScene(gameScene);
             pikachu = pikachu.loadPlayer();
             gameMap = gameMap.loadMap();
+            isGameLoaded = true;
         });
         exit.setOnAction(e -> System.exit(0));
         start.setMinWidth(150);
