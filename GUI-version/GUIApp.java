@@ -37,7 +37,6 @@ public class GUIApp extends Application implements Serializable{
     private static boolean eastOrWest;
     private static Image pikachuImage;
     private static Image gameBackground;
-    private static boolean battleFinished = true;
     private static boolean isGameLoaded = false;
     private Player pikachu = new Player();
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
@@ -193,10 +192,13 @@ public class GUIApp extends Application implements Serializable{
 
         root3 = new AnchorPane();
         battleScene = new Scene(root3, 640, 830);
-        Button endBattle = new Button("End Battle");
+        Button endBattle = new Button("Run away");
+        Button startBattle = new Button("Battle!");
         endBattle.setOnAction(e -> primary.setScene(gameScene));
         endBattle.setLayoutX(320);
         endBattle.setLayoutY(320);
+        startBattle.setLayoutX(320);
+        startBattle.setLayoutY(400);
         root3.getChildren().add(endBattle);
 
     }
@@ -208,23 +210,22 @@ public class GUIApp extends Application implements Serializable{
         @Override
         public void handle(KeyEvent e)
             {
-            if(battleFinished == true){
             switch(e.getCode()){
                     case W:
                         eastOrWest = false;
-                        pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif");
+                        pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif", primary);
                         break;
                     case D:
                         eastOrWest = true;
-                        pikachuMovement(pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif");
+                        pikachuMovement(pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif", primary);
                         break;
                     case S:
                         eastOrWest = false;
-                        pikachuMovement(pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif");
+                        pikachuMovement(pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif", primary);
                         break;
                     case A:
                         eastOrWest = true;
-                        pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif");
+                        pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif", primary);
                         break;
                     case Z:
                         itemSelect(0);
@@ -242,37 +243,10 @@ public class GUIApp extends Application implements Serializable{
                         output.setText("Please press correct keys to operate.");
                     }
                 }
-            else if (battleFinished == false){
-                switch(e.getCode()){
-                    case J:
-                        primary.setScene(battleScene);
-                        battleFinished = true;
-                        break;
-                    case L:
-                        output.setText("Use WASD to get out of battle");
-                        battleFinished = true;
-                        break;
-                    case Z:
-                        itemSelect(0);
-                        break;
-                    case X:
-                        itemSelect(1);
-                        break;
-                    case C:
-                        itemSelect(2);
-                        break;
-                    case B:
-                        output.setText("Current items in bag:\n" +pikachu.displayInventory());
-                        break;
-                    default:
-                        output.setText("You have encountered a monster! Press J to fight, or press L to run away.\nTo use items, press B and press Z, X or C to use one of 3 items in order.");
-                    }
-                }
-            }
         });
     }
 
-    public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation){
+    public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation, Stage primaryStage){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
@@ -281,7 +255,7 @@ public class GUIApp extends Application implements Serializable{
             pikachu.setX(pikachuX);
             pikachu.setY(pikachuY);
             itemInteractionHandler();
-            monsterInteractionHandler();
+            monsterInteractionHandler(primaryStage);
             if(secondMapUpdateCheck == true && eastOrWest){
                 pikachu.setCurrentGameLevel(2);
             } else if (firstMapUpdateCheck == true && eastOrWest){
@@ -303,11 +277,10 @@ public class GUIApp extends Application implements Serializable{
 
     }
 
-    public void monsterInteractionHandler(){
+    public void monsterInteractionHandler(Stage primary){
             double randomRate = Math.random();
             if (randomRate <= 0.04){
-                output.setText("You have encountered a monster! Press J to fight, or press L to run away.");
-                battleFinished = false;
+                primary.setScene(battleScene);
             }
     }
 
