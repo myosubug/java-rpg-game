@@ -81,16 +81,6 @@ public class GUIApp extends Application implements Serializable{
         launch(args);
     }
 
-    // ======================= setting up the layout of status window here =======================
-
-    /**
-     * this is the event class for the menu
-     * if save button is clicked then it prints out "save button clicked" in console
-     * else if load button is clicked then it prints out "load button clicked" in console
-     * we need to find a way to save it and load properly through these two events
-     * @return
-     */
-
     private EventHandler<ActionEvent> saveAndLoad(){
         return new EventHandler<ActionEvent>() {
             @Override
@@ -212,7 +202,6 @@ public class GUIApp extends Application implements Serializable{
             {
                 output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
             switch(e.getCode()){
-
                     case W:
                         eastOrWest = false;
                         pikachu.playerMovement(pikachu, pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
