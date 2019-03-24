@@ -13,7 +13,7 @@ public class Map implements Serializable{
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private char[][] mapData;
 	private String mapFileLocation;
-	private int mapLineWidth;
+
 
 	private Item HP, battleFruit;   //items that will be randomly appearing on the map
 	private Creature metapod, weedle, rattata; //different kinds of monsters on the map
@@ -32,16 +32,16 @@ public class Map implements Serializable{
 			this.mapData = null;
 		}
 
-		this.HP = new Item("HP Potion", 10, 0, 32, 32);
-		this.battleFruit = new Item("Battle Fruit", 0, 1, 64, 32);
-		this.metapod = new Creature("Metapod", 20, 1, 7, 224, 160);
-		this.weedle = new Creature("Weedle", 21, 1, 6, 320, 320);
-		this.rattata = new Creature("Rattata", 24, 1, 8, 608, 608);
+		this.HP = new Item("HP Potion", 10, 0);
+		this.battleFruit = new Item("Battle Fruit", 0, 1);
+		this.metapod = new Creature("Metapod", 20, 1, 7, "file:img/metapod.png");
+		this.weedle = new Creature("Weedle", 21, 1, 6);
+		this.rattata = new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif");
 
 		itemList.add(HP);
 		itemList.add(battleFruit);
 		monsterList.add(metapod);
-		monsterList.add(weedle);
+		//monsterList.add(weedle);
 		monsterList.add(rattata);
 	}
 

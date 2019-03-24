@@ -7,17 +7,15 @@ class Item implements Serializable{
 	private String name;
 	private int hPIncrease;
 	private int attackIncrease;
-	private int xCoord;
-	private int yCoord;
+
 
 
 	//CONSTRUCTOR
-	Item(String name, int hPIncrease, int attackIncrease, int x, int y){
+	Item(String name, int hPIncrease, int attackIncrease){
 		this.name = name;
 		this.hPIncrease = hPIncrease;
 		this.attackIncrease = attackIncrease;
-		this.xCoord = x;
-		this.yCoord = y;
+
 	}
 
 	//getter and setters for the member variable
@@ -27,14 +25,6 @@ class Item implements Serializable{
 
 	public String toString(){
 		return this.name;
-	}
-
-	public int getX(){
-		return this.xCoord;
-	}
-
-	public int getY(){
-		return this.yCoord;
 	}
 
 	public int getAttackIncrease(){

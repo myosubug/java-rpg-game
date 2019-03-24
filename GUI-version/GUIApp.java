@@ -41,17 +41,18 @@ public class GUIApp extends Application implements Serializable{
     private static Image gameBackground;
     private static boolean isGameLoaded = false;
     private Player pikachu = new Player();
+    private Creature monster;
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
     private Map gameMap;
     private Collision collisionCheck = new Collision(); 
+    private Interaction interaction = new Interaction();
     private static StackPane battleImage;
     private static Label battleOutput;
     private static Label playerStatus;
     private static Label monsterStatus;
     private static ImageView playerImageView;
     private static ImageView monsterImageView;
-    private Creature monster;
-    private Interaction interactionHandler = new Interaction();
+    
 
 
     @Override
@@ -63,6 +64,7 @@ public class GUIApp extends Application implements Serializable{
         //connecting button and keys to event handler
         addMovementKeyEvent(primaryStage, gameScene);
         addBattleKeyEvent(primaryStage, battleScene);
+
 
         new AnimationTimer(){
             @Override
@@ -91,6 +93,7 @@ public class GUIApp extends Application implements Serializable{
 
     public static void main(String[] args) {
         launch(args);
+        
     }
 
     // ======================= setting up the layout of status window here =======================
@@ -302,23 +305,34 @@ public class GUIApp extends Application implements Serializable{
         public void handle(KeyEvent e)
             {
             switch(e.getCode()){
+                    case J:
+                        playerStatus.setText(pikachu.toString());
+                        monsterStatus.setText(monster.toString());
+                        interaction.battle(pikachu, monster, battleOutput);
+                        playerStatus.setText(pikachu.toString());
+                        monsterStatus.setText(monster.toString());
+                        break;
                     case Z:
                         itemSelect(0);
+                        playerStatus.setText(pikachu.toString());
                         break;
                     case X:
                         itemSelect(1);
+                        playerStatus.setText(pikachu.toString());
                         break;
                     case C:
                         itemSelect(2);
+                        playerStatus.setText(pikachu.toString());
                         break;
                     case B:
-                        output.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        battleOutput.setText("Current items in bag:\n" +pikachu.displayInventory());
                         break;
                     case Q:
                         primary.setScene(gameScene);
+                        monster.setHP(30);
                         break;
                     default:
-                        output.setText("Please press correct keys to operate.");
+                        battleOutput.setText("Please press correct keys to operate.");
                     }
                 }
         });
@@ -359,6 +373,10 @@ public class GUIApp extends Application implements Serializable{
             double randomRate = Math.random();
             if (randomRate <= 0.04){
                 primary.setScene(battleScene);
+                monster = gameMap.getRandomMonster();
+                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q");
+                monsterStatus.setText(monster.toString());
+                monsterImageView.setImage(monster.getMonsterImage());
             }
     }
 

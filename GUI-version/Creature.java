@@ -1,5 +1,7 @@
 import java.io.*;
 
+import javafx.scene.image.Image;
+
 public class Creature implements Serializable{
 
 	//Declaring member variables
@@ -9,16 +11,17 @@ public class Creature implements Serializable{
 	private int attackDamage;
 	private int xCoord;
 	private int yCoord;
+	private Image monsterImage;
 
 	//CONSTRUCTORS
 
-	Creature(String name, int hitPoints, int level, int attackDamage, int x, int y){
+	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
 		this.hitPoints = hitPoints;
 		this.level = level;
 		this.attackDamage = attackDamage;
-		this.xCoord = x;
-		this.yCoord = y;
+		this.monsterImage = new Image(imgLocation);
+
 	}
 
 
@@ -71,15 +74,22 @@ public class Creature implements Serializable{
 		this.name = name;
 	}
 
+	public Image getMonsterImage(){
+		return this.monsterImage;
+	}
+
 
 	//if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
 	public void setHP(int hp){
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
 		if (this.hitPoints + hp > upperLimit)
 			this.hitPoints = upperLimit;
+		else if(this.hitPoints + hp < 0)
+			this.hitPoints = 0;
 		else
 			this.hitPoints += hp;
 	}
+
 
 	public void setAttack(int ad){
 		this.attackDamage += ad;
@@ -103,7 +113,7 @@ public class Creature implements Serializable{
 	 * this toString() prints out the creature's name and current HP
 	 */
 	public String toString(){
-		return "Name: " + this.getName() + " HP: " + this.getHP();
+		return this.getName() + "\nHP: " + this.getHP();
 	}
 
 	/**

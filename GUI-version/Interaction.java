@@ -9,65 +9,24 @@ public class Interaction {
      * Declaring member variables, as the battle in this game only takes two creatures,
      * this class is extended from Creature class to properly access the intances of Creature.
      */
-    private Player player;
-    private Creature monster;
 
 
-    //Constructor
-    Interaction(Player player, Creature monster){
-        this.player = player;
-        this.monster = monster;
-  
-    }
-
-    Interaction(){}
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Creature getMonster() {
-        return this.monster;
-    }
-
-    public void setMonster(Creature monster) {
-        this.monster = monster;
-    }
-
-
-    public void battle(Label output){      
-        while(this.player.getHP() > 0 && this.monster.getHP() > 0){
-            double fightRate = Math.random();
-            if(fightRate < 0.80){
-                this.monster.setHP(-this.player.getAttack());
-            }
-            else{
-                this.player.setHP(-this.monster.getAttack());
-            }
+    public void battle(Player pikachu, Creature monster, Label battleOutput){      
+        double fightRate = Math.random();
+        if(fightRate < 0.80){
+            monster.setHP(-pikachu.getAttack());
+            battleOutput.setText("Your attack was succesful!");
         }
-        if (this.player.getHP() <= 0){
-            output.setText("===========YOU HAVE LOST THE BATTLE!===========\n===========PLEASE RE-START THE GAME===========");
-        } else{
-            this.player.levelUp();
-            output.setText("You have won the battle with "+ this.monster.getName() +"\n"+player.toString()+"\n");
-            this.monster.setHP(25);
+        else{
+            pikachu.setHP(-monster.getAttack());
+            battleOutput.setText(monster.getName()+" attacked you back!");
+        }
+
+        if (pikachu.getHP() <= 0){
+            battleOutput.setText("===============================================\n===========YOU HAVE LOST THE BATTLE!===========\n===========PLEASE RE-START THE GAME============\n===============================================");
+        } else if(monster.getHP() <= 0){
+            pikachu.levelUp();
+            battleOutput.setText("You have won the battle with "+ monster.getName()+"!!\nTo go back to game map, press Q");
         }
     }
-
-    
-
-
-
-
-
- 
-
-
-
-    
- 
 }
