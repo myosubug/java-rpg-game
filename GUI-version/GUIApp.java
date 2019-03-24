@@ -6,16 +6,18 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import java.util.ArrayList;
 import java.io.*;
@@ -41,7 +43,15 @@ public class GUIApp extends Application implements Serializable{
     private Player pikachu = new Player();
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
     private Map gameMap;
-    private Collision collisionCheck = new Collision();
+    private Collision collisionCheck = new Collision(); 
+    private static StackPane battleImage;
+    private static Label battleOutput;
+    private static Label playerStatus;
+    private static Label monsterStatus;
+    private static ImageView playerImageView;
+    private static ImageView monsterImageView;
+    private Creature monster;
+    private Interaction interactionHandler = new Interaction();
 
 
     @Override
@@ -52,6 +62,7 @@ public class GUIApp extends Application implements Serializable{
 
         //connecting button and keys to event handler
         addMovementKeyEvent(primaryStage, gameScene);
+        addBattleKeyEvent(primaryStage, battleScene);
 
         new AnimationTimer(){
             @Override
@@ -192,14 +203,47 @@ public class GUIApp extends Application implements Serializable{
 
         root3 = new AnchorPane();
         battleScene = new Scene(root3, 640, 830);
-        Button endBattle = new Button("Run away");
-        Button startBattle = new Button("Battle!");
-        endBattle.setOnAction(e -> primary.setScene(gameScene));
-        endBattle.setLayoutX(320);
-        endBattle.setLayoutY(320);
-        startBattle.setLayoutX(320);
-        startBattle.setLayoutY(400);
-        root3.getChildren().add(endBattle);
+        monsterStatus = new Label();
+        monsterStatus.setPrefSize(300, 120);
+        monsterStatus.setLayoutX(14);
+        monsterStatus.setLayoutY(14);
+        monsterStatus.setText("hi im monster");
+        monsterStatus.setStyle("-fx-border-color: red; -fx-border-width: 3px;");
+
+        playerStatus = new Label();
+        playerStatus.setPrefSize(300, 120);
+        playerStatus.setLayoutX(326);
+        playerStatus.setLayoutY(540);
+        playerStatus.setText(pikachu.toString());
+        playerStatus.setStyle("-fx-border-color: red; -fx-border-width: 3px;");
+
+        battleOutput = new Label();
+        battleOutput.setPrefSize(640, 150);
+        battleOutput.setLayoutX(0);
+        battleOutput.setLayoutY(680);
+        battleOutput.setText("hi im battle output");
+        battleOutput.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
+
+
+        battleImage = new StackPane();
+        battleImage.setPrefSize(615, 370);
+        battleImage.setLayoutY(150);
+        battleImage.setLayoutX(14);
+        battleImage.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
+
+        playerImageView = new ImageView();
+        monsterImageView = new ImageView();
+        Image battlePikachu = new Image("file:img/battleBack.gif");
+        playerImageView.setImage(battlePikachu);
+        //monsterImageView.setImage(monster.getMonsterImage());
+        battleImage.setAlignment(playerImageView, Pos.BOTTOM_RIGHT);
+        battleImage.setAlignment(monsterImageView, Pos.TOP_LEFT);
+        battleImage.getChildren().addAll(playerImageView, monsterImageView);
+
+        root3.getChildren().add(monsterStatus);
+        root3.getChildren().add(playerStatus);
+        root3.getChildren().add(battleImage);
+        root3.getChildren().add(battleOutput);
 
     }
 
@@ -238,6 +282,40 @@ public class GUIApp extends Application implements Serializable{
                         break;
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        break;
+                    case Q:
+                        primary.setScene(gameScene);
+                        break;
+                    default:
+                        output.setText("Please press correct keys to operate.");
+                    }
+                }
+        });
+    }
+
+
+    public void addBattleKeyEvent(Stage primary, Scene scene){
+        scene.setOnKeyPressed(
+        new EventHandler<KeyEvent>()
+        {
+        @Override
+        public void handle(KeyEvent e)
+            {
+            switch(e.getCode()){
+                    case Z:
+                        itemSelect(0);
+                        break;
+                    case X:
+                        itemSelect(1);
+                        break;
+                    case C:
+                        itemSelect(2);
+                        break;
+                    case B:
+                        output.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        break;
+                    case Q:
+                        primary.setScene(gameScene);
                         break;
                     default:
                         output.setText("Please press correct keys to operate.");

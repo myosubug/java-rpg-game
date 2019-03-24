@@ -20,6 +20,8 @@ public class Interaction {
   
     }
 
+    Interaction(){}
+
     public Player getPlayer() {
         return this.player;
     }
