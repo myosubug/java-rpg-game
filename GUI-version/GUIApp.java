@@ -200,10 +200,9 @@ public class GUIApp extends Application implements Serializable{
         output.setMinWidth(640);
         output.setMaxHeight(150);
         output.setStyle("-fx-border-color: black;");
-
-         //setting up buttons up/down/left/right and two action buttons
         root2.getChildren().add(output);
 
+        //setting up battle scene and image and label layouts
         root3 = new AnchorPane();
         battleScene = new Scene(root3, 640, 830);
         monsterStatus = new Label();
@@ -227,12 +226,10 @@ public class GUIApp extends Application implements Serializable{
         battleOutput.setText("hi im battle output");
         battleOutput.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
 
-
         battleImage = new StackPane();
         battleImage.setPrefSize(615, 370);
         battleImage.setLayoutY(150);
         battleImage.setLayoutX(14);
-        battleImage.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
         playerImageView = new ImageView();
         monsterImageView = new ImageView();
