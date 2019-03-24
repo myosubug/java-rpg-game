@@ -199,7 +199,6 @@ public class GUIApp extends Application implements Serializable{
         startBattle.setLayoutX(320);
         startBattle.setLayoutY(400);
         root3.getChildren().add(endBattle);
-        root3.getChildren().add(startBattle);
 
     }
 
@@ -210,9 +209,7 @@ public class GUIApp extends Application implements Serializable{
         @Override
         public void handle(KeyEvent e)
             {
-                output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
             switch(e.getCode()){
-
                     case W:
                         eastOrWest = false;
                         pikachu.playerMovement(pikachu, pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
@@ -243,7 +240,6 @@ public class GUIApp extends Application implements Serializable{
                         break;
                     default:
                         output.setText("Please press correct keys to operate.");
-                        break;
                     }
                 }
         });
