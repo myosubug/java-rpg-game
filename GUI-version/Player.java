@@ -2,19 +2,15 @@ import java.util.ArrayList;
 import java.io.*;
 
 class Player extends Creature implements Serializable{
-    //declaring member variable, the player will use array list as a item bag
+
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private int currentGameLevel = 1;
 
-    //Constructor, calls its super class, Creature to create the player's character, Pikachu.
+
     Player() {
         super("Pikachu", 30, 1, 5);
     }
 
-    /**
-     * this method returns nothing but adds an item (parameter) to inventory arraylist.
-     * @param newItem
-     */
     public void addItemToInventory (Item newItem) {
         this.inventory.add(newItem);
     }

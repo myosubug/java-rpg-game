@@ -129,12 +129,14 @@ public class GUIApp extends Application implements Serializable{
 
     public void initilization(Stage primary){
 
-        //adding menu and save and load funcions
+        //adding pre-loaded game maps to arraylist
         gameMapList.add(new Map(20, "mapData/map1.txt"));
         gameMapList.add(new Map(20, "mapData/map2.txt"));
-
         gameMap = gameMapList.get(0);
+        
 
+
+        //adding menu and save and load funcions
         primary.setTitle("Liberate Pikachu!");
         MenuBar mainMenu = new MenuBar();
         Menu file = new Menu("File");
@@ -150,6 +152,7 @@ public class GUIApp extends Application implements Serializable{
         mainMenu.getMenus().add(file);
 
 
+        //Intro scene layout setup 
         root = new AnchorPane();
         introScene = new Scene(root, 640, 830);
         Button start = new Button("Start a new game");
@@ -179,11 +182,10 @@ public class GUIApp extends Application implements Serializable{
         root.getChildren().add(start);
         root.getChildren().add(loading);
         root.getChildren().add(exit);
-
-
         primary.setScene(introScene);
 
 
+        //game map scene layout and initliazations of variables
         root2 = new VBox(mainMenu);
         gameScene = new Scene(root2, 640, 830);
         pikachu.setX(0);
@@ -194,8 +196,6 @@ public class GUIApp extends Application implements Serializable{
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
         root2.getChildren().add(canvas);
-
-        //setting up a borderpane to place status message section as label object
         output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
         output.setMinWidth(640);
         output.setMaxHeight(150);
@@ -238,7 +238,6 @@ public class GUIApp extends Application implements Serializable{
         monsterImageView = new ImageView();
         Image battlePikachu = new Image("file:img/battleBack.gif");
         playerImageView.setImage(battlePikachu);
-        //monsterImageView.setImage(monster.getMonsterImage());
         battleImage.setAlignment(playerImageView, Pos.BOTTOM_RIGHT);
         battleImage.setAlignment(monsterImageView, Pos.TOP_LEFT);
         battleImage.getChildren().addAll(playerImageView, monsterImageView);

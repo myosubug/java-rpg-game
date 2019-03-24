@@ -45,10 +45,6 @@ public class Map implements Serializable{
 		monsterList.add(rattata);
 	}
 
-	//METHODS
-	/**
-	 * getters and setters for Map and member variables
-	 */
 
 	public ArrayList<Item> getItemList() {
 		return this.itemList;
@@ -64,12 +60,10 @@ public class Map implements Serializable{
 		return this.mapFileLocation;
 	}
 
-
 	public Item getRandomItem(){
 		int index = ThreadLocalRandom.current().nextInt(this.itemList.size());
 	    return itemList.get(index);
 	}
-
 
 	public Creature getRandomMonster(){
 		int index = ThreadLocalRandom.current().nextInt(this.monsterList.size());
