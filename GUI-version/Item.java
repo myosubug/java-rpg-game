@@ -52,5 +52,4 @@ class Item implements Serializable{
 			return attackIncrease;
 	}
 
-
 }

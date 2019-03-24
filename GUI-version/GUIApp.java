@@ -34,13 +34,14 @@ public class GUIApp extends Application implements Serializable{
     private static GraphicsContext gc;
     private static Label output;
     private static int updated = 1;
-    private static Image gameBackground;
     private static boolean eastOrWest;
+    private static Image pikachuImage;
+    private static Image gameBackground;
+    private static boolean isGameLoaded = false;
     private Player pikachu = new Player();
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
     private Map gameMap;
     private Collision collisionCheck = new Collision();
-    private Interaction interactionHandler = new Interaction();
 
 
     @Override
@@ -57,18 +58,18 @@ public class GUIApp extends Application implements Serializable{
             public void handle(long now) {
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gameBackground, 0, 0, 640, 640);
-                gc.drawImage(pikachu.getPikachuImage(), pikachu.getX(), pikachu.getY());
+                gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
                 if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
                     gameBackground = new Image("file:img/map2.png");
                     gameMap = gameMapList.get(1);
                     updated = 2;
-                    if (pikachu.getIsGameLoaded() == false)
+                    if (isGameLoaded == false)
                         pikachu.setX(0);
                 } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
                     gameBackground = new Image("file:img/map1.png");
                     gameMap = gameMapList.get(0);
                     updated = 1;
-                    if(pikachu.getIsGameLoaded() == false)
+                    if(isGameLoaded == false)
                         pikachu.setX(608);
                 }
             }
@@ -105,7 +106,7 @@ public class GUIApp extends Application implements Serializable{
                 } else if ("load".equalsIgnoreCase(menuButton)){
                     pikachu = pikachu.loadPlayer();
                     gameMap = gameMap.loadMap();
-                    pikachu.setIsGameLoaded(true);
+                    isGameLoaded = true;
                     output.setText("Your previous game is loaded!");
                 }
             }
@@ -145,7 +146,7 @@ public class GUIApp extends Application implements Serializable{
             primary.setScene(gameScene);
             pikachu = pikachu.loadPlayer();
             gameMap = gameMap.loadMap();
-            pikachu.setIsGameLoaded(true);
+            isGameLoaded = true;
         });
         exit.setOnAction(e -> System.exit(0));
         start.setMinWidth(150);
@@ -174,10 +175,10 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setX(0);
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
-        pikachu.setPikachuImage("file:img/front.gif");
+        pikachuImage = new Image("file:img/front.gif");
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
-        gc.drawImage(pikachu.getPikachuImage(), pikachu.getX(), pikachu.getY());
+        gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
         root2.getChildren().add(canvas);
 
         //setting up a borderpane to place status message section as label object
@@ -212,28 +213,28 @@ public class GUIApp extends Application implements Serializable{
             switch(e.getCode()){
                     case W:
                         eastOrWest = false;
-                        pikachu.playerMovement(pikachu, pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
+                        pikachuMovement(pikachu.getX(), pikachu.getY() - 32, "file:img/back.gif", primary);
                         break;
                     case D:
                         eastOrWest = true;
-                        pikachu.playerMovement(pikachu, pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
+                        pikachuMovement(pikachu.getX() + 32, pikachu.getY(), "file:img/right.gif", primary);
                         break;
                     case S:
                         eastOrWest = false;
-                        pikachu.playerMovement(pikachu, pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
+                        pikachuMovement(pikachu.getX(), pikachu.getY() + 32, "file:img/front.gif", primary);
                         break;
                     case A:
                         eastOrWest = true;
-                        pikachu.playerMovement(pikachu, pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif", primary, collisionCheck, gameMap, battleScene, output, eastOrWest, interactionHandler);
+                        pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif", primary);
                         break;
                     case Z:
-                        pikachu.itemSelect(pikachu, 0, output);
+                        itemSelect(0);
                         break;
                     case X:
-                        pikachu.itemSelect(pikachu, 1, output);
+                        itemSelect(1);
                         break;
                     case C:
-                        pikachu.itemSelect(pikachu, 2, output);
+                        itemSelect(2);
                         break;
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
@@ -243,5 +244,57 @@ public class GUIApp extends Application implements Serializable{
                     }
                 }
         });
+    }
+
+    public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation, Stage primaryStage){
+        boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
+            pikachuImage = new Image(imgLocation);
+            pikachu.setX(pikachuX);
+            pikachu.setY(pikachuY);
+            itemInteractionHandler();
+            monsterInteractionHandler(primaryStage);
+            if(secondMapUpdateCheck == true && eastOrWest){
+                pikachu.setCurrentGameLevel(2);
+            } else if (firstMapUpdateCheck == true && eastOrWest){
+                pikachu.setCurrentGameLevel(1);
+            }
+        }
+        else
+            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+        isGameLoaded = false;
+    }
+
+    public void itemInteractionHandler(){
+
+        double randomRate = Math.random();
+        if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
+            pikachu.addItemToInventory(gameMap.getRandomItem());
+            output.setText("Item has been found!\nItem has been added to your inventory!\n"+pikachu.displayInventory());
+        }
+
+    }
+
+    public void monsterInteractionHandler(Stage primary){
+            double randomRate = Math.random();
+            if (randomRate <= 0.04){
+                primary.setScene(battleScene);
+            }
+    }
+
+    public void itemSelect(int invenNum){
+        try{
+		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))
+            pikachu.setHP(pikachu.getInventory().get(invenNum).getHPIncrease());
+        else if (pikachu.getInventory().get(invenNum).getName().equals("Battle Fruit"))
+            pikachu.setAttack(pikachu.getInventory().get(invenNum).useItem());
+        output.setText("Used "+pikachu.getInventory().get(invenNum).getName()+"\n"+pikachu.toString());
+        pikachu.getInventory().remove(invenNum);
+        } catch (Exception e){
+            System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
+            output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
+        }
     }
 }

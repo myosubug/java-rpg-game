@@ -1,16 +1,10 @@
 import java.util.ArrayList;
 import java.io.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.control.Label;
 
 class Player extends Creature implements Serializable{
     //declaring member variable, the player will use array list as a item bag
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private int currentGameLevel = 1;
-    private Image pikachuImage;
-    private boolean isGameLoaded = false;
 
     //Constructor, calls its super class, Creature to create the player's character, Pikachu.
     Player() {
@@ -37,23 +31,6 @@ class Player extends Creature implements Serializable{
     public void setCurrentGameLevel(int level){
         this.currentGameLevel = level;
     }
-
-    public void setPikachuImage(String FileLcation){
-        this.pikachuImage = new Image(FileLcation);
-    }
-
-    public Image getPikachuImage(){
-        return this.pikachuImage;
-    }
-
-    public boolean getIsGameLoaded(){
-        return this.isGameLoaded;
-    }
-
-    public void setIsGameLoaded(boolean a){
-        this.isGameLoaded = a;
-    }
-
 
     /**
      * this method returns nothing and takes no parameter.
@@ -119,43 +96,5 @@ class Player extends Creature implements Serializable{
         c.printStackTrace();
         return null;
       }
-    }
-
-
-
-    public void playerMovement(Player pikachu, int pikachuX, int pikachuY, String imgLocation, Stage primaryStage, Collision collisionCheck, Map gameMap, Scene battleScene, Label output, boolean eastOrWest, Interaction interactionHandler){
-        boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
-        boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
-        boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
-        if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
-            setPikachuImage(imgLocation);
-            pikachu.setX(pikachuX);
-            pikachu.setY(pikachuY);
-            interactionHandler.itemInteractionHandler(pikachu, gameMap, output);
-            interactionHandler.monsterInteractionHandler(primaryStage, battleScene);
-            if(secondMapUpdateCheck == true && eastOrWest){
-                pikachu.setCurrentGameLevel(2);
-            } else if (firstMapUpdateCheck == true && eastOrWest){
-                pikachu.setCurrentGameLevel(1);
-            }
-        }
-        else
-            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
-        pikachu.setIsGameLoaded(false);
-    }
-
-
-    public void itemSelect(Player pikachu, int invenNum, Label output){
-        try{
-		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))
-            pikachu.setHP(pikachu.getInventory().get(invenNum).getHPIncrease());
-        else if (pikachu.getInventory().get(invenNum).getName().equals("Battle Fruit"))
-            pikachu.setAttack(pikachu.getInventory().get(invenNum).useItem());
-        output.setText("Used "+pikachu.getInventory().get(invenNum).getName()+"\n"+pikachu.toString());
-        pikachu.getInventory().remove(invenNum);
-        } catch (Exception e){
-            System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
-            output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
-        }
     }
 }
