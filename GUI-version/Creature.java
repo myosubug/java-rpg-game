@@ -79,7 +79,6 @@ public class Creature implements Serializable{
 	}
 
 
-	//if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
 	public void setHP(int hp){
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
 		if (this.hitPoints + hp > upperLimit)
@@ -90,28 +89,21 @@ public class Creature implements Serializable{
 			this.hitPoints += hp;
 	}
 
-
 	public void setAttack(int ad){
 		this.attackDamage += ad;
 	}
+
 	public void setLocation(int x, int y){
 		this.xCoord = x;
 		this.yCoord = y;
 	}
 
-	/**
-	 * this method updates player's level, hp and attackdamage when player levels up after battle.
-	 * returns nothing and takes no parameter.
-	 */
 	public void levelUp(){
 		this.level += 1;
 		this.hitPoints += 3;
 		this.attackDamage += 1;
 	}
 
-	/**
-	 * this toString() prints out the creature's name and current HP
-	 */
 	public String toString(){
 		return this.getName() + "\nHP: " + this.getHP();
 	}

@@ -40,18 +40,18 @@ public class GUIApp extends Application implements Serializable{
     private static Image pikachuImage;
     private static Image gameBackground;
     private static boolean isGameLoaded = false;
-    private Player pikachu = new Player();
-    private Creature monster;
-    private ArrayList<Map> gameMapList = new ArrayList<Map>();
-    private Map gameMap;
-    private Collision collisionCheck = new Collision(); 
-    private Interaction interaction = new Interaction();
     private static StackPane battleImage;
     private static Label battleOutput;
     private static Label playerStatus;
     private static Label monsterStatus;
     private static ImageView playerImageView;
     private static ImageView monsterImageView;
+    private Player pikachu = new Player();
+    private Creature monster;
+    private ArrayList<Map> gameMapList = new ArrayList<Map>();
+    private Map gameMap;
+    private Collision collisionCheck = new Collision(); 
+    private Interaction interaction = new Interaction();
     
 
 
@@ -61,7 +61,7 @@ public class GUIApp extends Application implements Serializable{
         //setting up main layout and stage
         initilization(primaryStage);
 
-        //connecting button and keys to event handler
+        //connecting button and keys to scenes
         addMovementKeyEvent(primaryStage, gameScene);
         addBattleKeyEvent(primaryStage, battleScene);
 
@@ -95,16 +95,6 @@ public class GUIApp extends Application implements Serializable{
         launch(args);
         
     }
-
-    // ======================= setting up the layout of status window here =======================
-
-    /**
-     * this is the event class for the menu
-     * if save button is clicked then it prints out "save button clicked" in console
-     * else if load button is clicked then it prints out "load button clicked" in console
-     * we need to find a way to save it and load properly through these two events
-     * @return
-     */
 
     private EventHandler<ActionEvent> saveAndLoad(){
         return new EventHandler<ActionEvent>() {
@@ -286,7 +276,7 @@ public class GUIApp extends Application implements Serializable{
                         primary.setScene(gameScene);
                         break;
                     default:
-                        output.setText("Please press correct keys to operate.");
+                        output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
                     }
                 }
         });
@@ -328,7 +318,7 @@ public class GUIApp extends Application implements Serializable{
                         monster.setHP(30);
                         break;
                     default:
-                        battleOutput.setText("Please press correct keys to operate.");
+                        battleOutput.setText("Please press correct keys to operate.\nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.");
                     }
                 }
         });

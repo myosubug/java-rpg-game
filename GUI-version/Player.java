@@ -15,7 +15,6 @@ class Player extends Creature implements Serializable{
         this.inventory.add(newItem);
     }
 
-    //getter for array list
     public ArrayList<Item> getInventory() {
         return this.inventory;
     }
@@ -28,11 +27,6 @@ class Player extends Creature implements Serializable{
         this.currentGameLevel = level;
     }
 
-
-    /**
-     * this method returns nothing and takes no parameter.
-     * it displays each item that is in the current inventory.
-     */
     public String displayInventory(){
         String result = "";
         for(Item i : this.getInventory()){
@@ -41,7 +35,6 @@ class Player extends Creature implements Serializable{
         return result +"\n To use items, use Z,X,C to use one of 3 items in order.";
     }
 
-    //this toString() method overrides toString() method from Creature when it is called on player's class instance
     public String toString(){
         String r;
         r = super.getName() +"\n HP: "+super.getHP()+"\n Level: "+super.getLevel()+"\n Attack Damage: "+super.getAttack();

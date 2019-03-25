@@ -1,8 +1,5 @@
 import java.util.Random;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.Scene;
-import javafx.event.EventHandler;
 
 public class Interaction {
 

@@ -1,25 +1,20 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.event.ItemListener;
 import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Map implements Serializable{
 
-	/**
-	 * Declaring member variables, the 2d array map and object that needs to be on the map.
-	*/
 	private ArrayList<Item> itemList= new ArrayList<Item>();
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private char[][] mapData;
 	private String mapFileLocation;
 
 
-	private Item HP, battleFruit;   //items that will be randomly appearing on the map
-	private Creature metapod, weedle, rattata; //different kinds of monsters on the map
+	private Item HP, battleFruit;   
+	private Creature metapod,rattata; 
 
-	//CONSTRUCTORS
-
+	//CONSTRUCTOR
 	public Map(int mapLineWidth, String mapToRead){
 
 		//will try to load map data from text file
@@ -35,26 +30,21 @@ public class Map implements Serializable{
 		this.HP = new Item("HP Potion", 10, 0);
 		this.battleFruit = new Item("Battle Fruit", 0, 1);
 		this.metapod = new Creature("Metapod", 20, 1, 7, "file:img/metapod.png");
-		this.weedle = new Creature("Weedle", 21, 1, 6);
 		this.rattata = new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif");
 
 		itemList.add(HP);
 		itemList.add(battleFruit);
 		monsterList.add(metapod);
-		//monsterList.add(weedle);
 		monsterList.add(rattata);
 	}
-
 
 	public ArrayList<Item> getItemList() {
 		return this.itemList;
 	}
 
-
 	public ArrayList<Creature> getMonsterList() {
 		return this.monsterList;
 	}
-
 
 	public String getMapFileLocation(){
 		return this.mapFileLocation;
@@ -74,14 +64,6 @@ public class Map implements Serializable{
 		return this.mapData;
 	}
 
-	public void printMap(){
-		for (int i = 0; i < 20; i++){
-			System.out.println("");
-			for (int j = 0; j < 20; j++){
-			  System.out.print(this.mapData[i][j]);
-			}
-		}
-	}
 
 	/**
 	method reads a text file to get map data
@@ -109,7 +91,6 @@ public class Map implements Serializable{
 
 	}
 
-
 		/**
 		Method is used to save the map state when player saves game.
 		Needed because of boss and miniboss locations
@@ -130,7 +111,6 @@ public class Map implements Serializable{
 					i.printStackTrace();
 				}
 			}
-
 			else
 				System.out.println("No map data to save.");
 		}
@@ -143,7 +123,7 @@ public class Map implements Serializable{
 
 			try{
 				FileInputStream fileIn = new FileInputStream("./temp/currentmap.ser");
-	      ObjectInputStream mapIn = new ObjectInputStream(fileIn);
+	     		 ObjectInputStream mapIn = new ObjectInputStream(fileIn);
 
 				outputMap = (Map) mapIn.readObject();
 				mapIn.close();
