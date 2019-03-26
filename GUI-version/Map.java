@@ -36,6 +36,7 @@ public class Map implements Serializable{
 		itemList.add(battleFruit);
 		monsterList.add(metapod);
 		monsterList.add(rattata);
+		monsterList.add(new Creature("Weedle", 22, 1, 9, "file:img/weedle.png"));
 	}
 
 	public ArrayList<Item> getItemList() {
