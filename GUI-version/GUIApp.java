@@ -186,10 +186,10 @@ public class GUIApp extends Application implements Serializable{
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
         root2.getChildren().add(canvas);
-        output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+        output = new Label("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+        output.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
         output.setMinWidth(640);
         output.setMaxHeight(150);
-        output.setStyle("-fx-border-color: black;");
         root2.getChildren().add(output);
 
         //setting up battle scene and image and label layouts
@@ -243,6 +243,7 @@ public class GUIApp extends Application implements Serializable{
         @Override
         public void handle(KeyEvent e)
             {
+            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
             switch(e.getCode()){
                     case W:
                         eastOrWest = false;
@@ -260,6 +261,9 @@ public class GUIApp extends Application implements Serializable{
                         eastOrWest = true;
                         pikachuMovement(pikachu.getX() - 32, pikachu.getY(), "file:img/left.gif", primary);
                         break;
+                    case T:
+                        output.setText("Current status of pikachu:\n"+pikachu.toString());
+                        break;
                     case Z:
                         itemSelect(0);
                         break;
@@ -276,7 +280,7 @@ public class GUIApp extends Application implements Serializable{
                         primary.setScene(gameScene);
                         break;
                     default:
-                        output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+                        output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
                     }
                 }
         });
@@ -341,7 +345,7 @@ public class GUIApp extends Application implements Serializable{
             }
         }
         else
-            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.");
+            output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
         isGameLoaded = false;
     }
 
