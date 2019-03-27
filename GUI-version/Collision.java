@@ -20,7 +20,7 @@ public class Collision {
         }
     }
 
-    public boolean miniBossCollisionCheck (int pikachuX, int pikachuY, char[][] mapData){
+    public boolean bossCollisionCheck (int pikachuX, int pikachuY, char[][] mapData){
         if(pikachuX > 608 || pikachuY > 608 || pikachuX < 0 || pikachuY < 0)
             return false;
 
