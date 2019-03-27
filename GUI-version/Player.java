@@ -24,7 +24,10 @@ class Player extends Creature implements Serializable{
     }
 
     public void setCurrentGameLevel(int level){
-        this.currentGameLevel = level;
+        if(level <= 0 || level > 3)
+            ;
+        else
+            this.currentGameLevel = level;
     }
 
     public String displayInventory(){

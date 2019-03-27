@@ -17,9 +17,18 @@ public class Creature implements Serializable{
 
 	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
-		this.hitPoints = hitPoints;
-		this.level = level;
-		this.attackDamage = attackDamage;
+		if(hitPoints <= 0)
+			this.hitPoints = 1;
+		else
+			this.hitPoints = hitPoints;
+		if(level <= 0)
+			this.level = 1;
+		else
+			this.level = level;
+		if(attackDamage <= 0)
+			this.attackDamage = 1;
+		else
+			this.attackDamage = attackDamage;
 		this.monsterImage = new Image(imgLocation);
 
 	}
@@ -27,9 +36,18 @@ public class Creature implements Serializable{
 
 	Creature(String name, int hitPoints, int level, int attackDamage){
 		this.name = name;
-		this.hitPoints = hitPoints;
-		this.level = level;
-		this.attackDamage = attackDamage;
+		if(hitPoints <= 0)
+			this.hitPoints = 1;
+		else
+			this.hitPoints = hitPoints;
+		if(level <= 0)
+			this.level = 1;
+		else
+			this.level = level;
+		if(attackDamage <= 0)
+			this.attackDamage = 1;
+		else
+			this.attackDamage = attackDamage;
 	}
 
 	Creature(){
@@ -63,11 +81,17 @@ public class Creature implements Serializable{
 	}
 
 	public void setX(int x){
-		this.xCoord = x;
+		if(x < 0 || x > 608)
+			;
+		else
+			this.xCoord = x;
 	}
 
 	public void setY(int y){
-		this.yCoord = y;
+		if(y < 0 || y > 608)
+			;
+		else
+			this.yCoord = y;
 	}
 
 	public void setName(String name){
@@ -90,12 +114,19 @@ public class Creature implements Serializable{
 	}
 
 	public void setAttack(int ad){
-		this.attackDamage += ad;
+		if(ad < 0)
+			;
+		else
+			this.attackDamage += ad;
 	}
 
 	public void setLocation(int x, int y){
-		this.xCoord = x;
-		this.yCoord = y;
+		if(x < 0 || x > 608 || y < 0 || y > 608)
+			;
+		else{
+			this.xCoord = x;
+			this.yCoord = y;
+		}
 	}
 
 	public void levelUp(){

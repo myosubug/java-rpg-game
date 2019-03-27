@@ -11,8 +11,14 @@ class Item implements Serializable{
 	//CONSTRUCTOR
 	Item(String name, int hPIncrease, int attackIncrease){
 		this.name = name;
-		this.hPIncrease = hPIncrease;
-		this.attackIncrease = attackIncrease;
+		if(hPIncrease <= 0)
+			;
+		else
+			this.hPIncrease = hPIncrease;
+		if(attackIncrease <= 0)
+			;
+		else
+			this.attackIncrease = attackIncrease;
 	}
 	//getter and setters for the member variable
 	public String getName(){
