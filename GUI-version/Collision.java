@@ -22,8 +22,8 @@ public class Collision {
 
     public boolean miniBossCollisionCheck (int pikachuX, int pikachuY, char[][] mapData){
         if(pikachuX > 608 || pikachuY > 608 || pikachuX < 0 || pikachuY < 0)
-            return true;
-            
+            return false;
+
         int pikachuXDivided = pikachuX / 32;
         int pikachuYDivided = pikachuY / 32;
         try{
@@ -57,7 +57,7 @@ public class Collision {
 
     public boolean firstMapUpdateCheck(int pikachuX, int pikachuY, char[][] mapData){
         if(pikachuX > 608 || pikachuY > 608 || pikachuX < 0 || pikachuY < 0)
-            return true;
+            return false;
 
         int pikachuXDivided = pikachuX / 32;
         int pikachuYDivided = pikachuY / 32;
