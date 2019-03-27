@@ -10,10 +10,6 @@ public class Map implements Serializable{
 	private char[][] mapData;
 	private String mapFileLocation;
 
-
-	private Item HP, battleFruit;   
-	private Creature metapod,rattata; 
-
 	//CONSTRUCTOR
 	public Map(int mapLineWidth, String mapToRead){
 
@@ -26,16 +22,10 @@ public class Map implements Serializable{
 			System.out.print("Cannot read text file");
 			this.mapData = null;
 		}
-
-		this.HP = new Item("HP Potion", 10, 0);
-		this.battleFruit = new Item("Battle Fruit", 0, 1);
-		this.metapod = new Creature("Metapod", 20, 1, 7, "file:img/metapod.png");
-		this.rattata = new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif");
-
-		itemList.add(HP);
-		itemList.add(battleFruit);
-		monsterList.add(metapod);
-		monsterList.add(rattata);
+		itemList.add(new Item("HP Potion", 10, 0));
+		itemList.add(new Item("Battle Fruit", 0, 1));
+		monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png");
+		monsterList.add(new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif");
 		monsterList.add(new Creature("Weedle", 22, 1, 9, "file:img/weedle.png"));
 	}
 
