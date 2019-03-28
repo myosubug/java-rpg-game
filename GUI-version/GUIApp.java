@@ -48,6 +48,7 @@ public class GUIApp extends Application implements Serializable{
     private Player pikachu = new Player();
     private Creature monster;
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
+    private ArrayList<Creature> monsterList = new ArrayList<Creature>();
     private Map gameMap;
     private Collision collisionCheck = new Collision(); 
     private Interaction interaction = new Interaction();
@@ -192,12 +193,11 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
-        gameMapList.get(0).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
-        gameMapList.get(0).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
-        gameMapList.get(0).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
-        gameMapList.get(1).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
-        gameMapList.get(1).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
-        gameMapList.get(1).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png"));
+        monsterList.add(new Creature("Weedle", 20, 1, 7, "file:img/weedle.png"));
+        monsterList.add(new Creature("Rattata", 20, 1, 7, "file:img/rattata.gif"));
+
+      
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
@@ -435,7 +435,7 @@ public class GUIApp extends Application implements Serializable{
             double randomRate = Math.random();
             if (randomRate <= 0.04){
                 primary.setScene(battleScene);
-                monster = gameMap.getRandomMonster();
+                monster = gameMap.getRandomMonster(monsterList);
                 battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
