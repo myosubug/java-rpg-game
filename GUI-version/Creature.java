@@ -111,7 +111,7 @@ public class Creature implements Serializable{
 	 * ex) level 1 = 30 hp
 	 * 	   level 2 = 33 hp
 	 * also hp can't be lower than 0.
-	 * @param hp this is the hp amount that needs to be added or 
+	 * @param hp this is the hp amount that needs to be added or
 	 *           subtracted from current hp.
 	 */
 	public void setHP(int hp){
@@ -162,11 +162,11 @@ public class Creature implements Serializable{
 		return this.getName() + "\nHP: " + this.getHP();
 	}
 
-	
-	/* 
+
+	/*
 	 * this method saves a creature object to temp folder when game is saved
 	 */
-	/* 
+
 	public void saveCreature(){
 		try{
 			//saves bytestream to temp folder
@@ -181,13 +181,13 @@ public class Creature implements Serializable{
 			i.printStackTrace();
 		}
 	}
-	*/
+
 
 	/**
 	 * loads a creature object from save state
 	 */
 
-	 /*
+
 	public Creature loadCreature(String creatureName){
 		Creature outputCreature = new Creature();
 
@@ -217,14 +217,14 @@ public class Creature implements Serializable{
 			c.printStackTrace();
 			return null;
 		}
-		
-		
+
+
 	}
-	*/
 
-	
- 
 
-	
+
+
+
+
 
 }
