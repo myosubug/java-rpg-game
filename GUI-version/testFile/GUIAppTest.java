@@ -1,8 +1,88 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
+import javafx.scene.control.Label;
+import java.util.*;
+import java.util.Random;
 
-public class CreatureTest extends  Creature{
-	// Test the Constructor with the correct Name, Level, Hp,and Attack Damage.
+public class GUIAppTest{
+
+	char[][] testMap = new char[5][5];
+    
+    /**
+     * this is to test object collision check method.
+     * if wrong intput has been entered, it should return true for players can't move
+     */
+    @Test
+    public void object_collision_method(){
+        Collision c = new Collision();
+
+        assertEquals("checking boundaries for wrong input, should return true", true, c.objectCollisionCheck(700, 32, testMap));
+    }
+    /**
+     * this is to test first map collision check method.
+     * if wrong intput has been entered, it should return false for players can't move
+     */
+    @Test
+    public void first_mapcheck_method(){
+        Collision c = new Collision();
+
+        assertEquals("checking boundaries for wrong input, should return false", false, c.firstMapUpdateCheck(700, -232, testMap));
+    }
+    /**
+     * this is to test second map collision check method.
+     * if wrong intput has been entered, it should return false for players can't move
+     */
+    @Test
+    public void second_mapcheck_method(){
+        Collision c = new Collision();
+        assertEquals("checking boundaries for wrong input, should return false", false, c.secondMapUpdateCheck(700, -32, testMap));
+    }
+     /**
+     * this tests if the constructor for player creates its instance correctly
+     */
+    @Test
+    public void test_constoructor(){
+        Player p = new Player();
+        assertEquals("Checking if player contstuctor create pikachu correctly", 5, p.getAttack(), 0.00001);
+        assertEquals("Checking if player contstuctor create pikachu correctly", 30, p.getHP(), 0.00001);
+        assertEquals("Checking if player contstuctor create pikachu correctly", 1, p.getLevel(), 0.00001);
+    }
+
+    /**
+     * this tests if a desired item is correctly added to player's inventory arraylist.
+     */
+    @Test
+    public void test_player_inventory(){
+        Player p = new Player();
+
+        p.addItemToInventory(new Item("testItem", 99, 44));
+        assertEquals("Checking if player inventory adds item correctly", 99, p.getInventory().get(0).getHPIncrease(), 0.00001);
+    }
+
+    /**
+     * this tests if setCurrentGamelevel() method blocks values for out of lower boundary
+     */
+    @Test
+    public void test_set_current_game_level_negative(){
+        Player p = new Player();
+
+        p.setCurrentGameLevel(-4);
+        assertEquals("Checking if player's current gamelevel works correctly in boundary", 1, p.getCurrentGameLevel(), 0.00001);
+      
+    }
+
+    /**
+     * this tests if setCurrentGamelevel() method blocks values for out of upper boundary
+     */
+    @Test
+    public void test_set_current_game_level_upper_boundary(){
+        Player p = new Player();
+
+        p.setCurrentGameLevel(55);
+        assertEquals("Checking if player's current gamelevel works correctly in boundary", 1, p.getCurrentGameLevel(), 0.00001);
+    }
+
+    // Test the Constructor with the correct Name, Level, Hp,and Attack Damage.
 	@Test
 	public void test_Constructor(){
 			Creature c = new Creature("Pikachu", 30, 1 , 5);
@@ -123,5 +203,7 @@ public class CreatureTest extends  Creature{
 			Creature c = new Creature("Pikachu",30,1,5);
 			c.levelUp();
 			assertEquals("Level up attack changed ", 6, c.getAttack());
-			}
+	}
+
+
 }
