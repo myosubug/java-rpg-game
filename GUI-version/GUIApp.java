@@ -22,6 +22,7 @@ import java.io.*;
 
 public class GUIApp extends Application implements Serializable{
 
+<<<<<<< HEAD
     //setting up instance variables, everything except pikachux, y will have no significant changes
     //pikachu x,y will be implmented through sprite class again
     private static AnchorPane root;
@@ -30,6 +31,13 @@ public class GUIApp extends Application implements Serializable{
     private static Scene introScene;
     private static Scene gameScene;
     private static Scene battleScene;
+=======
+    /**
+     * these are member variables that are used in this class
+     */
+    private static VBox root;
+    private static Scene theScene;
+>>>>>>> e5874546f61483d0bc5883c9184a1343d21b512c
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
@@ -53,6 +61,7 @@ public class GUIApp extends Application implements Serializable{
         //connecting button and keys to event handler
         addMovementKeyEvent(primaryStage, gameScene);
 
+        //animation starts
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -268,7 +277,6 @@ public class GUIApp extends Application implements Serializable{
     }
 
     public void itemInteractionHandler(){
-
         double randomRate = Math.random();
         if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
             pikachu.addItemToInventory(gameMap.getRandomItem());

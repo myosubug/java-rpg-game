@@ -45,6 +45,12 @@ class Item implements Serializable{
 		return this.hPIncrease;
 	}
 
+	/**
+	 * this method is for pikachu to use items
+	 * @return hPincrease or attackIncrease
+	 * 		   if it's HP potion, it returns the amount number that HP potion can heal
+	 * 		   else, it returns the amount of number that battle fruit increases the attack damage
+	 */
 	public int useItem(){
 		if (this.getName().equals("HP potion"))
 			 return hPIncrease;

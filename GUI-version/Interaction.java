@@ -1,13 +1,9 @@
 import java.util.Random;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.Scene;
-import javafx.event.EventHandler;
 
 public class Interaction {
     /**
-     * Declaring member variables, as the battle in this game only takes two creatures,
-     * this class is extended from Creature class to properly access the intances of Creature.
+     * Declaring member variables, as the battle in this game only takes two creatures
      */
     private Player player;
     private Creature monster;
@@ -17,9 +13,9 @@ public class Interaction {
     Interaction(Player player, Creature monster){
         this.player = player;
         this.monster = monster;
-  
     }
 
+    //getters and setters for member variables
     public Player getPlayer() {
         return this.player;
     }
@@ -35,7 +31,6 @@ public class Interaction {
     public void setMonster(Creature monster) {
         this.monster = monster;
     }
-
 
     public void battle(Label output){      
         while(this.player.getHP() > 0 && this.monster.getHP() > 0){

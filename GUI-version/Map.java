@@ -1,13 +1,16 @@
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Scanner;
 import java.awt.event.ItemListener;
 import java.io.*;
+=======
+>>>>>>> e5874546f61483d0bc5883c9184a1343d21b512c
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Map implements Serializable{
 
 	/**
-	 * Declaring member variables, the 2d array map and object that needs to be on the map.
+	 * Declaring member variables
 	*/
 	private ArrayList<Item> itemList= new ArrayList<Item>();
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
@@ -59,12 +62,10 @@ public class Map implements Serializable{
 		return this.monsterList;
 	}
 
-
-	public String getMapFileLocation(){
-		return this.mapFileLocation;
-	}
-
-
+	/**
+	 * this method picks a random item from itemList, which is an array List
+	 * @return it returns a randomly picked item from itemList
+	 */
 	public Item getRandomItem(){
 		int index = ThreadLocalRandom.current().nextInt(this.itemList.size());
 	    return itemList.get(index);

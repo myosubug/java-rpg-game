@@ -29,10 +29,6 @@ public class Creature implements Serializable{
 		this.attackDamage = attackDamage;
 	}
 
-	Creature(){
-		this("default", 10, 1, 1);
-	}
-
 	//METHODS
 	//Getters and setters for member variables
 	public String getName(){
@@ -71,8 +67,12 @@ public class Creature implements Serializable{
 		this.name = name;
 	}
 
-
-	//if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
+	/**
+	 * This methods updates current HP of all creature classes (including player and monsters) 
+	 * if hp is updated (healed) more than what is supposed to be, this condition sets the upper limit.
+	 * else, it just adds the amound of hp (parameter) to current hp of the creature
+	 * @param hp this is the hp that needs to be added (or subtracted if negative value comes in) to current hp of a creature
+	 */
 	public void setHP(int hp){
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
 		if (this.hitPoints + hp > upperLimit)
@@ -80,7 +80,11 @@ public class Creature implements Serializable{
 		else
 			this.hitPoints += hp;
 	}
-
+	/**
+	 * this method updates current attack damage of all creatures.
+	 * @param ad this is the attack damage that needs to be added (or subtracted if negative value comes in) 
+	 * 			 to current attack damage of a creature
+	 */
 	public void setAttack(int ad){
 		this.attackDamage += ad;
 	}
@@ -91,7 +95,6 @@ public class Creature implements Serializable{
 
 	/**
 	 * this method updates player's level, hp and attackdamage when player levels up after battle.
-	 * returns nothing and takes no parameter.
 	 */
 	public void levelUp(){
 		this.level += 1;
@@ -101,7 +104,9 @@ public class Creature implements Serializable{
 
 	/**
 	 * this toString() prints out the creature's name and current HP
+	 * it overides default toString() method.
 	 */
+	@Override
 	public String toString(){
 		return "Name: " + this.getName() + " HP: " + this.getHP();
 	}

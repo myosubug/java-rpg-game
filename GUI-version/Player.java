@@ -13,7 +13,7 @@ class Player extends Creature implements Serializable{
 
     /**
      * this method returns nothing but adds an item (parameter) to inventory arraylist.
-     * @param newItem
+     * @param newItem this is an item that will be added to player's inventory
      */
     public void addItemToInventory (Item newItem) {
         this.inventory.add(newItem);
