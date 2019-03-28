@@ -24,8 +24,6 @@ import java.io.*;
 
 public class GUIApp extends Application implements Serializable{
 
-    //setting up instance variables, everything except pikachux, y will have no significant changes
-    //pikachu x,y will be implmented through sprite class again
     private static AnchorPane root;
     private static VBox root2;
     private static AnchorPane root3;
@@ -69,9 +67,12 @@ public class GUIApp extends Application implements Serializable{
         new AnimationTimer(){
             @Override
             public void handle(long now) {
+                //drawing pikachu and background maps
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gameBackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
+
+                //updating maps based on pikachu's status and location and game loaded status
                 if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
                     gameBackground = new Image("file:img/map2.png");
                     gameMap = gameMapList.get(1);
@@ -96,6 +97,12 @@ public class GUIApp extends Application implements Serializable{
         
     }
 
+    /**
+     * this method returns events for saving and loading game.
+     * @return From the menubutton on top of the application, if
+     * save button is clicked, then it retuns save event. Else,
+     * it will return loading event.
+     */
     private EventHandler<ActionEvent> saveAndLoad(){
         return new EventHandler<ActionEvent>() {
             @Override
@@ -117,6 +124,11 @@ public class GUIApp extends Application implements Serializable{
         };
     }
 
+    /**
+     * this is initialization of layout, buttons, outputs, scenes and instance variable.
+     * basically sets up everything before the actual game starts up
+     * @param primary this stage variable is used to change the scene based on events.
+     */
     public void initilization(Stage primary){
 
         //adding pre-loaded game maps to arraylist
@@ -125,7 +137,6 @@ public class GUIApp extends Application implements Serializable{
         gameMap = gameMapList.get(0);
         
 
-
         //adding menu and save and load funcions
         primary.setTitle("Liberate Pikachu!");
         MenuBar mainMenu = new MenuBar();
@@ -133,10 +144,8 @@ public class GUIApp extends Application implements Serializable{
         MenuItem save = new MenuItem("Save");
         MenuItem load = new MenuItem("Load");
         EventHandler<ActionEvent> saveAndLoadAction = saveAndLoad();
-
         save.setOnAction(saveAndLoadAction);
         load.setOnAction(saveAndLoadAction);
-
         file.getItems().add(save);
         file.getItems().add(load);
         mainMenu.getMenus().add(file);
@@ -236,6 +245,18 @@ public class GUIApp extends Application implements Serializable{
 
     }
 
+     /**
+      * this method take cares of movement event for player (Pikachu)
+      * it takes the current Scene and stage as a parameter and based on the key pressed,
+      * it's taking care of different actions
+      * WASD - these are movement keys that updates pikachu's current location 
+      *        these key event make sure that Pikachu doesn't go over the boundaries of canvas
+      * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
+      * B - this is the key to check pikachu's current inventory. 
+      * T - this is the key to check pikachu's current status.
+      * @param primary this stage variable is used to change the scene based on events.
+      * @param scene this is the gameMap Scene variable in this JavaFx application
+      */
     public void addMovementKeyEvent(Stage primary, Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -276,9 +297,6 @@ public class GUIApp extends Application implements Serializable{
                     case B:
                         output.setText("Current items in bag:\n" +pikachu.displayInventory());
                         break;
-                    case Q:
-                        primary.setScene(gameScene);
-                        break;
                     default:
                         output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
                     }
@@ -287,6 +305,18 @@ public class GUIApp extends Application implements Serializable{
     }
 
 
+    /**
+      * this method take cares of battle action event for player (Pikachu)
+      * it takes the current Scene and stage as a parameter 
+      * based on the key pressed, it's taking care of different actions
+      * J - this is player's attack key to the fighting monster.
+      *     it also displays current status of the monster and player.
+      * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
+      * B - this is the key to check pikachu's current inventory. 
+      * Q - this is the key to exit battle.
+      * @param primary this stage variable is used to change the scene based on events.
+      * @param scene this is the gameMap Scene variable in this JavaFx application
+      */
     public void addBattleKeyEvent(Stage primary, Scene scene){
         scene.setOnKeyPressed(
         new EventHandler<KeyEvent>()
@@ -328,6 +358,13 @@ public class GUIApp extends Application implements Serializable{
         });
     }
 
+    /**
+     * this is a method that handles Pikahchu's movement and checks boundary and item and mosnter event as well as map updates
+     * @param pikachuX pikachu's x position for the next tile
+     * @param pikachuY pikachu's y position for the next tile
+     * @param imgLocation pikachu's image file location in file system so that it can update it's image by direction
+     * @param primaryStage this stage variable is used to change the current scene to battle scene through monsterineratcion method.
+     */
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation, Stage primaryStage){
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
@@ -349,6 +386,12 @@ public class GUIApp extends Application implements Serializable{
         isGameLoaded = false;
     }
 
+    /**
+     * this methods gives a player (pikachu) an random item by random chance.
+     * everytime pikahu makes a movement, this method is called and by 4% chance, 
+     * pikachu can get a random item and it's added to pikachu's current inventory, which is an arraylist
+     * pikachu only can have 3 items at max, and more item will be disregarded.
+     */
     public void itemInteractionHandler(){
 
         double randomRate = Math.random();
@@ -358,7 +401,12 @@ public class GUIApp extends Application implements Serializable{
         }
 
     }
-
+     /**
+      * this methods handles a monster battle event if player is encountered with monster on random rate.
+      * this method will choose a monster from monsterlist from gamemap class and sets up battle with player
+      * by changing the current scene to battle scene, player is brought into battle.
+      * @param primary this stage variable is used to change the current scene to battle scene
+      */
     public void monsterInteractionHandler(Stage primary){
             double randomRate = Math.random();
             if (randomRate <= 0.04){
@@ -370,6 +418,11 @@ public class GUIApp extends Application implements Serializable{
             }
     }
 
+    /**
+     * this method helps the player to select item by inventory number.
+     * player can hold maximum 3 items and each position is represented from 0 to 2.
+     * @param invenNum this is inventory number from 0 to 2
+     */
     public void itemSelect(int invenNum){
         try{
 		if(pikachu.getInventory().get(invenNum).getName().equals("HP Potion"))

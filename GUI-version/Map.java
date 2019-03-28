@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Map implements Serializable{
 
+	//declaring member variables
 	private ArrayList<Item> itemList= new ArrayList<Item>();
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private char[][] mapData;
@@ -29,6 +30,7 @@ public class Map implements Serializable{
 		monsterList.add(new Creature("Weedle", 22, 1, 9, "file:img/weedle.png"));
 	}
 
+	//getters and setter methods
 	public ArrayList<Item> getItemList() {
 		return this.itemList;
 	}
@@ -41,25 +43,35 @@ public class Map implements Serializable{
 		return this.mapFileLocation;
 	}
 
-	public Item getRandomItem(){
-		int index = ThreadLocalRandom.current().nextInt(this.itemList.size());
-	    return itemList.get(index);
-	}
-
-	public Creature getRandomMonster(){
-		int index = ThreadLocalRandom.current().nextInt(this.monsterList.size());
-	    return monsterList.get(index);
-	}
-
 	public char[][] getMapData(){
 		return this.mapData;
 	}
 
 
 	/**
-	method reads a text file to get map data
-	*/
+	 * this method randomly picks an item out of the two kinds from arraylist, itemList
+	 * @return it returns randomly picked item from the arraylist.
+	 */
+	public Item getRandomItem(){
+		int index = ThreadLocalRandom.current().nextInt(this.itemList.size());
+	    return itemList.get(index);
+	}
 
+	/**
+	 * this method randomly picks a monster out of three kinds from arraylist, monsterList
+	 * @return it returns randomly picked monster from the arraylist.
+	 */
+	public Creature getRandomMonster(){
+		int index = ThreadLocalRandom.current().nextInt(this.monsterList.size());
+	    return monsterList.get(index);
+	}
+
+	
+
+
+   /**
+	* method reads a text file to get map data
+	*/
 	public char[][] readMapFile(String fileName, int lengthOfSide) throws FileNotFoundException{
 		try{
 			int lineWidth = 20;
@@ -82,10 +94,10 @@ public class Map implements Serializable{
 
 	}
 
-		/**
-		Method is used to save the map state when player saves game.
-		Needed because of boss and miniboss locations
-		which are deleted from map after defeat.
+	   /**
+		* Method is used to save the map state when player saves game.
+		* Needed because of boss and miniboss locations
+		* which are deleted from map after defeat.
 		*/
 		public void saveMap(){
 			if (this.mapData != null){
@@ -106,8 +118,8 @@ public class Map implements Serializable{
 				System.out.println("No map data to save.");
 		}
 
-		/**
-		Method loads a saved map
+	   /**
+		* Method loads a saved map
 		*/
 		public Map loadMap(){
 			Map outputMap = new Map(20, "blankMap");

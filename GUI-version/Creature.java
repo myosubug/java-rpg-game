@@ -14,7 +14,6 @@ public class Creature implements Serializable{
 	private Image monsterImage;
 
 	//CONSTRUCTORS
-
 	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
 		if(hitPoints <= 0)
@@ -32,7 +31,6 @@ public class Creature implements Serializable{
 		this.monsterImage = new Image(imgLocation);
 
 	}
-
 
 	Creature(String name, int hitPoints, int level, int attackDamage){
 		this.name = name;
@@ -80,6 +78,7 @@ public class Creature implements Serializable{
 		return this.yCoord;
 	}
 
+	// X or Y value of creature class can't be lower than 0 or higher than 608.
 	public void setX(int x){
 		if(x < 0 || x > 608)
 			;
@@ -103,6 +102,15 @@ public class Creature implements Serializable{
 	}
 
 
+	/**
+	 * this method sets up hp for all creature class
+	 * there is an upper limit based on its creature's level
+	 * ex) level 1 = 30 hp
+	 * 	   level 2 = 33 hp
+	 * also hp can't be lower than 0.
+	 * @param hp this is the hp amount that needs to be added or 
+	 *           subtracted from current hp.
+	 */
 	public void setHP(int hp){
 		int upperLimit = 30 + (this.getLevel() - 1) * 3;
 		if (this.hitPoints + hp > upperLimit)
@@ -113,6 +121,10 @@ public class Creature implements Serializable{
 			this.hitPoints += hp;
 	}
 
+	/**
+	 * this method updates attack damage for all creature class.
+	 * @param ad this is the additional attack damage and can't be lower or equal to 0
+	 */
 	public void setAttack(int ad){
 		if(ad < 0)
 			;
@@ -120,6 +132,7 @@ public class Creature implements Serializable{
 			this.attackDamage += ad;
 	}
 
+	// X or Y value of creature class can't be lower than 0 or higher than 608.
 	public void setLocation(int x, int y){
 		if(x < 0 || x > 608 || y < 0 || y > 608)
 			;
@@ -129,19 +142,26 @@ public class Creature implements Serializable{
 		}
 	}
 
+	/**
+	 * this method updates player's level, hp and attackdamage when player levels up after battle.
+	 */
 	public void levelUp(){
 		this.level += 1;
 		this.hitPoints += 3;
 		this.attackDamage += 1;
 	}
 
+	/**
+	 * this toString() prints out the creature's name and current HP
+	 * it overides default toString() method.
+	 */
 	public String toString(){
 		return this.getName() + "\nHP: " + this.getHP();
 	}
 
 	/**
-	* this method saves a creature object to temp folder when game is saved
-	*/
+	 * this method saves a creature object to temp folder when game is saved
+	 */
 	public void saveCreature(){
 		try{
 			//saves bytestream to temp folder
@@ -158,8 +178,8 @@ public class Creature implements Serializable{
 	}
 
 	/**
-	* loads a creature object from save state
-	*/
+	 * loads a creature object from save state
+	 */
 	public Creature loadCreature(String creatureName){
 		Creature outputCreature = new Creature();
 
