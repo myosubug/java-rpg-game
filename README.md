@@ -1,6 +1,9 @@
 CPSC233 T06-G02
+
 Project Name : Liberate Pikachu!
+
 Project Description:
+
 The game that we are planning on making is a game, where Pikachu is trying to escape from Ash and win his freedom.
 Other similar types of games include Pokemon and Zelda. Like in these games, pikachu can move around the map to collect items to help him, and has to fight enemies on the way, before finally fighting the final boss. Our game will be smaller and shorter than these games, but we want to have multiple ‘rooms’ in our map, and multiple types of enemies to fight. Our graphics will also have to be simpler than a full game such as Pokemon or Zelda.
 
