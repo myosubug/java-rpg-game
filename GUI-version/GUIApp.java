@@ -358,10 +358,18 @@ public class GUIApp extends Application implements Serializable{
                         battleOutput.setText("Current items in inventory:\n" +pikachu.displayInventory());
                         break;
                     case Q:
-                        primary.setScene(gameScene);
-                        monster.setHP(30);
-                        isBattleFinished = false;
-                        break;
+                        double escapeChance = Math.random();
+                        if (escapeChance > 0.5){
+                          primary.setScene(gameScene);
+                          monster.setHP(30);
+                          isBattleFinished = false;
+                          output.setText("You ran away! \nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+                          break;
+                        }
+                        else{
+                          battleOutput.setText("You tried to run away, but you couldn't! \nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
+                          break;
+                        }
                     default:
                         battleOutput.setText("To attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
                     }
@@ -406,7 +414,7 @@ public class GUIApp extends Application implements Serializable{
             }
         }
         else
-            output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
         isGameLoaded = false;
     }
 
@@ -436,7 +444,7 @@ public class GUIApp extends Application implements Serializable{
             if (randomRate <= 0.04){
                 primary.setScene(battleScene);
                 monster = gameMap.getRandomMonster();
-                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
+                battleOutput.setText("You have encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
             }
