@@ -4,11 +4,12 @@ import javafx.scene.control.Label;
 public class Interaction {
 
     /**
-     * this method controls battle between player and a monster and prints out status to a label
-     * @param pikachu player class, pikachu is passed to this argument
-     * @param monster any creature class but other than player class is passed to here.
-     * @param battleOutput this is label that is in battle scene.
-     */
+      * this method controls battle between player and a monster and prints out status to a label
+      * @param pikachu player class, pikachu is passed to this argument
+      * @param monster any creature class but other than player class is passed to here.
+      * @param battleOutput this is label that is in battle scene.
+      * @return true is battle is finished and false if battle is not finished.
+      */
     public boolean battle(Player pikachu, Creature monster, Label battleOutput){      
         double fightRate = Math.random();
         //by 59% of chance, monster attacks back player every time player tries to attack the monster
