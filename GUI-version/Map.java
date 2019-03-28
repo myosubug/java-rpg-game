@@ -8,15 +8,9 @@ public class Map implements Serializable{
 
 	//declaring member variables
 	private ArrayList<Item> itemList= new ArrayList<Item>();
+	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private char[][] mapData;
 	private String mapFileLocation;
-<<<<<<< HEAD
-=======
-	private Item hpPotion;
-	private Item battleFruit;
-
-
->>>>>>> 7dd4d26ba07917150bcb7661d61a9bede614d7c1
 
 	//CONSTRUCTOR
 	public Map(int mapLineWidth, String mapToRead){
@@ -30,18 +24,11 @@ public class Map implements Serializable{
 			System.out.print("Cannot read text file");
 			this.mapData = null;
 		}
-<<<<<<< HEAD
 		itemList.add(new Item("HP Potion", 10, 0));
 		itemList.add(new Item("Battle Fruit", 0, 1));
 		monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png"));
 		monsterList.add(new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif"));
 		monsterList.add(new Creature("Weedle", 22, 1, 9, "file:img/weedle.png"));
-=======
-		hpPotion = new Item("HP Potion", 10, 0);
-		battleFruit = new Item("Battle Fruit", 0, 1);
-		itemList.add(hpPotion);
-		itemList.add(battleFruit);
->>>>>>> 7dd4d26ba07917150bcb7661d61a9bede614d7c1
 	}
 
 	//getters and setter methods
@@ -49,6 +36,9 @@ public class Map implements Serializable{
 		return this.itemList;
 	}
 
+	public ArrayList<Creature> getMonsterList() {
+		return this.monsterList;
+	}
 
 	public String getMapFileLocation(){
 		return this.mapFileLocation;
@@ -72,8 +62,8 @@ public class Map implements Serializable{
 	 * this method randomly picks a monster out of three kinds from arraylist, monsterList
 	 * @return it returns randomly picked monster from the arraylist.
 	 */
-	public Creature getRandomMonster(ArrayList<Creature> monsterList){
-		int index = ThreadLocalRandom.current().nextInt(monsterList.size());
+	public Creature getRandomMonster(){
+		int index = ThreadLocalRandom.current().nextInt(this.monsterList.size());
 	    return monsterList.get(index);
 	}
 
