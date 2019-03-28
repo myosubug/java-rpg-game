@@ -48,4 +48,5 @@ public class PlayerTest {
         p.setCurrentGameLevel(55);
         assertEquals("Checking if player's current gamelevel works correctly in boundary", 1, p.getCurrentGameLevel(), 0.00001);
     }
+
 }

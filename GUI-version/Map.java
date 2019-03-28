@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.image.Image;
 
 public class Map implements Serializable{
 

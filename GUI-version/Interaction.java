@@ -9,7 +9,7 @@ public class Interaction {
      * @param monster any creature class but other than player class is passed to here.
      * @param battleOutput this is label that is in battle scene.
      */
-    public void battle(Player pikachu, Creature monster, Label battleOutput){      
+    public boolean battle(Player pikachu, Creature monster, Label battleOutput){      
         double fightRate = Math.random();
         //by 59% of chance, monster attacks back player every time player tries to attack the monster
         if(fightRate < 0.60){
@@ -24,9 +24,13 @@ public class Interaction {
         //if either of monster or player's hp become 0, the battle is over.
         if (pikachu.getHP() <= 0){
             battleOutput.setText("===============================================\n===========YOU HAVE LOST THE BATTLE!=============\n===========PLEASE RE-START THE GAME=============\n===============================================");
+            return true;
         } else if(monster.getHP() <= 0){
             pikachu.levelUp();
             battleOutput.setText("You have won the battle with "+ monster.getName()+"!!\nTo go back to game map, press Q");
+            return true;
+        } else {
+            return false;
         }
     }
 }
