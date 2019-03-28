@@ -11,6 +11,12 @@ public class Map implements Serializable{
 	private ArrayList<Creature> monsterList = new ArrayList<Creature>();
 	private char[][] mapData;
 	private String mapFileLocation;
+	private Item hpPotion;
+	private Item battleFruit;
+	private Creature metapod;
+	private Creature weedle;
+	private Creature rattata;
+
 
 	//CONSTRUCTOR
 	public Map(int mapLineWidth, String mapToRead){
@@ -24,11 +30,16 @@ public class Map implements Serializable{
 			System.out.print("Cannot read text file");
 			this.mapData = null;
 		}
-		itemList.add(new Item("HP Potion", 10, 0));
-		itemList.add(new Item("Battle Fruit", 0, 1));
-		monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png"));
-		monsterList.add(new Creature("Rattata", 24, 1, 8, "file:img/rattata.gif"));
-		monsterList.add(new Creature("Weedle", 22, 1, 9, "file:img/weedle.png"));
+		hpPotion = new Item("HP Potion", 10, 0);
+		battleFruit = new Item("Battle Fruit", 0, 1);
+		metapod = new Creature("Metapod", 20, 1, 7);
+		weedle = new Creature("Weedle", 22, 1, 9);
+		rattata = new Creature("Rattata", 24, 1, 8);
+		itemList.add(hpPotion);
+		itemList.add(battleFruit);
+		monsterList.add(metapod);
+		monsterList.add(weedle);
+		monsterList.add(rattata);
 	}
 
 	//getters and setter methods
@@ -110,6 +121,9 @@ public class Map implements Serializable{
 					mapOut.close();
 					fileOut.close();
 				}
+				catch(NotSerializableException c){
+					System.out.println("saving with JavaFX image class..");
+				}
 
 				catch(IOException i){
 					i.printStackTrace();
@@ -134,7 +148,10 @@ public class Map implements Serializable{
 				fileIn.close();
 				return outputMap;
 			}
-
+			catch (WriteAbortedException e){
+				System.out.println("writing has been aborted");
+				return null;
+			}
 			catch(IOException i){
 				i.printStackTrace();
 				return null;

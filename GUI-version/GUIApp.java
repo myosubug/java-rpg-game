@@ -192,6 +192,12 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
+        gameMapList.get(0).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(0).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(0).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        gameMapList.get(1).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(1).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(1).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
@@ -330,6 +336,8 @@ public class GUIApp extends Application implements Serializable{
                 if(isBattleFinished == false){
                     switch(e.getCode()){
                     case J:
+                        playerStatus.setText(pikachu.toString());
+                        monsterStatus.setText(monster.toString());
                         isBattleFinished = interaction.battle(pikachu, monster, battleOutput);
                         playerStatus.setText(pikachu.toString());
                         monsterStatus.setText(monster.toString());

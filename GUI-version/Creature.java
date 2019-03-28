@@ -1,5 +1,4 @@
 import java.io.*;
-
 import javafx.scene.image.Image;
 
 public class Creature implements Serializable{
@@ -97,6 +96,10 @@ public class Creature implements Serializable{
 		this.name = name;
 	}
 
+	public void setMonsterImage(String fileLocation){
+		this.monsterImage = new Image(fileLocation);
+	}
+
 	public Image getMonsterImage(){
 		return this.monsterImage;
 	}
@@ -159,9 +162,11 @@ public class Creature implements Serializable{
 		return this.getName() + "\nHP: " + this.getHP();
 	}
 
-	/**
+	
+	/* 
 	 * this method saves a creature object to temp folder when game is saved
 	 */
+	/* 
 	public void saveCreature(){
 		try{
 			//saves bytestream to temp folder
@@ -176,10 +181,13 @@ public class Creature implements Serializable{
 			i.printStackTrace();
 		}
 	}
+	*/
 
 	/**
 	 * loads a creature object from save state
 	 */
+
+	 /*
 	public Creature loadCreature(String creatureName){
 		Creature outputCreature = new Creature();
 
@@ -194,6 +202,11 @@ public class Creature implements Serializable{
 			return outputCreature;
 		}
 
+		catch(NotSerializableException c){
+			System.out.println("saving Creatures with JavaFX image class..");
+			return null;
+		}
+
 		catch(IOException i){
 			i.printStackTrace();
 			return null;
@@ -204,9 +217,14 @@ public class Creature implements Serializable{
 			c.printStackTrace();
 			return null;
 		}
+		
+		
 	}
+	*/
 
+	
+ 
 
-
+	
 
 }
