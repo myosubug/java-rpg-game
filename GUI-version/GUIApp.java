@@ -48,18 +48,17 @@ public class GUIApp extends Application implements Serializable{
     private Player pikachu = new Player();
     private Creature monster;
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
-    private ArrayList<Creature> monsterList = new ArrayList<Creature>();
     private Map gameMap;
-    private Collision collisionCheck = new Collision(); 
+    private Collision collisionCheck = new Collision();
     private Interaction interaction = new Interaction();
-    
+
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         //setting up main layout and stage
-        initilization(primaryStage);
+        initialization(primaryStage);
 
         //connecting button and keys to scenes
         addMovementKeyEvent(primaryStage, gameScene);
@@ -96,7 +95,7 @@ public class GUIApp extends Application implements Serializable{
 
     public static void main(String[] args) {
         launch(args);
-        
+
     }
 
     /**
@@ -131,13 +130,13 @@ public class GUIApp extends Application implements Serializable{
      * basically sets up everything before the actual game starts up
      * @param primary this stage variable is used to change the scene based on events.
      */
-    public void initilization(Stage primary){
+    public void initialization(Stage primary){
 
         //adding pre-loaded game maps to arraylist
         gameMapList.add(new Map(20, "mapData/map1.txt"));
         gameMapList.add(new Map(20, "mapData/map2.txt"));
         gameMap = gameMapList.get(0);
-        
+
 
         //adding menu and save and load funcions
         primary.setTitle("Liberate Pikachu!");
@@ -153,7 +152,7 @@ public class GUIApp extends Application implements Serializable{
         mainMenu.getMenus().add(file);
 
 
-        //Intro scene layout setup 
+        //Intro scene layout setup
         root = new AnchorPane();
         introScene = new Scene(root, 640, 830);
         Button start = new Button("Start a new game");
@@ -193,11 +192,12 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
-        monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png"));
-        monsterList.add(new Creature("Weedle", 20, 1, 7, "file:img/weedle.png"));
-        monsterList.add(new Creature("Rattata", 20, 1, 7, "file:img/rattata.gif"));
-
-      
+        gameMapList.get(0).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(0).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(0).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        gameMapList.get(1).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(1).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(1).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
@@ -256,10 +256,10 @@ public class GUIApp extends Application implements Serializable{
       * this method take cares of movement event for player (Pikachu)
       * it takes the current Scene and stage as a parameter and based on the key pressed,
       * it's taking care of different actions
-      * WASD - these are movement keys that updates pikachu's current location 
+      * WASD - these are movement keys that updates pikachu's current location
       *        these key event make sure that Pikachu doesn't go over the boundaries of canvas
       * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
-      * B - this is the key to check pikachu's current inventory. 
+      * B - this is the key to check pikachu's current inventory.
       * T - this is the key to check pikachu's current status.
       * @param primary this stage variable is used to change the scene based on events.
       * @param scene this is the gameMap Scene variable in this JavaFx application
@@ -314,12 +314,12 @@ public class GUIApp extends Application implements Serializable{
 
     /**
       * this method take cares of battle action event for player (Pikachu)
-      * it takes the current Scene and stage as a parameter 
+      * it takes the current Scene and stage as a parameter
       * based on the key pressed, it's taking care of different actions
       * J - this is player's attack key to the fighting monster.
       *     it also displays current status of the monster and player.
       * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
-      * B - this is the key to check pikachu's current inventory. 
+      * B - this is the key to check pikachu's current inventory.
       * Q - this is the key to exit battle.
       * @param primary this stage variable is used to change the scene based on events.
       * @param scene this is the gameMap Scene variable in this JavaFx application
@@ -336,6 +336,7 @@ public class GUIApp extends Application implements Serializable{
                 if(isBattleFinished == false){
                     switch(e.getCode()){
                     case J:
+                        int monsterDamage = interaction.monstersTurn(monster);
                         playerStatus.setText(pikachu.toString());
                         monsterStatus.setText(monster.toString());
                         isBattleFinished = interaction.battle(pikachu, monster, battleOutput);
@@ -358,16 +359,25 @@ public class GUIApp extends Application implements Serializable{
                         battleOutput.setText("Current items in inventory:\n" +pikachu.displayInventory());
                         break;
                     case Q:
-                        primary.setScene(gameScene);
-                        monster.setHP(30);
-                        isBattleFinished = false;
-                        break;
+                        double escapeChance = Math.random();
+                        if (escapeChance > 0.5){
+                          primary.setScene(gameScene);
+                          monster.setHP(30);
+                          isBattleFinished = false;
+                          output.setText("You ran away! \nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+                          break;
+                        }
+                        else{
+                          battleOutput.setText("You tried to run away, but you couldn't! \nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
+                          break;
+                        }
                     default:
-                        battleOutput.setText("Please press correct keys to operate.\nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
+                        battleOutput.setText("To attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
                     }
+
                 }
                 else if (isBattleFinished == true){
-                    battleOutput.setText("Please press correct keys to operate.\nTo go back to game map, press Q");
+                    battleOutput.setText("To go back to game map, press Q");
                     switch(e.getCode()){
                         case Q:
                             primary.setScene(gameScene);
@@ -375,11 +385,11 @@ public class GUIApp extends Application implements Serializable{
                             isBattleFinished = false;
                             break;
                         default:
-                            battleOutput.setText("Please press correct keys to operate.\nTo go back to game map, press Q");
+                            battleOutput.setText("To go back to game map, press Q");
                     }
-                }        
+                }
             }
-        }); 
+        });
     }
 
     /**
@@ -406,13 +416,13 @@ public class GUIApp extends Application implements Serializable{
             }
         }
         else
-            output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
         isGameLoaded = false;
     }
 
     /**
      * this methods gives a player (pikachu) an random item by random chance.
-     * everytime pikahu makes a movement, this method is called and by 4% chance, 
+     * everytime pikahu makes a movement, this method is called and by 4% chance,
      * pikachu can get a random item and it's added to pikachu's current inventory, which is an arraylist
      * pikachu only can have 3 items at max, and more item will be disregarded.
      */
@@ -435,8 +445,8 @@ public class GUIApp extends Application implements Serializable{
             double randomRate = Math.random();
             if (randomRate <= 0.04){
                 primary.setScene(battleScene);
-                monster = gameMap.getRandomMonster(monsterList);
-                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
+                monster = gameMap.getRandomMonster();
+                battleOutput.setText("You have encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
             }

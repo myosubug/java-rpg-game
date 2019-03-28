@@ -5,6 +5,7 @@ public class Creature implements Serializable{
 
 	//Declaring member variables
 	private String name;
+	private double attackStrength;
 	private int hitPoints;
 	private int level;
 	private int attackDamage;
@@ -13,16 +14,24 @@ public class Creature implements Serializable{
 	private Image monsterImage;
 
 	//CONSTRUCTORS
-	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
+	Creature(String name, double attackStrength, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
+
+		if((attackStrength <= 0.0) && (attackStrength >= 1.0))
+			this.attackStrength = attackStrength;
+		else
+			this.attackStrength = 0.5;
+
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
 		else
 			this.hitPoints = hitPoints;
+
 		if(level <= 0)
 			this.level = 1;
 		else
 			this.level = level;
+
 		if(attackDamage <= 0)
 			this.attackDamage = 1;
 		else
@@ -33,6 +42,12 @@ public class Creature implements Serializable{
 
 	Creature(String name, int hitPoints, int level, int attackDamage){
 		this.name = name;
+
+		if((attackStrength <= 0.0) && (attackStrength >= 1.0))
+			this.attackStrength = attackStrength;
+		else
+			this.attackStrength = 0.5;
+
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
 		else
@@ -55,6 +70,10 @@ public class Creature implements Serializable{
 	//Getters and setters for member variables
 	public String getName(){
 		return name;
+	}
+
+	public double getAttackStrength(){
+		return attackStrength;
 	}
 
 	public int getHP(){
@@ -96,6 +115,11 @@ public class Creature implements Serializable{
 		this.name = name;
 	}
 
+	public void setAttackStrength(double newAttackStrength){
+		if ((newAttackStrength >= 0.0) && (newAttackStrength <= 1.0))
+			this.attackStrength = newAttackStrength;
+	}
+
 	public void setMonsterImage(String fileLocation){
 		this.monsterImage = new Image(fileLocation);
 	}
@@ -111,7 +135,7 @@ public class Creature implements Serializable{
 	 * ex) level 1 = 30 hp
 	 * 	   level 2 = 33 hp
 	 * also hp can't be lower than 0.
-	 * @param hp this is the hp amount that needs to be added or 
+	 * @param hp this is the hp amount that needs to be added or
 	 *           subtracted from current hp.
 	 */
 	public void setHP(int hp){
@@ -162,11 +186,11 @@ public class Creature implements Serializable{
 		return this.getName() + "\nHP: " + this.getHP();
 	}
 
-	
-	/* 
+
+	/*
 	 * this method saves a creature object to temp folder when game is saved
 	 */
-	/* 
+	/*
 	public void saveCreature(){
 		try{
 			//saves bytestream to temp folder
@@ -217,14 +241,14 @@ public class Creature implements Serializable{
 			c.printStackTrace();
 			return null;
 		}
-		
-		
+
+
 	}
 	*/
 
-	
- 
 
-	
+
+
+
 
 }
