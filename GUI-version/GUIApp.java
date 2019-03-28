@@ -22,22 +22,12 @@ import java.io.*;
 
 public class GUIApp extends Application implements Serializable{
 
-<<<<<<< HEAD
-    //setting up instance variables, everything except pikachux, y will have no significant changes
-    //pikachu x,y will be implmented through sprite class again
     private static AnchorPane root;
     private static VBox root2;
     private static AnchorPane root3;
     private static Scene introScene;
     private static Scene gameScene;
     private static Scene battleScene;
-=======
-    /**
-     * these are member variables that are used in this class
-     */
-    private static VBox root;
-    private static Scene theScene;
->>>>>>> e5874546f61483d0bc5883c9184a1343d21b512c
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
