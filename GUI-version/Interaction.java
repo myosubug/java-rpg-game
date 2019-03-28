@@ -24,7 +24,8 @@ public class Interaction {
 
         //if either of monster or player's hp become 0, the battle is over.
         if (pikachu.getHP() <= 0){
-            battleOutput.setText("===============================================\n===========YOU HAVE LOST THE BATTLE!=============\n===========PLEASE RE-START THE GAME=============\n===============================================");
+            battleOutput.setText("============================================================\n===========YOU HAVE LOST THE BATTLE!==========================\n===========PLEASE GO BACK TO GAME MAP BY PRESS Q===============\n============================================================");
+            pikachu.setHP(1);
             return true;
         } else if(monster.getHP() <= 0){
             pikachu.levelUp();

@@ -38,7 +38,7 @@ public class GUIApp extends Application implements Serializable{
     private static Image pikachuImage;
     private static Image gameBackground;
     private static boolean isGameLoaded = false;
-    private static boolean isBattleFinished = true;
+    private static boolean isBattleFinished = false;
     private static StackPane battleImage;
     private static Label battleOutput;
     private static Label playerStatus;
@@ -325,11 +325,11 @@ public class GUIApp extends Application implements Serializable{
         @Override
         public void handle(KeyEvent e)
             {
+                playerStatus.setText(pikachu.toString());
+                monsterStatus.setText(monster.toString());
                 if(isBattleFinished == false){
                     switch(e.getCode()){
                     case J:
-                        playerStatus.setText(pikachu.toString());
-                        monsterStatus.setText(monster.toString());
                         isBattleFinished = interaction.battle(pikachu, monster, battleOutput);
                         playerStatus.setText(pikachu.toString());
                         monsterStatus.setText(monster.toString());
@@ -347,14 +347,20 @@ public class GUIApp extends Application implements Serializable{
                         playerStatus.setText(pikachu.toString());
                         break;
                     case B:
-                        battleOutput.setText("Current items in bag:\n" +pikachu.displayInventory());
+                        battleOutput.setText("Current items in inventory:\n" +pikachu.displayInventory());
+                        break;
+                    case Q:
+                        primary.setScene(gameScene);
+                        monster.setHP(30);
+                        isBattleFinished = false;
                         break;
                     default:
-                        battleOutput.setText("Please press correct keys to operate.\nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.");
+                        battleOutput.setText("Please press correct keys to operate.\nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
                     }
                 }
                 else if (isBattleFinished == true){
-                        switch(e.getCode()){
+                    battleOutput.setText("Please press correct keys to operate.\nTo go back to game map, press Q");
+                    switch(e.getCode()){
                         case Q:
                             primary.setScene(gameScene);
                             monster.setHP(30);
@@ -422,7 +428,7 @@ public class GUIApp extends Application implements Serializable{
             if (randomRate <= 0.04){
                 primary.setScene(battleScene);
                 monster = gameMap.getRandomMonster();
-                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q");
+                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
             }
