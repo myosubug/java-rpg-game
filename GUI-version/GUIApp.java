@@ -336,6 +336,7 @@ public class GUIApp extends Application implements Serializable{
                 if(isBattleFinished == false){
                     switch(e.getCode()){
                     case J:
+                        int monsterDamage = interaction.monstersTurn(monster);
                         playerStatus.setText(pikachu.toString());
                         monsterStatus.setText(monster.toString());
                         isBattleFinished = interaction.battle(pikachu, monster, battleOutput);
@@ -373,6 +374,7 @@ public class GUIApp extends Application implements Serializable{
                     default:
                         battleOutput.setText("To attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
                     }
+
                 }
                 else if (isBattleFinished == true){
                     battleOutput.setText("To go back to game map, press Q");
