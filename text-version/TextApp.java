@@ -8,6 +8,7 @@ public class TextApp extends Map{
 	private Map currentMap;
 
 
+
 	//Constructors
 	TextApp(){
 		this.currentMap = new Map(); //creates a new map when the game is launched.
@@ -51,6 +52,18 @@ public class TextApp extends Map{
 		Scanner keyboard = new Scanner(System.in); //variable for taking user input
 		Boolean game = true;            //if this boolean value becomes false, the game ends
 
+<<<<<<< HEAD
+=======
+		//These are the stats for items and monsters found in the map
+		Item hPpotion = new Item("HP Potion", 10, 0);
+		Item battleFruit = new Item("Battle Fruit", 0, 1);
+		Player pikachu = new Player();
+		Creature metapod = new Creature("Metapod", 20, 1, 7);
+		Creature weedle = new Creature("Weedle", 21, 1, 6);
+		Creature rattata = new Creature("Rattata", 24, 1, 5);
+
+
+>>>>>>> 537e8ff0a55ae8befdb7441350f957b843647ef1
 		//Game Intro
 		System.out.println();
 		System.out.println();
@@ -69,6 +82,7 @@ public class TextApp extends Map{
 
 		//Main game loop, this game will be terminated only if game value is false.
 		while (game == true){
+
 
 			//End game condition : if the player reaches level 5, this will end the loop.
 			if(test.getPikachu().getLevel() == 5){
@@ -111,6 +125,9 @@ public class TextApp extends Map{
 			mapObject = tempMap[test.getPikachu().getX()][test.getPikachu().getY()]; //saving comparison string for interaction
 			double itemRate = Math.random();										 //this will generate random chances of getting random items.
 
+
+
+
 			//if the player is loacted at " I " on the map, the player gets a random item.
 			if (mapObject == " I "){
 				System.out.println("Found an item! Let's keep this in my bag! \n\nCurrent list of the items in the inventory: ");
@@ -135,8 +152,9 @@ public class TextApp extends Map{
 			}
 
 			//if the player is loacted at " M " on the map, the player get to choose fight or run from a monster.
-			else if (mapObject == " M "){
+			else if (mapObject == " M ") {
 				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f) or Run away(r)");
+<<<<<<< HEAD
 					String input2 = keyboard.nextLine();
 					String inputCap2 = input2.toUpperCase();
 
@@ -164,33 +182,99 @@ public class TextApp extends Map{
 						System.out.println("Use WASD to move");
 						System.out.println("Press 0 to quit the game");
 						System.out.println();
+=======
+				String input2 = keyboard.nextLine();
+				String inputCap2 = input2.toUpperCase();
+
+				//if player choose to fight, a random monster from wild will be selected.
+				if (inputCap2.equals("F")) {
+					System.out.println("Preparing battle...");
+					System.out.println();
+					//now we need fight interaction here
+					int randomMonster = rand.nextInt(3);
+					Creature m = new Creature();
+					if (randomMonster == 0)
+						m = test.getMetapod();
+					else if (randomMonster == 1)
+						m = test.getRattata();
+					else
+						m = test.getWeedle();
+
+					//once the monster is selected, the actual battle interaction begins.
+					Interaction fight = new Interaction(test.getPikachu(), m);
+					String battleResult = fight.battle();
+
+					if (battleResult == "win") {
+						test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
+>>>>>>> 537e8ff0a55ae8befdb7441350f957b843647ef1
 					}
 
-					//if player choose to run, the current map is shown to the player and ask user input for new movement.
-					else if (inputCap2.equals("R")){
-						System.out.println("Success!");
-						System.out.println();
-						test.printToConsole();
-						System.out.println();
-						System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
-						System.out.println("Press 0 to quit the game");
-						System.out.println();
-					}
+					//after the battle, the current map is shown to the player and ask user input for new movement.
+					test.printToConsole();
+					System.out.println();
+					System.out.println("Use WASD to move");
+					System.out.println("Press 0 to quit the game");
+					System.out.println();
+				}
 
-					//this is a termination condition if the player just wants to quit the game.
-					else if (input2.equals("0")){
-						System.exit(0);
-					}
 
-					//if the player didn't enter correct input, it will prompt the player again to enter correct input.
-					else{
-						System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
-						System.out.println();
-						continue;
-					}
+				//if player choose to run, the current map is shown to the player and ask user input for new movement.
+				else if (inputCap2.equals("R")) {
+					System.out.println("Success!");
+					System.out.println();
+					test.printToConsole();
+					System.out.println();
+					System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
+					System.out.println("Press 0 to quit the game");
+					System.out.println();
+				}
 
-					continue;
+				//this is a termination condition if the player just wants to quit the game.
+				else if (input2.equals("0")) {
+					System.exit(0);
+				}
+
+				//if the player didn't enter correct input, it will prompt the player again to enter correct input.
+				else {
+					System.out.println("Please enter correct input for the movement,\nyou can Fight(f) or Run away(r)");
+					System.out.println();
+				}
+
 			}
+
+
+			// Encounter rate if not in M or I
+			// random number generator for encounter rate and creature chance
+
+            else if ((mapObject != " M " ) || (mapObject != " I ")) {
+
+                double encounter = Math.random();
+                if (encounter <= 0.1) {
+                    int randomMonster = rand.nextInt(3);
+                    Creature m = new Creature();
+                    if (randomMonster == 0)
+                        m = test.getMetapod();
+                    else if (randomMonster == 1)
+                        m = test.getRattata();
+                    else
+                        m = test.getWeedle();
+                    Interaction fight = new Interaction(test.getPikachu(), m);
+                    String battleResult = fight.battle();
+                    if (battleResult == "win") {
+                        test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
+                    }
+
+                    //after the battle, the current map is shown to the player and ask user input for new movement.
+                    test.printToConsole();
+                    System.out.println();
+                    System.out.println("Use WASD to move");
+                    System.out.println("Press 0 to quit the game");
+                    System.out.println();
+                }
+            }
+
+
+
 		}
 		//closing keyboad scanner
 		keyboard.close();
