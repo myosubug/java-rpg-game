@@ -52,15 +52,6 @@ public class TextApp extends Map{
 		Scanner keyboard = new Scanner(System.in); //variable for taking user input
 		Boolean game = true;            //if this boolean value becomes false, the game ends
 
-		//These are the stats for items and monsters found in the map
-		Item hPpotion = new Item("HP Potion", 10, 0);
-		Item battleFruit = new Item("Battle Fruit", 0, 1);
-		Player pikachu = new Player();
-		Creature metapod = new Creature("Metapod", 20, 1, 7);
-		Creature weedle = new Creature("Weedle", 21, 1, 6);
-		Creature rattata = new Creature("Rattata", 24, 1, 5);
-
-
 		//Game Intro
 		System.out.println();
 		System.out.println();
@@ -139,8 +130,6 @@ public class TextApp extends Map{
 				test.getPikachu().displayInventory();
 				System.out.println();
 
-				test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
-
 				//then prompt user to enter another input for movement.
 				System.out.println("You can go: Left(a) Right(d) Up(w) Down(s)");
 				System.out.println();
@@ -153,29 +142,33 @@ public class TextApp extends Map{
 			//if the player is loacted at " M " on the map, the player get to choose fight or run from a monster.
 			else if (mapObject == " M ") {
 				System.out.println("Monster is near! \nWhat do you want to do? : Fight(f) or Run away(r)");
-				String input2 = keyboard.nextLine();
-				String inputCap2 = input2.toUpperCase();
+					String input2 = keyboard.nextLine();
+					String inputCap2 = input2.toUpperCase();
 
-				//if player choose to fight, a random monster from wild will be selected.
-				if (inputCap2.equals("F")) {
-					System.out.println("Preparing battle...");
-					System.out.println();
-					//now we need fight interaction here
-					int randomMonster = rand.nextInt(3);
-					Creature m = new Creature();
-					if (randomMonster == 0)
-						m = test.getMetapod();
-					else if (randomMonster == 1)
-						m = test.getRattata();
-					else
-						m = test.getWeedle();
+					//if player choose to fight, a random monster from wild will be selected.
+					if (inputCap2.equals("F")){
+						System.out.println("Preparing battle...");
+						System.out.println();
+						//now we need fight interaction here
+						int randomMonster =  rand.nextInt(3);
+						Creature m = new Creature();
+						if (randomMonster == 0)
+							m = test.getMetapod();
+						else if (randomMonster == 1)
+							m = test.getRattata();
+						else
+							m = test.getWeedle();
 
-					//once the monster is selected, the actual battle interaction begins.
-					Interaction fight = new Interaction(test.getPikachu(), m);
-					String battleResult = fight.battle();
+						//once the monster is selected, the actual battle interaction begins.
+						Interaction fight = new Interaction(test.getPikachu(), m);
+						fight.battle();
 
-					if (battleResult == "win") {
-						test.getCurrentMap().setMap(" - ", test.getPikachu().getX(), test.getPikachu().getY());
+						//after the battle, the current map is shown to the player and ask user input for new movement.
+						test.printToConsole();
+						System.out.println();
+						System.out.println("Use WASD to move");
+						System.out.println("Press 0 to quit the game");
+						System.out.println();
 					}
 
 					//after the battle, the current map is shown to the player and ask user input for new movement.
