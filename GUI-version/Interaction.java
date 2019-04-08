@@ -1,18 +1,86 @@
 import java.util.Random;
 import javafx.scene.control.Label;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
 
 public class Interaction {
 
+  public int bossTurn(Boss boss, Label battleOutput){
+    //displays initial boss message before the attack
+    int randomMessage = ThreadLocalRandom.current().nextInt(1, 3);
 
-  public int monstersTurn(Creature monster){
+    if (randomMessage == 1){
+      battleOutput.setText(boss.getAttackMessage1());
+    }
+    else{
+      battleOutput.setText(boss.getAttackMessage2());
+    }
+
+    //decides whether boss will attack or use an item
+    double itemOrAttack = Math.random();
+
+    //if its HP is below 5, it will use its potion
+    if (boss.getHP() <= 5){
+      Item superPotion = new Item("Super Potion", 20, 1);
+      if (Arrays.asList(boss.getInventory()).contains(superPotion)){
+        battleOutput.setText(boss.getName() + " used a Super Potion and regained 20 HP!");
+        return 0;
+      }
+
+      //if boss doesn't have super potion, attacks instead
+      else{
+        itemOrAttack = 0.1;
+      }
+    }
+
+
+    //30% chance of using its super berry
+    if (itemOrAttack > 0.7){
+      Item superBerry = new Item("Super Berry", 2, 3);
+      if (Arrays.asList(boss.getInventory()).contains(superBerry)){
+        battleOutput.setText(boss.getName() + " used a Super Berry and its attack went up!");
+        return 0;
+      }
+
+      //if the boss's inventory doesn't contain a super berry, it attacks instead
+      else{
+        itemOrAttack = 0.1;
+      }
+    }
+
+    //70% chance of attacking
+    if (itemOrAttack <= 0.7){
+      double monsterAttack = Math.random();
+
+      if (boss.getAttack() > monsterAttack){
+        int damagePoints = -(int)(monsterAttack * boss.getAttack());
+        battleOutput.setText("The " + boss.getName() + " did " + damagePoints + " of damage to you!");
+        return damagePoints;
+      }
+
+      else {
+        battleOutput.setText("The " + boss.getName() + " tried to attack, but it missed!");
+        return 0;
+      }
+    }
+
+
+    return 0;
+
+  }
+
+
+  public int monstersTurn(Creature monster, Label battleOutput){
     double monsterAttack = Math.random();
 
     if (monster.getAttackStrength() > monsterAttack){
-      return -(int)(monster.getAttackStrength() * monster.getAttack());
+      int damagePoints = -(int)(monsterAttack * monster.getAttack());
+      battleOutput.setText("The " + monster.getName() + " did " + damagePoints + " of damage to you!");
+      return damagePoints;
     }
 
     else {
-      //battleOutput.setText("The " + monster.getName() + " tried to attack, but it missed!");
+      battleOutput.setText("The " + monster.getName() + " tried to attack, but it missed!");
       return 0;
     }
   }
