@@ -3,36 +3,21 @@ import java.util.ArrayList;
 public class Boss extends Player{
   //extra variables to control boss' abilities
   private String name;
-  private Inventory bossInventory;
+  private ArrayList<Item> bossInventory = new ArrayList<Item>();
   private String introMessage;
   private String attackMessage1;
   private String attackMessage2;
   private String deathMessage;
-
-
   //CONSTRUCTORS
-  public Boss(String bossName, Inventory bossItems, String bossIntroMessage, String attackMessage1, String attackMessage2, String bossDeathMessage){
-    this.name = name;
-    this.setHP(100);
-    this.setAttack(10);
-    this.bossInventory = bossItems;
-    this.introMessage = bossIntroMessage;
-    this.attackMessage1 = attackMessage1;
-    this.attackMessage2 = attackMessage2;
-    this.deathMessage = bossDeathMessage;
-  }
 
   public Boss(){
-    this.name = name;
+    this.name = "Ash";
     this.setHP(100);
-    this.setAttack(10);
-    this.bossInventory = new Inventory();
+    this.setAttack(12);
     Item superPotion = new Item("Super Potion", 20, 1);
-    bossInventory.addItem(superPotion);
-
     Item superBerry = new Item("Super Berry", 2, 3);
-    this.bossInventory.addItem(superBerry);
-
+    bossInventory.add(superPotion);
+    bossInventory.add(superBerry);
   }
 
   public String getAttackMessage1(){
@@ -43,4 +28,13 @@ public class Boss extends Player{
     return this.attackMessage2;
   }
 
+  @Override
+  public String getName(){
+    return this.name;
+  }
+
+  @Override
+  public String toString(){
+		return this.name + "\nHP: " + this.getHP();
+	}
 }

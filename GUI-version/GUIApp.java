@@ -37,8 +37,10 @@ public class GUIApp extends Application implements Serializable{
     private static boolean eastOrWest;
     private static Image pikachuImage;
     private static Image gameBackground;
+    private static Image bossImage;
     private static boolean isGameLoaded = false;
     private static boolean isBattleFinished = false;
+    private static boolean isBossDefeated = false;
     private static StackPane battleImage;
     private static Label battleOutput;
     private static Label playerStatus;
@@ -46,6 +48,7 @@ public class GUIApp extends Application implements Serializable{
     private static ImageView playerImageView;
     private static ImageView monsterImageView;
     private Player pikachu = new Player();
+    private Boss ash = new Boss();
     private Creature monster;
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
     private Map gameMap;
@@ -72,6 +75,8 @@ public class GUIApp extends Application implements Serializable{
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gameBackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
+                if(pikachu.getCurrentGameLevel() == 3 && isBossDefeated == false)
+                    gc.drawImage(bossImage, 384, 160);
 
                 //updating maps based on pikachu's status and location and game loaded status
                 if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
@@ -86,6 +91,26 @@ public class GUIApp extends Application implements Serializable{
                     updated = 1;
                     if(isGameLoaded == false)
                         pikachu.setX(608);
+                } else if(pikachu.getCurrentGameLevel() == 3 && updated == 2){
+                    gameBackground = new Image("file:img/map3.png");
+                    gameMap = gameMapList.get(2);
+                    updated = 3;
+                    if(isGameLoaded == false)
+                        pikachu.setX(0);
+                } else if(pikachu.getCurrentGameLevel() == 2 && updated == 3){
+                    gameBackground = new Image("file:img/map2.png");
+                    gameMap = gameMapList.get(1);
+                    updated = 2;
+                    if(isGameLoaded == false)
+                        pikachu.setX(608);
+                } else if(pikachu.getCurrentGameLevel() == 1 && updated == 3){
+                    gameBackground = new Image("file:img/map1.png");
+                    gameMap = gameMapList.get(0);
+                    updated = 1;
+                } else if(pikachu.getCurrentGameLevel() == 3 && updated == 1){
+                    gameBackground = new Image("file:img/map3.png");
+                    gameMap = gameMapList.get(2);
+                    updated = 3;
                 }
             }
         }.start();
@@ -135,6 +160,7 @@ public class GUIApp extends Application implements Serializable{
         //adding pre-loaded game maps to arraylist
         gameMapList.add(new Map(20, "mapData/map1.txt"));
         gameMapList.add(new Map(20, "mapData/map2.txt"));
+        gameMapList.add(new Map(20, "mapData/map3.txt"));
         gameMap = gameMapList.get(0);
 
 
@@ -192,12 +218,18 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
+        bossImage = new Image("file:img/ashFront.gif");
         gameMapList.get(0).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
         gameMapList.get(0).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
         gameMapList.get(0).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
         gameMapList.get(1).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
         gameMapList.get(1).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
         gameMapList.get(1).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        gameMapList.get(2).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(2).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(2).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        ash.setMonsterImage("file:img/ashBattle.gif");
+        
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
@@ -336,7 +368,6 @@ public class GUIApp extends Application implements Serializable{
                 if(isBattleFinished == false){
                     switch(e.getCode()){
                     case J:
-                        int monsterDamage = interaction.monstersTurn(monster);
                         playerStatus.setText(pikachu.toString());
                         monsterStatus.setText(monster.toString());
                         isBattleFinished = interaction.battle(pikachu, monster, battleOutput);
@@ -403,16 +434,20 @@ public class GUIApp extends Application implements Serializable{
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean thirdMapUpdateCheck = collisionCheck.thirdMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean bossFoundCheck = collisionCheck.bossCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
             pikachuImage = new Image(imgLocation);
             pikachu.setX(pikachuX);
             pikachu.setY(pikachuY);
             itemInteractionHandler();
-            monsterInteractionHandler(primaryStage);
+            monsterInteractionHandler(primaryStage, bossFoundCheck);
             if(secondMapUpdateCheck == true && eastOrWest){
                 pikachu.setCurrentGameLevel(2);
             } else if (firstMapUpdateCheck == true && eastOrWest){
                 pikachu.setCurrentGameLevel(1);
+            } else if (thirdMapUpdateCheck == true && eastOrWest){
+                pikachu.setCurrentGameLevel(3);
             }
         }
         else
@@ -427,7 +462,6 @@ public class GUIApp extends Application implements Serializable{
      * pikachu only can have 3 items at max, and more item will be disregarded.
      */
     public void itemInteractionHandler(){
-
         double randomRate = Math.random();
         if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
             pikachu.addItemToInventory(gameMap.getRandomItem());
@@ -441,14 +475,23 @@ public class GUIApp extends Application implements Serializable{
       * by changing the current scene to battle scene, player is brought into battle.
       * @param primary this stage variable is used to change the current scene to battle scene
       */
-    public void monsterInteractionHandler(Stage primary){
+    public void monsterInteractionHandler(Stage primary, boolean bossFoundCheck){
             double randomRate = Math.random();
-            if (randomRate <= 0.04){
+            if (bossFoundCheck) {
+                primary.setScene(battleScene);
+                monster = ash;
+                battleOutput.setText("You finally have encountered with "+ ash.getName() +" To fight, press J or to run away, press Q.");
+                monsterStatus.setText(ash.toString());
+                monsterImageView.setImage(ash.getMonsterImage());
+            }
+            else {
+                if (randomRate <= 0.04){
                 primary.setScene(battleScene);
                 monster = gameMap.getRandomMonster();
                 battleOutput.setText("You have encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
+                }
             }
     }
 

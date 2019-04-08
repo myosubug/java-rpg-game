@@ -16,6 +16,7 @@ public class Map implements Serializable{
 	private Creature metapod;
 	private Creature weedle;
 	private Creature rattata;
+	
 
 
 	//CONSTRUCTOR
@@ -40,6 +41,7 @@ public class Map implements Serializable{
 		monsterList.add(metapod);
 		monsterList.add(weedle);
 		monsterList.add(rattata);
+
 	}
 
 	//getters and setter methods
