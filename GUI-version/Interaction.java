@@ -17,15 +17,34 @@ public class Interaction {
     }
 
     //decides whether boss will attack or use an item
-    //if its HP is below 5, it will use its potion
     double itemOrAttack = Math.random();
+
+    //if its HP is below 5, it will use its potion
+    if (boss.getHP() <= 5){
+      Item superPotion = new Item("Super Potion", 20, 1);
+      if (Arrays.asList(boss.getInventory()).contains(superPotion)){
+        battleOutput.setText(boss.getName() + " used a Super Potion and regained 20 HP!");
+        return 0;
+      }
+
+      //if boss doesn't have super potion, attacks instead
+      else{
+        itemOrAttack = 0.1;
+      }
+    }
+
 
     //30% chance of using its super berry
     if (itemOrAttack > 0.7){
       Item superBerry = new Item("Super Berry", 2, 3);
       if (Arrays.asList(boss.getInventory()).contains(superBerry)){
-        battleOutput.setText(boss.getName() + " used a Super Berry and regained 20 HP!");
+        battleOutput.setText(boss.getName() + " used a Super Berry and its attack went up!");
         return 0;
+      }
+
+      //if the boss's inventory doesn't contain a super berry, it attacks instead
+      else{
+        itemOrAttack = 0.1;
       }
     }
 
@@ -44,6 +63,8 @@ public class Interaction {
         return 0;
       }
     }
+
+
     return 0;
 
   }
