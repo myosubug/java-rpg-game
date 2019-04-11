@@ -206,38 +206,18 @@ public class GUIAppTest{
 	}
 
 	@Test
-	public void test_Constructor_item_class(){
+	public void test_Constructor_for_itemclass(){
 		Item i = new Item("Battle Fruit",3,3);
 		assertEquals("Created Item named Battle Fruit", "Battle Fruit", i.getName());
 		assertEquals("Created hPIncrease with Increase hp: 3", 3, i.getHPIncrease());
 		assertEquals("Created attackIncrease with Increase attack: 3", 3, i.getAttackIncrease());
 	}
 	//Test the Constructor with Invalid value for hPIncrease negetive 1.
-	//The hPIncrease should be nonnegative.
+	//The default hPIncrease should be nonnegative.
 	@Test
 	public void test_Constructor_withInvalidNumber_inhPIncrease(){
 		Item i = new Item("Battle Fruit", -1, 3);
 		assertEquals("Created hPIncrease with Increase hp: -1", 0, i.getHPIncrease());
-	}
-	//Test the Constructor with Invalid value for attackIncreas negetive 1.
-	//The attackIncreas should be nonnegative.
-	@Test
-	public void test_Constructor_withInvalidNumber_attackIncrease(){
-		Item i = new Item("Battle Fruit", 3, -1);
-		assertEquals("Created attackIncrease with Increase attack: -1", 0 ,i.getAttackIncrease());
-	}
-	//Test toString
-	@Test
-	public void test_toString() {
-		Item i = new Item("Battle Fruit", 3, 3);
-		assertEquals("want the item's name: Battle Fruit", "Battle Fruit", i.toString());
-	}
-	// Test use item, if item's name is HP potion, then return hPIncrease. 
-	// If not, then return attackIncrease 
-	@Test
-	public void test_useItme(){
-		Item i = new Item("Battle Fruit", 3, 3);
-		assertEquals("the item is not HP potion, so incease attack(3)", 3, i.useItem());
 	}
 
 

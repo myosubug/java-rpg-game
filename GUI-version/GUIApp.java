@@ -27,9 +27,11 @@ public class GUIApp extends Application implements Serializable{
     private static AnchorPane root;
     private static VBox root2;
     private static AnchorPane root3;
+    private static AnchorPane root4;
     private static Scene introScene;
     private static Scene gameScene;
     private static Scene battleScene;
+    private static Scene endingScene;
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
@@ -37,8 +39,10 @@ public class GUIApp extends Application implements Serializable{
     private static boolean eastOrWest;
     private static Image pikachuImage;
     private static Image gameBackground;
+    private static Image bossImage;
     private static boolean isGameLoaded = false;
     private static boolean isBattleFinished = false;
+    private static boolean isBossDefeated = false;
     private static StackPane battleImage;
     private static Label battleOutput;
     private static Label playerStatus;
@@ -46,20 +50,20 @@ public class GUIApp extends Application implements Serializable{
     private static ImageView playerImageView;
     private static ImageView monsterImageView;
     private Player pikachu = new Player();
+    private Boss ash = new Boss();
     private Creature monster;
     private ArrayList<Map> gameMapList = new ArrayList<Map>();
-    private ArrayList<Creature> monsterList = new ArrayList<Creature>();
     private Map gameMap;
-    private Collision collisionCheck = new Collision(); 
+    private Collision collisionCheck = new Collision();
     private Interaction interaction = new Interaction();
-    
+
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         //setting up main layout and stage
-        initilization(primaryStage);
+        initialization(primaryStage);
 
         //connecting button and keys to scenes
         addMovementKeyEvent(primaryStage, gameScene);
@@ -73,21 +77,11 @@ public class GUIApp extends Application implements Serializable{
                 gc.clearRect(0, 0, 640, 640);
                 gc.drawImage(gameBackground, 0, 0, 640, 640);
                 gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
+                if(pikachu.getCurrentGameLevel() == 3 && isBossDefeated == false)
+                    gc.drawImage(bossImage, 384, 160);
 
                 //updating maps based on pikachu's status and location and game loaded status
-                if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
-                    gameBackground = new Image("file:img/map2.png");
-                    gameMap = gameMapList.get(1);
-                    updated = 2;
-                    if (isGameLoaded == false)
-                        pikachu.setX(0);
-                } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
-                    gameBackground = new Image("file:img/map1.png");
-                    gameMap = gameMapList.get(0);
-                    updated = 1;
-                    if(isGameLoaded == false)
-                        pikachu.setX(608);
-                }
+                mapUpdateCheck();
             }
         }.start();
 
@@ -96,7 +90,7 @@ public class GUIApp extends Application implements Serializable{
 
     public static void main(String[] args) {
         launch(args);
-        
+
     }
 
     /**
@@ -131,13 +125,14 @@ public class GUIApp extends Application implements Serializable{
      * basically sets up everything before the actual game starts up
      * @param primary this stage variable is used to change the scene based on events.
      */
-    public void initilization(Stage primary){
+    public void initialization(Stage primary){
 
         //adding pre-loaded game maps to arraylist
         gameMapList.add(new Map(20, "mapData/map1.txt"));
         gameMapList.add(new Map(20, "mapData/map2.txt"));
+        gameMapList.add(new Map(20, "mapData/map3.txt"));
         gameMap = gameMapList.get(0);
-        
+
 
         //adding menu and save and load funcions
         primary.setTitle("Liberate Pikachu!");
@@ -153,7 +148,7 @@ public class GUIApp extends Application implements Serializable{
         mainMenu.getMenus().add(file);
 
 
-        //Intro scene layout setup 
+        //Intro scene layout setup
         root = new AnchorPane();
         introScene = new Scene(root, 640, 830);
         Button start = new Button("Start a new game");
@@ -193,11 +188,18 @@ public class GUIApp extends Application implements Serializable{
         pikachu.setY(96);
         canvas = new Canvas(640, 640);
         pikachuImage = new Image("file:img/front.gif");
-        monsterList.add(new Creature("Metapod", 20, 1, 7, "file:img/metapod.png"));
-        monsterList.add(new Creature("Weedle", 20, 1, 7, "file:img/weedle.png"));
-        monsterList.add(new Creature("Rattata", 20, 1, 7, "file:img/rattata.gif"));
-
-      
+        bossImage = new Image("file:img/ashFront.gif");
+        gameMapList.get(0).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(0).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(0).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        gameMapList.get(1).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(1).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(1).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        gameMapList.get(2).getMonsterList().get(0).setMonsterImage("file:img/metapod.png");
+        gameMapList.get(2).getMonsterList().get(1).setMonsterImage("file:img/weedle.png");
+        gameMapList.get(2).getMonsterList().get(2).setMonsterImage("file:img/rattata.gif");
+        ash.setMonsterImage("file:img/ashBattle.gif");
+        
         gameBackground = new Image("file:img/map1.png");
         gc = canvas.getGraphicsContext2D();
         gc.drawImage(pikachuImage, pikachu.getX(), pikachu.getY());
@@ -250,16 +252,28 @@ public class GUIApp extends Application implements Serializable{
         root3.getChildren().add(battleImage);
         root3.getChildren().add(battleOutput);
 
+        //setting up ending scene 
+        root4 = new AnchorPane();
+        endingScene = new Scene(root4, 640, 830);
+        Button endingMenu = new Button("Go back to main menu");
+        endingMenu.setMinWidth(150);
+        endingMenu.setMinHeight(50);
+        endingMenu.setLayoutX(250);
+        endingMenu.setLayoutY(660);
+        endingMenu.setOnAction(e -> primary.setScene(introScene));
+        root4.setStyle("-fx-background-image: url(file:img/endScene.gif);");
+        root4.getChildren().add(endingMenu);
+
     }
 
      /**
       * this method take cares of movement event for player (Pikachu)
       * it takes the current Scene and stage as a parameter and based on the key pressed,
       * it's taking care of different actions
-      * WASD - these are movement keys that updates pikachu's current location 
+      * WASD - these are movement keys that updates pikachu's current location
       *        these key event make sure that Pikachu doesn't go over the boundaries of canvas
       * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
-      * B - this is the key to check pikachu's current inventory. 
+      * B - this is the key to check pikachu's current inventory.
       * T - this is the key to check pikachu's current status.
       * @param primary this stage variable is used to change the scene based on events.
       * @param scene this is the gameMap Scene variable in this JavaFx application
@@ -314,12 +328,12 @@ public class GUIApp extends Application implements Serializable{
 
     /**
       * this method take cares of battle action event for player (Pikachu)
-      * it takes the current Scene and stage as a parameter 
+      * it takes the current Scene and stage as a parameter
       * based on the key pressed, it's taking care of different actions
       * J - this is player's attack key to the fighting monster.
       *     it also displays current status of the monster and player.
       * ZXC - these are keys for using items. Can choose 1st, 2nd, and 3rd item in order
-      * B - this is the key to check pikachu's current inventory. 
+      * B - this is the key to check pikachu's current inventory.
       * Q - this is the key to exit battle.
       * @param primary this stage variable is used to change the scene based on events.
       * @param scene this is the gameMap Scene variable in this JavaFx application
@@ -358,28 +372,48 @@ public class GUIApp extends Application implements Serializable{
                         battleOutput.setText("Current items in inventory:\n" +pikachu.displayInventory());
                         break;
                     case Q:
-                        primary.setScene(gameScene);
+                        double escapeChance = Math.random();
+                        if (escapeChance > 0.5){
                         monster.setHP(30);
+                        primary.setScene(gameScene);
                         isBattleFinished = false;
+                        output.setText("You ran away! \nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
                         break;
+                        }
+                        else{
+                          battleOutput.setText("You tried to run away, but you couldn't! \nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
+                          break;
+                        }
                     default:
-                        battleOutput.setText("Please press correct keys to operate.\nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
+                        battleOutput.setText("To attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
                     }
+
                 }
                 else if (isBattleFinished == true){
-                    battleOutput.setText("Please press correct keys to operate.\nTo go back to game map, press Q");
+                    battleOutput.setText("To go back to game map, press Q");
                     switch(e.getCode()){
                         case Q:
-                            primary.setScene(gameScene);
-                            monster.setHP(30);
-                            isBattleFinished = false;
-                            break;
+                            if(ash.getHP() <= 0){
+                                primary.setScene(endingScene);
+                                break;
+                            } else if (ash.getHP() >= 1 && pikachu.getCurrentGameLevel() == 3) {
+                                pikachu.setX(0);
+                                pikachu.setY(512);
+                                primary.setScene(gameScene);
+                                monster.setHP(30);
+                                isBattleFinished = false;
+                                break;
+                            } else{
+                                primary.setScene(gameScene);
+                                monster.setHP(30);
+                                isBattleFinished = false;
+                            }
                         default:
-                            battleOutput.setText("Please press correct keys to operate.\nTo go back to game map, press Q");
+                            battleOutput.setText("To go back to game map, press Q");
                     }
-                }        
+                }
             }
-        }); 
+        });
     }
 
     /**
@@ -390,34 +424,40 @@ public class GUIApp extends Application implements Serializable{
      * @param primaryStage this stage variable is used to change the current scene to battle scene through monsterineratcion method.
      */
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation, Stage primaryStage){
+        boolean bossFoundCheck = false;
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        boolean thirdMapUpdateCheck = collisionCheck.thirdMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
+        if (isBossDefeated == false){
+            bossFoundCheck = collisionCheck.bossCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
+        }
         if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
             pikachuImage = new Image(imgLocation);
             pikachu.setX(pikachuX);
             pikachu.setY(pikachuY);
             itemInteractionHandler();
-            monsterInteractionHandler(primaryStage);
+            monsterInteractionHandler(primaryStage, bossFoundCheck);
             if(secondMapUpdateCheck == true && eastOrWest){
                 pikachu.setCurrentGameLevel(2);
             } else if (firstMapUpdateCheck == true && eastOrWest){
                 pikachu.setCurrentGameLevel(1);
+            } else if (thirdMapUpdateCheck == true && eastOrWest){
+                pikachu.setCurrentGameLevel(3);
             }
         }
         else
-            output.setText("Please press correct keys to operate.\nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+            output.setText("Use WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
         isGameLoaded = false;
     }
 
     /**
      * this methods gives a player (pikachu) an random item by random chance.
-     * everytime pikahu makes a movement, this method is called and by 4% chance, 
+     * everytime pikahu makes a movement, this method is called and by 4% chance,
      * pikachu can get a random item and it's added to pikachu's current inventory, which is an arraylist
      * pikachu only can have 3 items at max, and more item will be disregarded.
      */
     public void itemInteractionHandler(){
-
         double randomRate = Math.random();
         if (randomRate <= 0.04 && pikachu.getInventory().size() < 3){
             pikachu.addItemToInventory(gameMap.getRandomItem());
@@ -431,14 +471,23 @@ public class GUIApp extends Application implements Serializable{
       * by changing the current scene to battle scene, player is brought into battle.
       * @param primary this stage variable is used to change the current scene to battle scene
       */
-    public void monsterInteractionHandler(Stage primary){
+    public void monsterInteractionHandler(Stage primary, boolean bossFoundCheck){
             double randomRate = Math.random();
-            if (randomRate <= 0.04){
+            if (bossFoundCheck) {
                 primary.setScene(battleScene);
-                monster = gameMap.getRandomMonster(monsterList);
-                battleOutput.setText("You have been encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
+                monster = ash;
+                battleOutput.setText("You finally have encountered with "+ ash.getName() +" To fight, press J or to run away, press Q.");
+                monsterStatus.setText(ash.toString());
+                monsterImageView.setImage(ash.getMonsterImage());
+            }
+            else {
+                if (randomRate <= 0.04){
+                primary.setScene(battleScene);
+                monster = gameMap.getRandomMonster();
+                battleOutput.setText("You have encountered with "+ monster.getName() +" To fight, press J or to run away, press Q.");
                 monsterStatus.setText(monster.toString());
                 monsterImageView.setImage(monster.getMonsterImage());
+                }
             }
     }
 
@@ -458,6 +507,45 @@ public class GUIApp extends Application implements Serializable{
         } catch (Exception e){
             System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
             output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
+        }
+    }
+    /**
+     * this method checks the current map of player and the map that is needed to
+     * be updated so that it prepares to update the map.
+     */
+    public void mapUpdateCheck(){
+        if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
+            gameBackground = new Image("file:img/map2.png");
+            gameMap = gameMapList.get(1);
+            updated = 2;
+            if (isGameLoaded == false)
+                pikachu.setX(0);
+        } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
+            gameBackground = new Image("file:img/map1.png");
+            gameMap = gameMapList.get(0);
+            updated = 1;
+            if(isGameLoaded == false)
+                pikachu.setX(608);
+        } else if(pikachu.getCurrentGameLevel() == 3 && updated == 2){
+            gameBackground = new Image("file:img/map3.png");
+            gameMap = gameMapList.get(2);
+            updated = 3;
+            if(isGameLoaded == false)
+                pikachu.setX(0);
+        } else if(pikachu.getCurrentGameLevel() == 2 && updated == 3){
+            gameBackground = new Image("file:img/map2.png");
+            gameMap = gameMapList.get(1);
+            updated = 2;
+            if(isGameLoaded == false)
+                pikachu.setX(608);
+        } else if(pikachu.getCurrentGameLevel() == 1 && updated == 3){
+            gameBackground = new Image("file:img/map1.png");
+            gameMap = gameMapList.get(0);
+            updated = 1;
+        } else if(pikachu.getCurrentGameLevel() == 3 && updated == 1){
+            gameBackground = new Image("file:img/map3.png");
+            gameMap = gameMapList.get(2);
+            updated = 3;
         }
     }
 }

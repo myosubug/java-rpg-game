@@ -15,6 +15,27 @@ public class Creature implements Serializable{
 	//CONSTRUCTORS
 	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
+
+		if(hitPoints <= 0)
+			this.hitPoints = 1;
+		else
+			this.hitPoints = hitPoints;
+
+		if(level <= 0)
+			this.level = 1;
+		else
+			this.level = level;
+
+		if(attackDamage <= 0)
+			this.attackDamage = 1;
+		else
+			this.attackDamage = attackDamage;
+		this.monsterImage = new Image(imgLocation);
+
+	}
+
+	Creature(String name, int hitPoints, int level, int attackDamage){
+		this.name = name;
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
 		else
@@ -27,12 +48,9 @@ public class Creature implements Serializable{
 			this.attackDamage = 1;
 		else
 			this.attackDamage = attackDamage;
-		this.monsterImage = new Image(imgLocation);
-
 	}
 
-	Creature(String name, int hitPoints, int level, int attackDamage){
-		this.name = name;
+	Creature(int hitPoints, int level, int attackDamage){
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
 		else
@@ -111,7 +129,7 @@ public class Creature implements Serializable{
 	 * ex) level 1 = 30 hp
 	 * 	   level 2 = 33 hp
 	 * also hp can't be lower than 0.
-	 * @param hp this is the hp amount that needs to be added or 
+	 * @param hp this is the hp amount that needs to be added or
 	 *           subtracted from current hp.
 	 */
 	public void setHP(int hp){
@@ -161,70 +179,5 @@ public class Creature implements Serializable{
 	public String toString(){
 		return this.getName() + "\nHP: " + this.getHP();
 	}
-
-	
-	/* 
-	 * this method saves a creature object to temp folder when game is saved
-	 */
-	/* 
-	public void saveCreature(){
-		try{
-			//saves bytestream to temp folder
-			FileOutputStream fileOut = new FileOutputStream("./temp/" + this.getName() + ".ser");
-			ObjectOutputStream creatureOut = new ObjectOutputStream(fileOut);
-			creatureOut.writeObject(this);
-			creatureOut.close();
-			fileOut.close();
-		}
-
-		catch(IOException i){
-			i.printStackTrace();
-		}
-	}
-	*/
-
-	/**
-	 * loads a creature object from save state
-	 */
-
-	 /*
-	public Creature loadCreature(String creatureName){
-		Creature outputCreature = new Creature();
-
-		try{
-			FileInputStream fileIn = new FileInputStream("./temp/" + creatureName + ".ser");
-			ObjectInputStream creatureIn = new ObjectInputStream(fileIn);
-
-			outputCreature = (Creature) creatureIn.readObject();
-			creatureIn.close();
-			fileIn.close();
-
-			return outputCreature;
-		}
-
-		catch(NotSerializableException c){
-			System.out.println("saving Creatures with JavaFX image class..");
-			return null;
-		}
-
-		catch(IOException i){
-			i.printStackTrace();
-			return null;
-		}
-
-		catch(ClassNotFoundException c){
-			System.out.println("Creature not found.");
-			c.printStackTrace();
-			return null;
-		}
-		
-		
-	}
-	*/
-
-	
- 
-
-	
 
 }

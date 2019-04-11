@@ -99,5 +99,29 @@ public class Collision {
             return false;
         }
     }
+
+    /**
+     * this method checks if pikachu enters third map of the game by checking mapData which is in 2d char array.
+     * @param pikachuX this argument holds pikachu's x position for next tile
+     * @param pikachuY this argument holds pikachu's y position for next tile
+     * @param mapData his argument holds 2d char array that is imported in Map class
+     * @return it will return true if pikachu's entering third map or false if pikachu is still in other map.
+     */
+    public boolean thirdMapUpdateCheck(int pikachuX, int pikachuY, char[][] mapData){
+        if(pikachuX > 608 || pikachuY > 608 || pikachuX < 0 || pikachuY < 0)
+            return false;
+
+        int pikachuXDivided = pikachuX / 32;
+        int pikachuYDivided = pikachuY / 32;
+        try{
+        if (mapData[pikachuYDivided][pikachuXDivided] == '%')
+            return true;
+        else
+            return false;
+        } catch(Exception e){
+            System.out.println("Object Collision checking ...");
+            return false;
+        }
+    }
     
 }

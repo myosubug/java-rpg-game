@@ -12,6 +12,11 @@ class Player extends Creature implements Serializable{
         super("Pikachu", 30, 1, 5);
     }
 
+    Player(int hitPoints, int level, int attackDamage){
+		super(hitPoints, level, attackDamage);
+	}
+
+
     //getters and setters
     public ArrayList<Item> getInventory() {
         return this.inventory;

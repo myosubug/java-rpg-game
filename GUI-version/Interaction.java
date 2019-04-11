@@ -1,5 +1,6 @@
 import java.util.Random;
 import javafx.scene.control.Label;
+import java.util.Arrays;
 
 public class Interaction {
 
@@ -10,16 +11,20 @@ public class Interaction {
       * @param battleOutput this is label that is in battle scene.
       * @return true is battle is finished and false if battle is not finished.
       */
-    public boolean battle(Player pikachu, Creature monster, Label battleOutput){      
+    public boolean battle(Player pikachu, Creature monster, Label battleOutput){
         double fightRate = Math.random();
-        //by 59% of chance, monster attacks back player every time player tries to attack the monster
-        if(fightRate < 0.60){
+        double incidentRate = 0.50;
+        if(monster.getName().equals("Ash"))
+            incidentRate = 0.40;
+        //by 50% of chance, monster attacks back player every time player tries to attack the monster
+        //if it's boss, ash, ash has 60% chance to attack back.
+        if(fightRate < incidentRate){
             monster.setHP(-pikachu.getAttack());
-            battleOutput.setText("Your attack was succesful!");
+            battleOutput.setText("Your attack was succesful! \nYou did " + pikachu.getAttack() + " damage! \nTo fight, press J or to use item, press B or to run away, press Q.");
         }
         else{
             pikachu.setHP(-monster.getAttack());
-            battleOutput.setText(monster.getName()+" attacked you back!");
+            battleOutput.setText("You tried to hit, but you missed! \n"+monster.getName()+" attacked you back with "+monster.getAttack()+" damage!\nTo fight, press J or to use item, press B");
         }
 
         //if either of monster or player's hp become 0, the battle is over.
