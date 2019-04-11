@@ -1,12 +1,12 @@
-@-------------x-----
-@xx---xx------------
+@-------------x----%
+@xx---xx-----------%
 @-----xxx-------x-xx
 @xxxxx-------x----xx
-@xxxxx-------x------
+@xxxxx-------x-----%
 @xxxxxxx----------xx
 @xxxxxxx------xx--xx
 @xxxxxxx-------x--xx
-@xxxxxx------x------
+@xxxxxx------x-----%
 @xxxxxx-------x---xx
 @xxxxx--------xx--xx
 @xxx----------xx--xx

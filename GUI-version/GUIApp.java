@@ -27,9 +27,11 @@ public class GUIApp extends Application implements Serializable{
     private static AnchorPane root;
     private static VBox root2;
     private static AnchorPane root3;
+    private static AnchorPane root4;
     private static Scene introScene;
     private static Scene gameScene;
     private static Scene battleScene;
+    private static Scene endingScene;
     private static Canvas canvas;
     private static GraphicsContext gc;
     private static Label output;
@@ -79,39 +81,7 @@ public class GUIApp extends Application implements Serializable{
                     gc.drawImage(bossImage, 384, 160);
 
                 //updating maps based on pikachu's status and location and game loaded status
-                if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
-                    gameBackground = new Image("file:img/map2.png");
-                    gameMap = gameMapList.get(1);
-                    updated = 2;
-                    if (isGameLoaded == false)
-                        pikachu.setX(0);
-                } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
-                    gameBackground = new Image("file:img/map1.png");
-                    gameMap = gameMapList.get(0);
-                    updated = 1;
-                    if(isGameLoaded == false)
-                        pikachu.setX(608);
-                } else if(pikachu.getCurrentGameLevel() == 3 && updated == 2){
-                    gameBackground = new Image("file:img/map3.png");
-                    gameMap = gameMapList.get(2);
-                    updated = 3;
-                    if(isGameLoaded == false)
-                        pikachu.setX(0);
-                } else if(pikachu.getCurrentGameLevel() == 2 && updated == 3){
-                    gameBackground = new Image("file:img/map2.png");
-                    gameMap = gameMapList.get(1);
-                    updated = 2;
-                    if(isGameLoaded == false)
-                        pikachu.setX(608);
-                } else if(pikachu.getCurrentGameLevel() == 1 && updated == 3){
-                    gameBackground = new Image("file:img/map1.png");
-                    gameMap = gameMapList.get(0);
-                    updated = 1;
-                } else if(pikachu.getCurrentGameLevel() == 3 && updated == 1){
-                    gameBackground = new Image("file:img/map3.png");
-                    gameMap = gameMapList.get(2);
-                    updated = 3;
-                }
+                mapUpdateCheck();
             }
         }.start();
 
@@ -282,6 +252,18 @@ public class GUIApp extends Application implements Serializable{
         root3.getChildren().add(battleImage);
         root3.getChildren().add(battleOutput);
 
+        //setting up ending scene 
+        root4 = new AnchorPane();
+        endingScene = new Scene(root4, 640, 830);
+        Button endingMenu = new Button("Go back to main menu");
+        endingMenu.setMinWidth(150);
+        endingMenu.setMinHeight(50);
+        endingMenu.setLayoutX(250);
+        endingMenu.setLayoutY(660);
+        endingMenu.setOnAction(e -> primary.setScene(introScene));
+        root4.setStyle("-fx-background-image: url(file:img/endScene.gif);");
+        root4.getChildren().add(endingMenu);
+
     }
 
      /**
@@ -392,11 +374,11 @@ public class GUIApp extends Application implements Serializable{
                     case Q:
                         double escapeChance = Math.random();
                         if (escapeChance > 0.5){
-                          primary.setScene(gameScene);
-                          monster.setHP(30);
-                          isBattleFinished = false;
-                          output.setText("You ran away! \nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
-                          break;
+                        monster.setHP(30);
+                        primary.setScene(gameScene);
+                        isBattleFinished = false;
+                        output.setText("You ran away! \nUse WASD to move around. To see inventory, Use B.\n"+"To use items, use Z,X,C to use one of 3 items in order.\nTo see Pikachu's status, press T.");
+                        break;
                         }
                         else{
                           battleOutput.setText("You tried to run away, but you couldn't! \nTo attack, press J.\nTo use items, Press B and use Z,X,C to use one of 3 items in order.\nTo run away from battle, press Q.");
@@ -411,7 +393,11 @@ public class GUIApp extends Application implements Serializable{
                     battleOutput.setText("To go back to game map, press Q");
                     switch(e.getCode()){
                         case Q:
+                            if(ash.getHP() <= 0){
+                                primary.setScene(endingScene);
+                            } else {
                             primary.setScene(gameScene);
+                            }
                             monster.setHP(30);
                             isBattleFinished = false;
                             break;
@@ -431,11 +417,14 @@ public class GUIApp extends Application implements Serializable{
      * @param primaryStage this stage variable is used to change the current scene to battle scene through monsterineratcion method.
      */
     public void pikachuMovement(int pikachuX, int pikachuY, String imgLocation, Stage primaryStage){
+        boolean bossFoundCheck = false;
         boolean objectCheck = collisionCheck.objectCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean secondMapUpdateCheck = collisionCheck.secondMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean firstMapUpdateCheck = collisionCheck.firstMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
         boolean thirdMapUpdateCheck = collisionCheck.thirdMapUpdateCheck(pikachuX, pikachuY, gameMap.getMapData());
-        boolean bossFoundCheck = collisionCheck.bossCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
+        if (isBossDefeated == false){
+            bossFoundCheck = collisionCheck.bossCollisionCheck(pikachuX, pikachuY, gameMap.getMapData());
+        }
         if(pikachuX >= 0 && pikachuX <= 608 && pikachuY >= 0 && pikachuY <= 608 && objectCheck == false){
             pikachuImage = new Image(imgLocation);
             pikachu.setX(pikachuX);
@@ -511,6 +500,45 @@ public class GUIApp extends Application implements Serializable{
         } catch (Exception e){
             System.out.println("tried to access an empty inventory to delete item or to use non-existing item.");
             output.setText("tried to access an empty inventory to delete item or to use non-existing item.");
+        }
+    }
+    /**
+     * this method checks the current map of player and the map that is needed to
+     * be updated so that it prepares to update the map.
+     */
+    public void mapUpdateCheck(){
+        if(pikachu.getCurrentGameLevel() == 2 && updated == 1){
+            gameBackground = new Image("file:img/map2.png");
+            gameMap = gameMapList.get(1);
+            updated = 2;
+            if (isGameLoaded == false)
+                pikachu.setX(0);
+        } else if(pikachu.getCurrentGameLevel() == 1 && updated == 2){
+            gameBackground = new Image("file:img/map1.png");
+            gameMap = gameMapList.get(0);
+            updated = 1;
+            if(isGameLoaded == false)
+                pikachu.setX(608);
+        } else if(pikachu.getCurrentGameLevel() == 3 && updated == 2){
+            gameBackground = new Image("file:img/map3.png");
+            gameMap = gameMapList.get(2);
+            updated = 3;
+            if(isGameLoaded == false)
+                pikachu.setX(0);
+        } else if(pikachu.getCurrentGameLevel() == 2 && updated == 3){
+            gameBackground = new Image("file:img/map2.png");
+            gameMap = gameMapList.get(1);
+            updated = 2;
+            if(isGameLoaded == false)
+                pikachu.setX(608);
+        } else if(pikachu.getCurrentGameLevel() == 1 && updated == 3){
+            gameBackground = new Image("file:img/map1.png");
+            gameMap = gameMapList.get(0);
+            updated = 1;
+        } else if(pikachu.getCurrentGameLevel() == 3 && updated == 1){
+            gameBackground = new Image("file:img/map3.png");
+            gameMap = gameMapList.get(2);
+            updated = 3;
         }
     }
 }

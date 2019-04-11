@@ -541,6 +541,5 @@ healthchecksdb
 
 # Extra useless files to add to git
 .DS_Store
-.ser
 
 # End of https://www.gitignore.io/api/java,eclipse,netbeans,intellij,visualstudio,visualstudiocode

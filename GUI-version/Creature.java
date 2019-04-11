@@ -5,7 +5,6 @@ public class Creature implements Serializable{
 
 	//Declaring member variables
 	private String name;
-	private double attackStrength;
 	private int hitPoints;
 	private int level;
 	private int attackDamage;
@@ -14,13 +13,8 @@ public class Creature implements Serializable{
 	private Image monsterImage;
 
 	//CONSTRUCTORS
-	Creature(String name, double attackStrength, int hitPoints, int level, int attackDamage, String imgLocation){
+	Creature(String name, int hitPoints, int level, int attackDamage, String imgLocation){
 		this.name = name;
-
-		if((attackStrength <= 0.0) && (attackStrength >= 1.0))
-			this.attackStrength = attackStrength;
-		else
-			this.attackStrength = 0.5;
 
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
@@ -42,12 +36,21 @@ public class Creature implements Serializable{
 
 	Creature(String name, int hitPoints, int level, int attackDamage){
 		this.name = name;
-
-		if((attackStrength <= 0.0) && (attackStrength >= 1.0))
-			this.attackStrength = attackStrength;
+		if(hitPoints <= 0)
+			this.hitPoints = 1;
 		else
-			this.attackStrength = 0.5;
+			this.hitPoints = hitPoints;
+		if(level <= 0)
+			this.level = 1;
+		else
+			this.level = level;
+		if(attackDamage <= 0)
+			this.attackDamage = 1;
+		else
+			this.attackDamage = attackDamage;
+	}
 
+	Creature(int hitPoints, int level, int attackDamage){
 		if(hitPoints <= 0)
 			this.hitPoints = 1;
 		else
@@ -70,10 +73,6 @@ public class Creature implements Serializable{
 	//Getters and setters for member variables
 	public String getName(){
 		return name;
-	}
-
-	public double getAttackStrength(){
-		return attackStrength;
 	}
 
 	public int getHP(){
@@ -113,11 +112,6 @@ public class Creature implements Serializable{
 
 	public void setName(String name){
 		this.name = name;
-	}
-
-	public void setAttackStrength(double newAttackStrength){
-		if ((newAttackStrength >= 0.0) && (newAttackStrength <= 1.0))
-			this.attackStrength = newAttackStrength;
 	}
 
 	public void setMonsterImage(String fileLocation){
@@ -185,70 +179,5 @@ public class Creature implements Serializable{
 	public String toString(){
 		return this.getName() + "\nHP: " + this.getHP();
 	}
-
-
-	/*
-	 * this method saves a creature object to temp folder when game is saved
-	 */
-	/*
-	public void saveCreature(){
-		try{
-			//saves bytestream to temp folder
-			FileOutputStream fileOut = new FileOutputStream("./temp/" + this.getName() + ".ser");
-			ObjectOutputStream creatureOut = new ObjectOutputStream(fileOut);
-			creatureOut.writeObject(this);
-			creatureOut.close();
-			fileOut.close();
-		}
-
-		catch(IOException i){
-			i.printStackTrace();
-		}
-	}
-	*/
-
-	/**
-	 * loads a creature object from save state
-	 */
-
-	 /*
-	public Creature loadCreature(String creatureName){
-		Creature outputCreature = new Creature();
-
-		try{
-			FileInputStream fileIn = new FileInputStream("./temp/" + creatureName + ".ser");
-			ObjectInputStream creatureIn = new ObjectInputStream(fileIn);
-
-			outputCreature = (Creature) creatureIn.readObject();
-			creatureIn.close();
-			fileIn.close();
-
-			return outputCreature;
-		}
-
-		catch(NotSerializableException c){
-			System.out.println("saving Creatures with JavaFX image class..");
-			return null;
-		}
-
-		catch(IOException i){
-			i.printStackTrace();
-			return null;
-		}
-
-		catch(ClassNotFoundException c){
-			System.out.println("Creature not found.");
-			c.printStackTrace();
-			return null;
-		}
-
-
-	}
-	*/
-
-
-
-
-
 
 }

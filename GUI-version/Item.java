@@ -1,7 +1,6 @@
-import java.util.jar.*;
 import java.io.*;
 
-class Item implements Serializable{
+public class Item implements Serializable{
 
 	//Declaring member variable
 	private String name;
