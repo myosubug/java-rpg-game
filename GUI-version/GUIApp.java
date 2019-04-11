@@ -395,12 +395,19 @@ public class GUIApp extends Application implements Serializable{
                         case Q:
                             if(ash.getHP() <= 0){
                                 primary.setScene(endingScene);
-                            } else {
-                            primary.setScene(gameScene);
+                                break;
+                            } else if (ash.getHP() >= 1 && pikachu.getCurrentGameLevel() == 3) {
+                                pikachu.setX(0);
+                                pikachu.setY(512);
+                                primary.setScene(gameScene);
+                                monster.setHP(30);
+                                isBattleFinished = false;
+                                break;
+                            } else{
+                                primary.setScene(gameScene);
+                                monster.setHP(30);
+                                isBattleFinished = false;
                             }
-                            monster.setHP(30);
-                            isBattleFinished = false;
-                            break;
                         default:
                             battleOutput.setText("To go back to game map, press Q");
                     }
