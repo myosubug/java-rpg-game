@@ -398,7 +398,7 @@ public class GUIApp extends Application implements Serializable{
                                 break;
                             } else if (ash.getHP() >= 1 && pikachu.getCurrentGameLevel() == 3 && pikachu.getHP() == 1) {
                                 pikachu.setX(0);
-                                pikachu.setY(512);
+                                pikaclshu.setY(512);
                                 primary.setScene(gameScene);
                                 monster.setHP(30);
                                 isBattleFinished = false;
