@@ -13,9 +13,9 @@ public class Interaction {
       */
     public boolean battle(Player pikachu, Creature monster, Label battleOutput){
         double fightRate = Math.random();
-        double incidentRate = 0.50;
+        double incidentRate = 0.60;
         if(monster.getName().equals("Ash"))
-            incidentRate = 0.40;
+            incidentRate = 0.50;
         //by 50% of chance, monster attacks back player every time player tries to attack the monster
         //if it's boss, ash, ash has 60% chance to attack back.
         if(fightRate < incidentRate){
