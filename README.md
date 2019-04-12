@@ -1,5 +1,4 @@
-# LiberatePikachu
-CPSC233 T06-G02
+# Java & JavaFX RPG game
 
 Project Name : Liberate Pikachu!
 
