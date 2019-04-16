@@ -1,4 +1,4 @@
-# Java & JavaFX RPG game
+# Java RPG game
 
 
 ## Project Description:
@@ -8,8 +8,24 @@ Other similar types of games include Pokemon and Zelda. Like in these games, pik
 ![demo](../master/demoimg/demo1.png) ![demo](../master/demoimg/demo2.png) ![demo](../master/demoimg/demo3.png) ![demo](../master/demoimg/demo4.png)![demo](../master/demoimg/demo5.png)![demo](../master/demoimg/demo6.png)
 
 There are two versions: text-version, GUI-version
+
     Text-version is located at "text-version" folder in this git.
     GUI-version is located at "GUI-version" folder in this git.
+## Prerequisites
+
+Java SE 8 or higher
+
+*As of JavaFX 2.2 and Java SE 7 update 6, the JavaFX libraries are installed as part of Java SE; a standalone version of JavaFX 2.2 will remain available for Java SE 6 users (Windows only) until Java SE 6 reaches End-of-Life in February 2013.
+
+## Installing
+
+No installation is required.
+
+## Built With
+
+* Java SE 8
+* Java FX
+
 
 ## How to start text-version:
     
