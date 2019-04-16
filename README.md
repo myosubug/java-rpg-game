@@ -7,9 +7,9 @@ Other similar types of games include Pokemon and Zelda. Like in these games, pik
 
 ![demo](../master/demoimg/demo1.png) ![demo](../master/demoimg/demo2.png) ![demo](../master/demoimg/demo3.png) ![demo](../master/demoimg/demo4.png)![demo](../master/demoimg/demo5.png)![demo](../master/demoimg/demo6.png)
 
-There are two versions: text-version, GUI
-Text-version is located at "text-version" folder in this git.
-GUI-version is located at "GUI-version" folder in this git.
+There are two versions: text-version, GUI-version
+    Text-version is located at "text-version" folder in this git.
+    GUI-version is located at "GUI-version" folder in this git.
 
 ## How to start text-version:
     
