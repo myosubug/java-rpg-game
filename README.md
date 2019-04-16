@@ -1,21 +1,18 @@
 # Java & JavaFX RPG game
 
-Project Name : Liberate Pikachu!
 
-Project Description:
-
+## Project Description:
 It is a  RPG game, where Pikachu is trying to escape from Ash and win his freedom. 
-Other similar types of games include Pokemon and Zelda. Like in these games, pikachu can move around the map to collect items to help him, and has to fight enemies on the way, before finally fighting the final boss. The game will be smaller and shorter than these games, but it has multiple maps and types of enemies to fight. The graphics will also have to be simpler than a full game such as Pokemon or Zelda.
+Other similar types of games include Pokemon and Zelda. Like in these games, pikachu can move around the map to collect items to help him, and has to fight enemies on the way, before finally fighting the final boss. The game is smaller and shorter than these games, but it has multiple maps and types of enemies to fight. The graphics will also have to be simpler than a full game such as Pokemon or Zelda.
 
 
 There are two versions: text-version, GUI
-
 Text-version is located at "text-version" folder in this git.
 GUI-version is located at "GUI-version" folder in this git.
 
 ## How to start text-version:
     
-    1. Download the files in https://gitlab.cpsc.ucalgary.ca/sungjong.oh/liberatepikachu/
+    1. Download the files in https://github.com/myosubug/java-rpg-game/
 
     2. Unzip the file and locate the folder you unzipped in your command terminal.
 
@@ -27,7 +24,7 @@ GUI-version is located at "GUI-version" folder in this git.
 
 ## How to start GUI-version:
     
-    1. Download the files in https://gitlab.cpsc.ucalgary.ca/sungjong.oh/liberatepikachu/
+    1. Download the files in https://github.com/myosubug/java-rpg-game/
 
     2. Unzip the file and locate the folder you unzipped in your command terminal.
 
