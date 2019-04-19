@@ -11,6 +11,7 @@ There are two versions: text-version, GUI-version
 
     Text-version is located at "text-version" folder in this git.
     GUI-version is located at "GUI-version" folder in this git.
+    
 ## Prerequisites
 
 Java SE 8 or higher
