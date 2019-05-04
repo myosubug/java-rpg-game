@@ -1,7 +1,7 @@
 # Java RPG game
 
 
-## Project Description:
+## Project Description
 It is a  RPG game, where Pikachu is trying to escape from Ash and win his freedom. 
 Other similar types of games include Pokemon and Zelda. Like in these games, pikachu can move around the map to collect items to help him, and has to fight enemies on the way, before finally fighting the final boss. The game is smaller and shorter than these games, but it has multiple maps and types of enemies to fight. The graphics will also have to be simpler than a full game such as Pokemon or Zelda.
 
